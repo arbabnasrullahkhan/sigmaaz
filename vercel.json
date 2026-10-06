@@ -1,0 +1,302 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/login",
+      "destination": "/login.html"
+    },
+    {
+      "source": "/reg",
+      "destination": "/reg.html"
+    },
+    {
+      "source": "/dash",
+      "destination": "/dash.html"
+    },
+    {
+      "source": "/profile",
+      "destination": "/profile.html"
+    },
+    {
+      "source": "/plans",
+      "destination": "/plans.html"
+    },
+    {
+      "source": "/my-plans",
+      "destination": "/my-plans.html"
+    },
+    {
+      "source": "/withdraw",
+      "destination": "/withdraw.html"
+    },
+    {
+      "source": "/transactions",
+      "destination": "/transactions.html"
+    },
+    {
+      "source": "/team",
+      "destination": "/team.html"
+    },
+    {
+      "source": "/support",
+      "destination": "/support.html"
+    },
+    {
+      "source": "/leaderboard",
+      "destination": "/leaderboard.html"
+    },
+    {
+      "source": "/manual-payment",
+      "destination": "/manual-payment.html"
+    },
+    {
+      "source": "/kyc",
+      "destination": "/kyc.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/x/login",
+      "destination": "/x/login.html"
+    },
+    {
+      "source": "/x/dashboard",
+      "destination": "/x/dashboard.html"
+    },
+    {
+      "source": "/x/users",
+      "destination": "/x/users.html"
+    },
+    {
+      "source": "/x/plans",
+      "destination": "/x/plans.html"
+    },
+    {
+      "source": "/x/deposits",
+      "destination": "/x/deposits.html"
+    },
+    {
+      "source": "/x/withdrawals",
+      "destination": "/x/withdrawals.html"
+    },
+    {
+      "source": "/x/wallet",
+      "destination": "/x/wallet.html"
+    },
+    {
+      "source": "/x/team",
+      "destination": "/x/team.html"
+    },
+    {
+      "source": "/x/tickets",
+      "destination": "/x/tickets.html"
+    },
+    {
+      "source": "/x/security",
+      "destination": "/x/security.html"
+    },
+    {
+      "source": "/x/settings",
+      "destination": "/x/settings.html"
+    },
+    {
+      "source": "/x/content",
+      "destination": "/x/content.html"
+    },
+    {
+      "source": "/x/roi",
+      "destination": "/x/roi.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/login.html",
+      "destination": "/login",
+      "permanent": true
+    },
+    {
+      "source": "/reg.html",
+      "destination": "/reg",
+      "permanent": true
+    },
+    {
+      "source": "/dash.html",
+      "destination": "/dash",
+      "permanent": true
+    },
+    {
+      "source": "/profile.html",
+      "destination": "/profile",
+      "permanent": true
+    },
+    {
+      "source": "/plans.html",
+      "destination": "/plans",
+      "permanent": true
+    },
+    {
+      "source": "/my-plans.html",
+      "destination": "/my-plans",
+      "permanent": true
+    },
+    {
+      "source": "/withdraw.html",
+      "destination": "/withdraw",
+      "permanent": true
+    },
+    {
+      "source": "/transactions.html",
+      "destination": "/transactions",
+      "permanent": true
+    },
+    {
+      "source": "/team.html",
+      "destination": "/team",
+      "permanent": true
+    },
+    {
+      "source": "/support.html",
+      "destination": "/support",
+      "permanent": true
+    },
+    {
+      "source": "/leaderboard.html",
+      "destination": "/leaderboard",
+      "permanent": true
+    },
+    {
+      "source": "/manual-payment.html",
+      "destination": "/manual-payment",
+      "permanent": true
+    },
+    {
+      "source": "/kyc.html",
+      "destination": "/kyc",
+      "permanent": true
+    },
+    {
+      "source": "/terms.html",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/x/login.html",
+      "destination": "/x/login",
+      "permanent": true
+    },
+    {
+      "source": "/x/dashboard.html",
+      "destination": "/x/dashboard",
+      "permanent": true
+    },
+    {
+      "source": "/x/users.html",
+      "destination": "/x/users",
+      "permanent": true
+    },
+    {
+      "source": "/x/plans.html",
+      "destination": "/x/plans",
+      "permanent": true
+    },
+    {
+      "source": "/x/deposits.html",
+      "destination": "/x/deposits",
+      "permanent": true
+    },
+    {
+      "source": "/x/withdrawals.html",
+      "destination": "/x/withdrawals",
+      "permanent": true
+    },
+    {
+      "source": "/x/wallet.html",
+      "destination": "/x/wallet",
+      "permanent": true
+    },
+    {
+      "source": "/x/team.html",
+      "destination": "/x/team",
+      "permanent": true
+    },
+    {
+      "source": "/x/tickets.html",
+      "destination": "/x/tickets",
+      "permanent": true
+    },
+    {
+      "source": "/x/security.html",
+      "destination": "/x/security",
+      "permanent": true
+    },
+    {
+      "source": "/x/settings.html",
+      "destination": "/x/settings",
+      "permanent": true
+    },
+    {
+      "source": "/x/content.html",
+      "destination": "/x/content",
+      "permanent": true
+    },
+    {
+      "source": "/x/roi.html",
+      "destination": "/x/roi",
+      "permanent": true
+    }
+  ]
+}

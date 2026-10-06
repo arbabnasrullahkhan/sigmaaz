@@ -1,0 +1,1437 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+    <title>Sigma | Active Portfolios & Live Earnings</title>
+
+    <!-- SEO, Privacy & PWA Metadata -->
+    <meta name="description"
+        content="Monitor your active Sigma automated portfolios, real-time compounding yields, and exact cycle payout timers.">
+    <meta name="keywords" content="Sigma Active Plans, Investment Tracker, Daily Yield Pakistan, EasyPaisa Payouts">
+    <meta name="author" content="Sigma Technologies">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="theme-color" content="#0B132B">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sigma Active">
+    <link rel="canonical" href="https://sigmaaz.vercel.app/my-plans.html">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <!-- Fallback Firebase Initialization -->
+    <script>
+        if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+            firebase.initializeApp({
+                apiKey: "AIzaSyCTRe2w4juZ55DrayIw61qKz_UYlZfw1H8",
+                authDomain: "week-team.firebaseapp.com",
+                projectId: "week-team",
+                storageBucket: "week-team.firebasestorage.app",
+                messagingSenderId: "480334485782",
+                appId: "1:480334485782:web:c0c886ed710567b9e6d837"
+            });
+        }
+    </script>
+
+    <style>
+        /* ==========================================================================
+           1. DESIGN TOKENS (SIGMA OBSIDIAN & LUXURY ACCENTS)
+           ========================================================================== */
+        :root {
+            --sigma-primary: #0B132B;
+            --sigma-secondary: #1C2541;
+            --sigma-tertiary: #3A506B;
+
+            --sigma-surface: #FFFFFF;
+            --sigma-surface-alt: #F8FAFC;
+            --sigma-subtle: #F1F5F9;
+
+            --sigma-muted-border: #E2E8F0;
+            --sigma-input-border: #CBD5E1;
+
+            --sigma-accent: #10B981;
+            --sigma-accent-dark: #059669;
+            --sigma-accent-light: #34D399;
+            --sigma-accent-soft: #ECFDF5;
+            --sigma-accent-border: #A7F3D0;
+
+            --sigma-gold: #F59E0B;
+            --sigma-gold-dark: #D97706;
+            --sigma-gold-soft: #FEF3C7;
+
+            --sigma-danger: #EF4444;
+            --sigma-danger-dark: #DC2626;
+
+            --sigma-info: #3B82F6;
+            --sigma-info-dark: #2563EB;
+            --sigma-pink: #F472B6;
+
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --text-light: #94A3B8;
+
+            --radius-pill: 9999px;
+            --radius-2xl: 32px;
+            --radius-xl: 22px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+
+            --shadow-subtle: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+            --shadow-card: 0 16px 32px -8px rgba(15, 23, 42, 0.08), 0 4px 16px -4px rgba(15, 23, 42, 0.04);
+            --shadow-float: 0 24px 48px -12px rgba(15, 23, 42, 0.16);
+            --shadow-glow: 0 8px 24px rgba(16, 185, 129, 0.25);
+
+            --z-dock: 1000;
+            --z-header: 900;
+            --z-toast: 3000;
+
+            --transition-smooth: 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            --transition-bounce: 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --safe-area-bottom: env(safe-area-inset-bottom, 16px);
+        }
+
+        /* ==========================================================================
+           2. GLOBAL RESET & BASE
+           ========================================================================== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--sigma-surface-alt);
+            color: var(--text-body);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: calc(110px + var(--safe-area-bottom));
+            background-image:
+                radial-gradient(circle at 10% 0%, rgba(244, 114, 182, 0.035) 0%, transparent 45vw),
+                radial-gradient(circle at 90% 100%, rgba(16, 185, 129, 0.04) 0%, transparent 45vw);
+            background-attachment: fixed;
+        }
+
+        body.locked {
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            background: none;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: var(--text-heading);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-feature-settings: "tnum" 1;
+        }
+
+        #networkOfflineBanner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--sigma-danger);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-align: center;
+            padding: 8px;
+            z-index: var(--z-toast);
+            display: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================================================
+           3. SINGLE-ROW ISLAND TOPBAR
+           ========================================================================== */
+        .app-container {
+            width: 100%;
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .island-topbar {
+            position: sticky;
+            top: 12px;
+            margin: 0 16px 20px;
+            height: 68px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-pill);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 14px;
+            z-index: var(--z-header);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .island-topbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-card);
+            border-color: var(--sigma-muted-border);
+        }
+
+        .btn-back {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--sigma-surface);
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--sigma-muted-border);
+            transition: var(--transition-bounce);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-back:active {
+            transform: scale(0.92);
+            background: var(--sigma-subtle);
+        }
+
+        .btn-back svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2.5;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .header-title b {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: var(--sigma-primary);
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+
+        .header-title small {
+            font-size: 0.65rem;
+            color: var(--sigma-accent-dark);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-top-action {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--sigma-subtle);
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--sigma-muted-border);
+            transition: var(--transition-bounce);
+        }
+
+        .btn-top-action:active {
+            transform: scale(0.92);
+        }
+
+        .btn-top-action svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2.2;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        /* ==========================================================================
+           4. WORKSPACE & SUMMARY VAULT CARD
+           ========================================================================== */
+        .workspace {
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .vault-card {
+            background: linear-gradient(135deg, #0b132b 0%, #161c36 45%, #20172e 80%, #131b2e 100%);
+            border-radius: var(--radius-2xl);
+            padding: 28px 24px;
+            color: white;
+            box-shadow: var(--shadow-card), var(--shadow-glow);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid rgba(244, 114, 182, 0.2);
+            animation: fadeInDown 0.5s ease-out;
+        }
+
+        .vault-card::after {
+            content: '';
+            position: absolute;
+            right: -30px;
+            top: -30px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.22) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .vault-card::before {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.16) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .vault-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sigma-accent-light);
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .vault-icon svg {
+            width: 30px;
+            height: 30px;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .vault-info {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .vault-info small {
+            font-size: 0.72rem;
+            color: #CBD5E1;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .vault-info h3 {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            color: white;
+            line-height: 1.1;
+        }
+
+        .vault-info h3 span {
+            font-size: 1.1rem;
+            color: var(--sigma-accent-light);
+            font-weight: 800;
+        }
+
+        .vault-sub-metric {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .vault-sub-metric svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--sigma-accent-light);
+            fill: none;
+            stroke-width: 2.2;
+        }
+
+        .vault-sub-metric span {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+
+        .section-header {
+            margin: 6px 0 2px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-header h2 {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-header h2 .count-badge {
+            background: var(--sigma-primary);
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: var(--radius-pill);
+            font-weight: 800;
+        }
+
+        /* ==========================================================================
+           5. ACTIVE PLAN CARDS (WITH LIVE COUNTDOWN TIMERS)
+           ========================================================================== */
+        .plans-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-height: 280px;
+        }
+
+        .active-plan-card {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            padding: 24px;
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--sigma-muted-border);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            animation: slideUp 0.4s ease-out backwards;
+        }
+
+        .active-plan-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card);
+            border-color: var(--sigma-input-border);
+        }
+
+        .active-plan-card::before {
+            content: '';
+            position: absolute;
+            right: -25px;
+            top: -25px;
+            width: 140px;
+            height: 140px;
+            background-image: url('assets/logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.04;
+            transform: rotate(-12deg);
+            filter: grayscale(100%);
+            pointer-events: none;
+        }
+
+        .plan-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+
+        .plan-title-block {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .plan-icon-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
+            color: white;
+        }
+
+        .plan-icon-wrap svg {
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        /* Metallic themes */
+        .theme-bronze {
+            background: linear-gradient(135deg, #1f1a18 0%, #7c4d37 60%, #b47455 100%);
+        }
+
+        .theme-silver {
+            background: linear-gradient(135deg, #18202d 0%, #475569 60%, #94a3b8 100%);
+        }
+
+        .theme-gold {
+            background: linear-gradient(135deg, #1e1b13 0%, #b45309 60%, #f59e0b 100%);
+        }
+
+        .theme-platinum {
+            background: linear-gradient(135deg, #090e1c 0%, #1e293b 60%, #334155 100%);
+        }
+
+        .theme-diamond {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1d4ed8 60%, #60a5fa 100%);
+        }
+
+        .theme-master {
+            background: linear-gradient(135deg, #170d2b 0%, #6b21a8 60%, #a855f7 100%);
+        }
+
+        .theme-obsidian {
+            background: linear-gradient(135deg, #000000 0%, #111827 60%, #040812 100%);
+            border-bottom: 2px solid var(--sigma-gold);
+        }
+
+        .plan-title-block h3 {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--text-heading);
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .plan-title-block small {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            display: block;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--sigma-accent-dark);
+            background: var(--sigma-accent-soft);
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid var(--sigma-accent-border);
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--sigma-accent);
+            animation: pulse-green 2s infinite;
+        }
+
+        /* Metrics Grid */
+        .plan-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: var(--sigma-surface-alt);
+            border-radius: var(--radius-xl);
+            padding: 16px 12px;
+            border: 1px solid var(--sigma-muted-border);
+            position: relative;
+            z-index: 2;
+        }
+
+        .metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 4px;
+            position: relative;
+        }
+
+        .metric:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background: var(--sigma-input-border);
+        }
+
+        .metric small {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric strong {
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: var(--text-heading);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .metric strong.highlight {
+            color: var(--sigma-accent-dark);
+        }
+
+        /* Timer Dashboard */
+        .timer-dashboard {
+            border-top: 1px dashed var(--sigma-input-border);
+            padding-top: 18px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 12px;
+        }
+
+        .timer-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timer-label svg {
+            width: 15px;
+            height: 15px;
+            stroke: var(--sigma-primary);
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .digital-clock {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            letter-spacing: -0.5px;
+            background: white;
+            padding: 5px 14px;
+            border-radius: var(--radius-md);
+            border: 1.5px solid var(--sigma-muted-border);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+            line-height: 1;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background: var(--sigma-subtle);
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--sigma-input-border);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--sigma-accent-dark), var(--sigma-accent));
+            border-radius: 99px;
+            transition: width 0.4s linear;
+        }
+
+        .progress-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .progress-footer .pct {
+            color: var(--sigma-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+        }
+
+        .progress-footer .days-info {
+            color: var(--sigma-accent-dark);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 44px 24px;
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            border: 1px dashed var(--sigma-input-border);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .empty-state svg {
+            width: 52px;
+            height: 52px;
+            stroke: var(--sigma-input-border);
+            fill: none;
+            stroke-width: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.2rem;
+            color: var(--text-heading);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            max-width: 360px;
+            margin-inline: auto;
+        }
+
+        .btn-browse {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            color: white;
+            border-radius: var(--radius-pill);
+            font-weight: 800;
+            font-size: 0.95rem;
+            box-shadow: 0 8px 20px rgba(11, 19, 43, 0.22);
+            transition: var(--transition-bounce);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-browse:active {
+            transform: scale(0.95);
+        }
+
+        .skeleton {
+            background: #E2E8F0;
+            color: transparent !important;
+            animation: pulseSkel 1.5s infinite ease-in-out;
+            border-radius: 8px;
+        }
+
+        .skel-card {
+            height: 270px;
+            width: 100%;
+            border-radius: var(--radius-2xl);
+            margin-bottom: 16px;
+            border: 1px solid var(--sigma-muted-border);
+        }
+
+        @keyframes pulseSkel {
+            0% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse-green {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        /* ==========================================================================
+           6. 3-BUTTON FLOATING MOBILE DOCK (.html FULL NAVIGATION)
+           ========================================================================== */
+        .mobile-dock {
+            position: fixed;
+            bottom: var(--safe-area-bottom);
+            left: 50%;
+            transform: translateX(-50%);
+            height: 78px;
+            width: calc(100% - 32px);
+            max-width: 440px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-float);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: var(--z-dock);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .dock-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--text-muted);
+            width: 64px;
+            height: 100%;
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .dock-slot svg {
+            width: 26px;
+            height: 26px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2;
+        }
+
+        .dock-slot span {
+            font-size: 0.72rem;
+            font-weight: 800;
+        }
+
+        .dock-slot.active {
+            color: var(--sigma-primary);
+        }
+
+        .dock-slot.active svg {
+            stroke-width: 2.8;
+            transform: translateY(-2px);
+            color: var(--sigma-accent-dark);
+        }
+
+        .dock-crest-btn {
+            position: relative;
+            top: -26px;
+            width: 72px;
+            height: 72px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 26px rgba(11, 19, 43, 0.35);
+            border: 6px solid var(--sigma-surface-alt);
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .dock-crest-btn:active {
+            transform: scale(0.9);
+        }
+
+        .dock-crest-btn img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .dock-crest-btn::after {
+            content: 'MY PLANS';
+            position: absolute;
+            bottom: -24px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: var(--text-heading);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 860px) {
+            .mobile-dock {
+                display: none;
+            }
+
+            body {
+                padding-bottom: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="networkOfflineBanner">Reconnecting to Sigma Core Node...</div>
+
+    <!-- Complete SVG Sprite Architecture -->
+    <svg width="0" height="0" style="display:none;" aria-hidden="true">
+        <symbol id="icon-back" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22" />
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-bell" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </symbol>
+        <symbol id="icon-wallet" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6v12c0 1.1.9 2 2 2h14v-4" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z" />
+        </symbol>
+        <symbol id="icon-clock" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="12 6 12 12 16 14" />
+        </symbol>
+        <symbol id="icon-layers" viewBox="0 0 24 24">
+            <polygon stroke-linecap="round" stroke-linejoin="round" points="12 2 2 7 12 12 22 7 12 2" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="2 12 12 17 22 12" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="2 17 12 22 22 17" />
+        </symbol>
+        <symbol id="icon-pie" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z" />
+        </symbol>
+        <symbol id="icon-zap" viewBox="0 0 24 24">
+            <polygon stroke-linecap="round" stroke-linejoin="round" points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+        </symbol>
+        <symbol id="icon-shield" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </symbol>
+    </svg>
+
+    <div class="app-container">
+
+        <!-- HEADER -->
+        <header class="island-topbar" id="topHeader">
+            <a href="dash.html" class="btn-back" aria-label="Back to Dashboard">
+                <svg>
+                    <use href="#icon-back" />
+                </svg>
+            </a>
+            <div class="brand-cluster">
+                <div class="header-title">
+                    <b>Active Portfolios</b>
+                    <small>Compounding Engine</small>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-top-action" aria-label="Notifications" onclick="window.location.href='dash.html'">
+                    <svg>
+                        <use href="#icon-bell" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN WORKSPACE -->
+        <main class="workspace">
+
+            <!-- Summary Vault -->
+            <div class="vault-card">
+                <div class="vault-icon"><svg>
+                        <use href="#icon-wallet" />
+                    </svg></div>
+                <div class="vault-info">
+                    <small>Total Active Principal</small>
+                    <h3><span>PKR</span> <span id="uiTotalInvestment" class="font-mono">...</span></h3>
+
+                    <div class="vault-sub-metric">
+                        <svg>
+                            <use href="#icon-zap" />
+                        </svg>
+                        <span>Aggregate Daily Yield: <strong class="font-mono" id="uiTotalYield"
+                                style="color: var(--sigma-accent-light);">...</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2>Subscribed Portfolios <span class="count-badge" id="uiPlanCount">0</span></h2>
+            </div>
+
+            <!-- Active Plans Container -->
+            <div class="plans-container" id="plansContainer">
+                <div class="skel-card skeleton"></div>
+                <div class="skel-card skeleton"></div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- 3-BUTTON MOBILE DOCK (.html FULL NAVIGATION) -->
+    <nav class="mobile-dock">
+        <a href="dash.html" class="dock-slot">
+            <svg>
+                <use href="#icon-home" />
+            </svg>
+            <span>Home</span>
+        </a>
+
+        <!-- Central Crest Button (Active Page) -->
+        <a href="my-plans.html" class="dock-crest-btn"
+            onclick="MyPlansController.logAction('dock_my_plans', 'Opened my active plans')">
+            <img src="assets/logo.png" alt="Sigma Crest" onerror="this.style.display='none'">
+        </a>
+
+        <a href="profile.html" class="dock-slot">
+            <div style="width: 26px; height: 26px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--sigma-subtle);"
+                id="dockAvatarContainer">
+                <svg style="width: 18px; height: 18px;">
+                    <use href="#icon-user" />
+                </svg>
+            </div>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- ==========================================================================
+         JAVASCRIPT CONTROLLER (EXACT 24H CYCLE REAL-TIME COUNTDOWN)
+         ========================================================================== -->
+    <script>
+        const MyPlansController = (() => {
+
+            let authUser = null;
+            let activePlansList = [];
+            let timerAnimationIds = {};
+
+            const dom = {
+                plansContainer: document.getElementById('plansContainer'),
+                uiTotalInvestment: document.getElementById('uiTotalInvestment'),
+                uiTotalYield: document.getElementById('uiTotalYield'),
+                uiPlanCount: document.getElementById('uiPlanCount'),
+                offlineBanner: document.getElementById('networkOfflineBanner')
+            };
+
+            const getThemeClass = (price) => {
+                const p = Number(price);
+                if (p >= 60000) return 'theme-obsidian';
+                if (p >= 46000) return 'theme-master';
+                if (p >= 28000) return 'theme-diamond';
+                if (p >= 14000) return 'theme-platinum';
+                if (p >= 6000) return 'theme-gold';
+                if (p >= 2300) return 'theme-silver';
+                return 'theme-bronze';
+            };
+
+            const pad = num => String(Math.max(0, Math.floor(num))).padStart(2, '0');
+
+            const logAction = async (actionType, description) => {
+                if (!authUser || typeof firebase === 'undefined') return;
+                try {
+                    const db = firebase.firestore();
+                    await db.collection('users').doc(authUser.uid).collection('notifications').add({
+                        type: actionType,
+                        title: actionType.replace(/_/g, ' ').toUpperCase(),
+                        body: description,
+                        read: false,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        device: navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop'
+                    });
+                } catch (e) { }
+            };
+
+            // Precision Math for Independent 24-Hour Cycle Countdown
+            const calculateExactProgress = (activationTimestamp, durationDays) => {
+                const now = Date.now();
+                const startMs = activationTimestamp?.seconds ? (activationTimestamp.seconds * 1000) : new Date(activationTimestamp || now).getTime();
+
+                const cycleMs = 24 * 60 * 60 * 1000;
+                const totalDurationMs = durationDays * cycleMs;
+                const elapsedTotalMs = now - startMs;
+
+                if (elapsedTotalMs >= totalDurationMs) {
+                    return { isFinished: true, h: 0, m: 0, s: 0, pct: 100, daysPassed: durationDays };
+                }
+
+                if (elapsedTotalMs < 0) {
+                    return { isFinished: false, h: 24, m: 0, s: 0, pct: 0, daysPassed: 0 };
+                }
+
+                const currentCycleElapsedMs = elapsedTotalMs % cycleMs;
+                const timeLeftInCycleMs = cycleMs - currentCycleElapsedMs;
+
+                const daysPassed = Math.floor(elapsedTotalMs / cycleMs);
+                const pct = (currentCycleElapsedMs / cycleMs) * 100;
+
+                const h = Math.floor(timeLeftInCycleMs / (1000 * 60 * 60));
+                const m = Math.floor((timeLeftInCycleMs % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((timeLeftInCycleMs % (1000 * 60)) / 1000);
+
+                return { isFinished: false, h, m, s, pct, daysPassed };
+            };
+
+            const renderEmptyState = () => {
+                if (!dom.plansContainer) return;
+                dom.uiTotalInvestment.textContent = "0.00";
+                dom.uiTotalYield.textContent = "Rs. 0.00";
+                dom.uiPlanCount.textContent = "0";
+
+                dom.plansContainer.innerHTML = `
+                    <div class="empty-state">
+                        <svg><use href="#icon-pie"/></svg>
+                        <h3>No Active Portfolios</h3>
+                        <p>You currently do not have any subscribed portfolios generating daily yields. Choose a portfolio to begin.</p>
+                        <a href="plans.html" class="btn-browse">
+                            <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5;"><use href="#icon-layers"/></svg> 
+                            Browse Portfolios
+                        </a>
+                    </div>
+                `;
+            };
+
+            const renderPlans = () => {
+                if (!dom.plansContainer) return;
+
+                Object.values(timerAnimationIds).forEach(id => cancelAnimationFrame(id));
+                timerAnimationIds = {};
+                dom.plansContainer.innerHTML = '';
+
+                if (activePlansList.length === 0) {
+                    renderEmptyState();
+                    return;
+                }
+
+                let totalInv = 0;
+                let totalYield = 0;
+
+                activePlansList.forEach((plan, index) => {
+                    const price = Number(plan.price || 0);
+                    const daily = Number(plan.dailyProfit || plan.dailyROI || 0);
+                    const totalProfit = Number(plan.totalProfit || (daily * plan.durationDays) || 0);
+
+                    totalInv += price;
+                    totalYield += daily;
+
+                    const delay = index * 0.08;
+                    const card = document.createElement('article');
+                    card.className = 'active-plan-card';
+                    card.style.animationDelay = `${delay}s`;
+
+                    const themeClass = getThemeClass(price);
+                    let planName = plan.name || "Sigma Portfolio";
+                    if (!planName.toLowerCase().startsWith('sigma')) {
+                        planName = `Sigma ${planName}`;
+                    }
+
+                    card.innerHTML = `
+                        <div class="plan-top">
+                            <div class="plan-title-block">
+                                <div class="plan-icon-wrap ${themeClass}">
+                                    <svg><use href="#icon-shield"/></svg>
+                                </div>
+                                <div>
+                                    <h3>${planName}</h3>
+                                    <small>Principal: Rs. ${price.toLocaleString('en-PK')}</small>
+                                </div>
+                            </div>
+                            <div class="status-badge" id="statusBadge_${plan.docId}">Earning</div>
+                        </div>
+
+                        <div class="plan-metrics font-mono">
+                            <div class="metric">
+                                <small>Daily ROI</small>
+                                <strong class="highlight">Rs. ${daily.toLocaleString('en-PK')}</strong>
+                            </div>
+                            <div class="metric">
+                                <small>Total Yield</small>
+                                <strong>Rs. ${totalProfit.toLocaleString('en-PK')}</strong>
+                            </div>
+                            <div class="metric">
+                                <small>Duration</small>
+                                <strong>${plan.durationDays} Days</strong>
+                            </div>
+                        </div>
+
+                        <div class="timer-dashboard">
+                            <div class="timer-header">
+                                <span class="timer-label"><svg><use href="#icon-clock"/></svg> Next Credit In</span>
+                                <div class="digital-clock font-mono" id="clock_${plan.docId}">--:--:--</div>
+                            </div>
+
+                            <div class="progress-track">
+                                <div class="progress-fill" id="bar_${plan.docId}" style="width: 0%;"></div>
+                            </div>
+                            <div class="progress-footer font-mono">
+                                <span>Cycle: <span class="pct" id="pct_${plan.docId}">0%</span></span>
+                                <span class="days-info" id="days_${plan.docId}">Day 0 of ${plan.durationDays}</span>
+                            </div>
+                        </div>
+                    `;
+                    dom.plansContainer.appendChild(card);
+
+                    startExactTimer(plan);
+                });
+
+                dom.uiTotalInvestment.textContent = totalInv.toLocaleString('en-PK', { minimumFractionDigits: 2 });
+                dom.uiTotalYield.textContent = "Rs. " + totalYield.toLocaleString('en-PK', { minimumFractionDigits: 2 });
+                dom.uiPlanCount.textContent = activePlansList.length.toString();
+            };
+
+            const startExactTimer = (plan) => {
+                const clockEl = document.getElementById(`clock_${plan.docId}`);
+                const barEl = document.getElementById(`bar_${plan.docId}`);
+                const pctEl = document.getElementById(`pct_${plan.docId}`);
+                const daysEl = document.getElementById(`days_${plan.docId}`);
+                const badgeEl = document.getElementById(`statusBadge_${plan.docId}`);
+
+                if (!clockEl || !plan.activatedAt) return;
+
+                const tick = () => {
+                    const data = calculateExactProgress(plan.activatedAt, plan.durationDays);
+
+                    if (data.isFinished) {
+                        clockEl.textContent = "00:00:00";
+                        barEl.style.width = "100%";
+                        pctEl.textContent = "100%";
+                        daysEl.textContent = "Matured";
+
+                        if (badgeEl) {
+                            badgeEl.textContent = "Completed";
+                            badgeEl.style.background = "var(--sigma-subtle)";
+                            badgeEl.style.color = "var(--text-muted)";
+                            badgeEl.style.border = "1px solid var(--sigma-muted-border)";
+                        }
+                        return;
+                    }
+
+                    clockEl.textContent = `${pad(data.h)}:${pad(data.m)}:${pad(data.s)}`;
+                    barEl.style.width = `${data.pct}%`;
+                    pctEl.textContent = `${Math.floor(data.pct)}%`;
+                    daysEl.textContent = `Day ${data.daysPassed + 1} of ${plan.durationDays}`;
+
+                    timerAnimationIds[plan.docId] = requestAnimationFrame(tick);
+                };
+
+                timerAnimationIds[plan.docId] = requestAnimationFrame(tick);
+            };
+
+            // Real-time synchronization from authoritative Firebase subcollections
+            const fetchActivePlans = (db, uid) => {
+                // Primary collection: active_plans
+                db.collection('users').doc(uid).collection('active_plans')
+                    .where('status', '==', 'active')
+                    .onSnapshot(snapshot => {
+                        if (!snapshot.empty) {
+                            activePlansList = [];
+                            snapshot.forEach(doc => {
+                                const d = doc.data();
+                                activePlansList.push({
+                                    docId: doc.id,
+                                    planId: d.planId || "plan_01",
+                                    name: d.name || "Sigma Portfolio",
+                                    price: Number(d.price || 0),
+                                    dailyProfit: Number(d.dailyProfit || d.dailyROI || 0),
+                                    totalProfit: Number(d.totalProfit || 0),
+                                    durationDays: Number(d.durationDays || 25),
+                                    activatedAt: d.activatedAt || d.subscribedAt || firebase.firestore.FieldValue.serverTimestamp()
+                                });
+                            });
+                            renderPlans();
+                        } else {
+                            // Secondary fallback collection: myPlans
+                            db.collection('users').doc(uid).collection('myPlans')
+                                .where('status', '==', 'active')
+                                .onSnapshot(snap2 => {
+                                    activePlansList = [];
+                                    snap2.forEach(doc => {
+                                        const d = doc.data();
+                                        activePlansList.push({
+                                            docId: doc.id,
+                                            planId: doc.id,
+                                            name: d.planName || d.name || "Sigma Portfolio",
+                                            price: Number(d.investedAmount || d.price || 0),
+                                            dailyProfit: Number((d.investedAmount || 0) * (d.dailyPercent || 0) / 100),
+                                            totalProfit: Number(d.totalEarned || 0),
+                                            durationDays: Number(d.duration || 25),
+                                            activatedAt: d.createdAt || firebase.firestore.FieldValue.serverTimestamp()
+                                        });
+                                    });
+                                    renderPlans();
+                                }, () => renderEmptyState());
+                        }
+                    }, err => {
+                        console.error("Firestore Plans Query Error:", err);
+                        renderEmptyState();
+                    });
+            };
+
+            const initFirebase = () => {
+                if (typeof firebase === 'undefined' || !firebase.apps.length) return;
+                const auth = firebase.auth();
+                const db = firebase.firestore();
+
+                auth.onAuthStateChanged(user => {
+                    if (!user) {
+                        window.location.replace('login.html');
+                        return;
+                    }
+                    authUser = user;
+
+                    if (user.photoURL) {
+                        const dockAvatar = document.getElementById('dockAvatarContainer');
+                        if (dockAvatar) dockAvatar.innerHTML = `<img src="${user.photoURL}" alt="User" style="width:100%;height:100%;object-fit:cover;" referrerpolicy="no-referrer">`;
+                    }
+
+                    fetchActivePlans(db, user.uid);
+                });
+            };
+
+            const init = () => {
+                const header = document.getElementById('topHeader');
+                if (header) {
+                    window.addEventListener('scroll', () => {
+                        if (window.scrollY > 20) header.classList.add('scrolled');
+                        else header.classList.remove('scrolled');
+                    }, { passive: true });
+                }
+
+                window.addEventListener('offline', () => { if (dom.offlineBanner) dom.offlineBanner.style.display = 'block'; });
+                window.addEventListener('online', () => { if (dom.offlineBanner) dom.offlineBanner.style.display = 'none'; });
+
+                initFirebase();
+            };
+
+            return { init, logAction };
+
+        })();
+
+        document.addEventListener('DOMContentLoaded', MyPlansController.init);
+    </script>
+</body>
+
+</html>

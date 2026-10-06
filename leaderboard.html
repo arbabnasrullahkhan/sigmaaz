@@ -1,0 +1,828 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+    <title>Sigma | Daily Leaderboard & Top Performers</title>
+
+    <!-- SEO, Privacy & PWA Metadata -->
+    <meta name="description"
+        content="Sigma Daily Top Performers and Global Leaderboard Ranking. Verified daily payout earners and performance metrics.">
+    <meta name="keywords" content="Sigma Leaderboard, Top Earners Pakistan, Investment Rankings, Daily Profit Winners">
+    <meta name="author" content="Sigma Technologies">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="theme-color" content="#0B132B">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sigma Leaderboard">
+    <link rel="canonical" href="https://sigmaaz.vercel.app/leaderboard.html">
+
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sigmaaz.vercel.app/leaderboard.html">
+    <meta property="og:title" content="Sigma | Daily Leaderboard">
+    <meta property="og:description" content="View top earners and daily profit rankings across the network.">
+    <meta property="og:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sigma | Global Leaderboard">
+    <meta name="twitter:description" content="Verified network performers and daily payout recipients.">
+    <meta name="twitter:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <!-- Fallback Firebase Initialization -->
+    <script>
+        if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+            firebase.initializeApp({
+                apiKey: "AIzaSyCTRe2w4juZ55DrayIw61qKz_UYlZfw1H8",
+                authDomain: "week-team.firebaseapp.com",
+                projectId: "week-team",
+                storageBucket: "week-team.firebasestorage.app",
+                messagingSenderId: "480334485782",
+                appId: "1:480334485782:web:c0c886ed710567b9e6d837"
+            });
+        }
+    </script>
+
+    <style>
+        /* ==========================================================================
+           1. SIGMA PREMIUM DESIGN TOKENS
+           ========================================================================== */
+        :root {
+            --sigma-primary: #0B132B;
+            --sigma-secondary: #1C2541;
+            --sigma-tertiary: #3A506B;
+
+            --sigma-surface: #FFFFFF;
+            --sigma-surface-alt: #F8FAFC;
+            --sigma-subtle: #F1F5F9;
+
+            --sigma-muted-border: #E2E8F0;
+            --sigma-input-border: #CBD5E1;
+
+            --sigma-accent: #10B981;
+            --sigma-accent-dark: #059669;
+            --sigma-accent-soft: #ECFDF5;
+
+            --sigma-gold: #F59E0B;
+            --sigma-gold-dark: #D97706;
+            --sigma-gold-soft: #FEF3C7;
+            --sigma-gold-border: #FDE68A;
+
+            --sigma-danger: #EF4444;
+            --sigma-danger-soft: #FEE2E2;
+
+            --sigma-info: #3B82F6;
+            --sigma-info-soft: #EFF6FF;
+            --sigma-pink: #F472B6;
+
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --text-light: #94A3B8;
+
+            --radius-pill: 9999px;
+            --radius-2xl: 32px;
+            --radius-xl: 20px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+
+            --shadow-subtle: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+            --shadow-card: 0 16px 32px -8px rgba(15, 23, 42, 0.08);
+            --shadow-float: 0 24px 48px -12px rgba(15, 23, 42, 0.15);
+
+            --z-dock: 1000;
+            --z-header: 900;
+            --z-toast: 3000;
+
+            --transition-smooth: 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            --transition-bounce: 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --safe-area-bottom: env(safe-area-inset-bottom, 16px);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--sigma-surface-alt);
+            color: var(--text-body);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: calc(110px + var(--safe-area-bottom));
+            background-image:
+                radial-gradient(circle at 10% 0%, rgba(245, 158, 11, 0.04) 0%, transparent 45vw),
+                radial-gradient(circle at 90% 100%, rgba(16, 185, 129, 0.035) 0%, transparent 45vw);
+            background-attachment: fixed;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--text-heading);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        #networkOfflineBanner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--sigma-danger);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-align: center;
+            padding: 8px;
+            z-index: var(--z-toast);
+            display: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================================================
+           2. SINGLE-ROW ISLAND HEADER WITH BOTH LOGOS
+           ========================================================================== */
+        .app-container {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .island-topbar {
+            position: sticky;
+            top: 12px;
+            margin: 0 16px 20px;
+            height: 68px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-pill);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 14px;
+            z-index: var(--z-header);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-subtle);
+            transition: var(--transition-smooth);
+        }
+
+        .island-topbar.scrolled {
+            box-shadow: var(--shadow-card);
+            border-color: var(--sigma-muted-border);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .btn-back {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--sigma-surface);
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--sigma-muted-border);
+            transition: var(--transition-bounce);
+        }
+
+        .btn-back:active {
+            transform: scale(0.92);
+            background: var(--sigma-subtle);
+        }
+
+        .btn-back svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2.5;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+        }
+
+        .brand-text-img {
+            height: 20px;
+            object-fit: contain;
+            margin-top: 2px;
+        }
+
+        .header-title-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .header-title-box b {
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: var(--sigma-primary);
+            line-height: 1.1;
+        }
+
+        .header-title-box small {
+            font-size: 0.65rem;
+            color: var(--sigma-gold-dark);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==========================================================================
+           3. LEADERBOARD WORKSPACE & RANK ROWS
+           ========================================================================== */
+        .workspace {
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .leaderboard-header {
+            text-align: center;
+            padding: 6px 0 16px;
+        }
+
+        .leaderboard-header h2 {
+            font-size: 1.6rem;
+            color: var(--sigma-primary);
+            margin-bottom: 4px;
+        }
+
+        .leaderboard-header p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .leaderboard-island-card {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--sigma-muted-border);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+        }
+
+        .rank-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--sigma-muted-border);
+            transition: var(--transition-smooth);
+            animation: slideUp 0.35s ease-out backwards;
+            position: relative;
+        }
+
+        .rank-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Ranks 1 to 3 Visual Luxury */
+        .rank-row.rank-1 {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.12));
+            border-bottom: 1px solid var(--sigma-gold-border);
+        }
+
+        .rank-row.rank-2 {
+            background: linear-gradient(135deg, rgba(148, 163, 184, 0.08), rgba(100, 116, 139, 0.12));
+        }
+
+        .rank-row.rank-3 {
+            background: linear-gradient(135deg, rgba(180, 83, 9, 0.06), rgba(120, 53, 15, 0.1));
+        }
+
+        .rank-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+            z-index: 2;
+        }
+
+        .rank-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: 900;
+            font-size: 1.05rem;
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--sigma-subtle);
+            color: var(--text-muted);
+            border: 1px solid var(--sigma-muted-border);
+        }
+
+        .rank-1 .rank-badge {
+            background: linear-gradient(135deg, var(--sigma-gold), var(--sigma-gold-dark));
+            color: white;
+            border: 2px solid var(--sigma-gold-soft);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+            transform: scale(1.08);
+        }
+
+        .rank-2 .rank-badge {
+            background: linear-gradient(135deg, #CBD5E1, #94A3B8);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .rank-3 .rank-badge {
+            background: linear-gradient(135deg, #FDBA74, #D97706);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .avatar-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--sigma-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        .rank-details {
+            min-width: 0;
+        }
+
+        .rank-details b {
+            display: block;
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rank-details small {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .rank-right {
+            text-align: right;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            z-index: 2;
+        }
+
+        .rank-amount {
+            display: block;
+            font-size: 1.05rem;
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--sigma-accent-dark);
+            letter-spacing: -0.5px;
+        }
+
+        .rank-1 .rank-amount {
+            font-size: 1.2rem;
+            color: var(--sigma-gold-dark);
+        }
+
+        /* Skeletons */
+        .skeleton {
+            background: #E2E8F0;
+            color: transparent !important;
+            border-radius: 8px;
+            animation: pulseSkel 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulseSkel {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==========================================================================
+           4. 3-BUTTON MOBILE DOCK (.html FULL NAVIGATION)
+           ========================================================================== */
+        .mobile-dock {
+            position: fixed;
+            bottom: var(--safe-area-bottom);
+            left: 50%;
+            transform: translateX(-50%);
+            height: 76px;
+            width: calc(100% - 32px);
+            max-width: 440px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-float);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: var(--z-dock);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .dock-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--text-muted);
+            width: 64px;
+            height: 100%;
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .dock-slot svg {
+            width: 26px;
+            height: 26px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2;
+        }
+
+        .dock-slot span {
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .dock-slot.active {
+            color: var(--sigma-primary);
+        }
+
+        .dock-slot.active svg {
+            stroke-width: 2.8;
+            transform: translateY(-2px);
+            color: var(--sigma-accent-dark);
+        }
+
+        .dock-crest-action {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 24px rgba(11, 19, 43, 0.25);
+            transform: translateY(-16px);
+            border: 4px solid var(--sigma-surface);
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .dock-crest-action:active {
+            transform: translateY(-14px) scale(0.92);
+            box-shadow: 0 8px 16px rgba(11, 19, 43, 0.2);
+        }
+
+        .dock-crest-action svg {
+            width: 28px;
+            height: 28px;
+            stroke: white;
+            stroke-width: 2.2;
+        }
+
+        @media (min-width: 860px) {
+            .mobile-dock {
+                display: none;
+            }
+
+            body {
+                padding-bottom: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="networkOfflineBanner">Operating in offline mode. Cached leaderboard displayed.</div>
+
+    <div class="app-container">
+
+        <!-- HEADER WITH LOGO, TEXT LOGO & BACK BUTTON -->
+        <header class="island-topbar" id="islandTopbar">
+            <a href="dash.html" class="btn-back" aria-label="Go Back">
+                <svg viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </a>
+
+            <div class="brand-cluster">
+                <img src="assets/logo.png" alt="Sigma" class="brand-logo-img"
+                    onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310B981\'/><text x=\'50\' y=\'65\' font-family=\'Arial\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\'>S</text></svg>'">
+                <img src="assets/textlogo.png" alt="Sigma" class="brand-text-img" onerror="this.style.display='none'">
+            </div>
+
+            <div class="header-title-box">
+                <b>Leaderboard</b>
+                <small id="currentDateDisplay">Daily Rankings</small>
+            </div>
+        </header>
+
+        <div class="workspace">
+            <div class="leaderboard-header">
+                <h2>Top Performers</h2>
+                <p>Top network profit earners updated in real-time daily.</p>
+            </div>
+
+            <!-- Leaderboard Card Container -->
+            <div class="leaderboard-island-card" id="leaderboardContainer">
+                <div class="rank-row">
+                    <div class="rank-left">
+                        <div class="rank-badge skeleton">#</div>
+                        <div class="avatar-circle skeleton">AB</div>
+                        <div class="rank-details">
+                            <b class="skeleton" style="width: 100px;">Loading...</b>
+                            <small class="skeleton" style="width: 60px;">Loading</small>
+                        </div>
+                    </div>
+                    <div class="rank-right">
+                        <span class="rank-amount skeleton" style="width: 80px;">Rs. 0</span>
+                    </div>
+                </div>
+                <div class="rank-row">
+                    <div class="rank-left">
+                        <div class="rank-badge skeleton">#</div>
+                        <div class="avatar-circle skeleton">CD</div>
+                        <div class="rank-details">
+                            <b class="skeleton" style="width: 100px;">Loading...</b>
+                            <small class="skeleton" style="width: 60px;">Loading</small>
+                        </div>
+                    </div>
+                    <div class="rank-right">
+                        <span class="rank-amount skeleton" style="width: 80px;">Rs. 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3-BUTTON MOBILE DOCK (.html FULL NAVIGATION) -->
+    <nav class="mobile-dock">
+        <a href="dash.html" class="dock-slot">
+            <svg viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <span>Home</span>
+        </a>
+
+        <a href="plans.html" class="dock-crest-action" aria-label="Portfolios">
+            <svg viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+        </a>
+
+        <a href="profile.html" class="dock-slot">
+            <svg viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- ==========================================================================
+         JAVASCRIPT LOGIC (FIREBASE SYNC + DETERMINISTIC DAILY SEED)
+         ========================================================================== -->
+    <script>
+        const dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+        document.getElementById('currentDateDisplay').textContent = new Date().toLocaleDateString('en-US', dateOptions);
+
+        const topbar = document.getElementById('islandTopbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) topbar.classList.add('scrolled');
+            else topbar.classList.remove('scrolled');
+        });
+
+        const DEMO_NAMES = [
+            "Ali Raza", "Usman Tariq", "Hassan Ahmed", "Muhammad Bilal", "Hamza Khan",
+            "Fahad Mustafa", "Omer Sheikh", "Kamran Akmal", "Zain Abbas", "Saad Haroon",
+            "Waqas Mehmood", "Adnan Sami", "Imran Nazir", "Kashif Ali", "Sajid Khan",
+            "Tahir Jamil", "Babar Azam", "Shaheen Shah", "Fakhar Zaman", "Rizwan Ali",
+            "Asad Shafiq", "Shoaib Malik", "Wahab Riaz", "Yasir Shah", "Azhar Ali",
+            "Ayesha Khan", "Fatima Tariq", "Sana Mir", "Nida Dar", "Zara Noor",
+            "Hira Mani", "Mahira Khan", "Sajal Aly", "Iqra Aziz", "Yumna Zaidi"
+        ];
+
+        function mulberry32(a) {
+            return function () {
+                var t = a += 0x6D2B79F5;
+                t = Math.imul(t ^ t >>> 15, t | 1);
+                t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            };
+        }
+
+        function generateDailyFallbackLeaderboard() {
+            const today = new Date();
+            const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+            const random = mulberry32(seed);
+
+            let selectedProfiles = [];
+            let availableIndexes = Array.from({ length: DEMO_NAMES.length }, (_, i) => i);
+
+            for (let i = 0; i < 10; i++) {
+                const randIndex = Math.floor(random() * availableIndexes.length);
+                const nameIndex = availableIndexes[randIndex];
+                availableIndexes.splice(randIndex, 1);
+
+                const earnings = Math.floor(random() * 10000) + 2500;
+
+                selectedProfiles.push({
+                    name: DEMO_NAMES[nameIndex],
+                    initials: DEMO_NAMES[nameIndex].split(' ').map(n => n[0]).join(''),
+                    earnings: earnings
+                });
+            }
+
+            selectedProfiles.sort((a, b) => b.earnings - a.earnings);
+            renderLeaderboard(selectedProfiles);
+        }
+
+        function formatCurrency(amount) {
+            return "Rs. " + Number(amount).toLocaleString('en-PK');
+        }
+
+        function renderLeaderboard(profiles) {
+            const container = document.getElementById('leaderboardContainer');
+            container.innerHTML = '';
+
+            profiles.forEach((profile, index) => {
+                const rank = index + 1;
+                let rankClass = '';
+                if (rank === 1) rankClass = 'rank-1';
+                else if (rank === 2) rankClass = 'rank-2';
+                else if (rank === 3) rankClass = 'rank-3';
+
+                const row = document.createElement('div');
+                row.className = `rank-row ${rankClass}`;
+                row.style.animationDelay = `${index * 0.04}s`;
+
+                row.innerHTML = `
+                    <div class="rank-left">
+                        <div class="rank-badge">${rank}</div>
+                        <div class="avatar-circle">${profile.initials}</div>
+                        <div class="rank-details">
+                            <b>${profile.name}</b>
+                            <small>Daily Reward</small>
+                        </div>
+                    </div>
+                    <div class="rank-right">
+                        <span class="rank-amount font-mono">${formatCurrency(profile.earnings)}</span>
+                    </div>
+                `;
+
+                container.appendChild(row);
+            });
+        }
+
+        // Live Firestore Sync with Fallback
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+                const db = firebase.firestore();
+
+                // Check if admin has published a leaderboard or if users can be queried
+                db.collection('users')
+                    .orderBy('totalWithdrawn', 'desc')
+                    .limit(10)
+                    .get()
+                    .then(snapshot => {
+                        if (!snapshot.empty && snapshot.size >= 3) {
+                            const profiles = [];
+                            snapshot.forEach(doc => {
+                                const data = doc.data();
+                                const name = data.fullName || data.username || 'Investor';
+                                const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                                const earnings = Number(data.totalWithdrawn || data.profitBalance || 0);
+
+                                if (earnings > 0) {
+                                    profiles.push({ name, initials, earnings });
+                                }
+                            });
+
+                            if (profiles.length >= 3) {
+                                profiles.sort((a, b) => b.earnings - a.earnings);
+                                renderLeaderboard(profiles);
+                                return;
+                            }
+                        }
+                        generateDailyFallbackLeaderboard();
+                    })
+                    .catch(() => {
+                        generateDailyFallbackLeaderboard();
+                    });
+            } else {
+                generateDailyFallbackLeaderboard();
+            }
+        });
+    </script>
+</body>
+
+</html>

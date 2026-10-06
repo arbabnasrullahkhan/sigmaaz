@@ -1,0 +1,1515 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Sigma | Create Account & Start Trading</title>
+
+    <!-- SEO & Metadata -->
+    <meta name="description"
+        content="Create your Sigma account in seconds. Access automated trading portfolios, daily PKR profits, and instant Easypaisa & JazzCash withdrawals.">
+    <meta name="keywords"
+        content="Sigma, Register, Sign Up, Pakistan Trading, Earn PKR, Easypaisa, JazzCash, Automated Investment">
+    <meta name="author" content="Sigma Technologies">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Mobile Web App Capability -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sigma">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://sigmaaz.vercel.app/reg">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sigmaaz.vercel.app/reg">
+    <meta property="og:title" content="Create Your Sigma Account | Premium Trading Platform">
+    <meta property="og:description"
+        content="Join thousands of Pakistani investors generating daily profits with Sigma.">
+    <meta property="og:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sigma | Create Account">
+    <meta name="twitter:description" content="Automated trading and daily PKR profits. Open your free account now.">
+    <meta name="twitter:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+
+    <!-- Preconnect & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Firebase SDKs (Compat Libraries for Vanilla JS Integration) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <!-- Connect External Config with Fallback Initialization -->
+    <script src="firebase-config.js"></script>
+    <script>
+        // Failsafe Initialization
+        if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+            const fallbackConfig = {
+                apiKey: "AIzaSyCTRe2w4juZ55DrayIw61qKz_UYlZfw1H8",
+                authDomain: "week-team.firebaseapp.com",
+                projectId: "week-team",
+                storageBucket: "week-team.firebasestorage.app",
+                messagingSenderId: "480334485782",
+                appId: "1:480334485782:web:c0c886ed710567b9e6d837"
+            };
+            firebase.initializeApp(fallbackConfig);
+            console.log("Sigma Firebase fallback verified in registration gateway.");
+        }
+    </script>
+
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & DESIGN SYSTEM (Sigma Theme)
+           ========================================================================== */
+        :root {
+            --sigma-primary: #0F172A;
+            --sigma-secondary: #1E293B;
+            --sigma-accent: #10B981;
+            --sigma-accent-hover: #059669;
+            --sigma-accent-light: #D1FAE5;
+            --sigma-gold: #F59E0B;
+            --sigma-gold-light: #FEF3C7;
+            --sigma-danger: #EF4444;
+            --sigma-danger-light: #FEE2E2;
+
+            --bg-body: #F8FAFC;
+            --bg-surface: #FFFFFF;
+            --bg-input: #F1F5F9;
+            --bg-glass: rgba(255, 255, 255, 0.9);
+
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --text-inverse: #FFFFFF;
+
+            --border-light: rgba(15, 23, 42, 0.08);
+            --border-focus: #10B981;
+
+            --radius-pill: 9999px;
+            --radius-island: 28px;
+            --radius-card: 20px;
+            --radius-input: 16px;
+            --radius-btn: 14px;
+
+            --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+            --shadow-island: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
+            --shadow-float: 0 25px 50px -12px rgba(15, 23, 42, 0.15);
+
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ==========================================================================
+           2. GLOBAL RESET & BASE STYLES
+           ========================================================================== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 0%, rgba(16, 185, 129, 0.06) 0%, transparent 40vw),
+                radial-gradient(circle at 90% 100%, rgba(15, 23, 42, 0.04) 0%, transparent 40vw);
+            background-attachment: fixed;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            background: none;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+            height: auto;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: var(--text-main);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        /* ==========================================================================
+           3. ISLAND TOPBAR (Single Row across all viewports)
+           ========================================================================== */
+        .island-topbar {
+            position: sticky;
+            top: 12px;
+            margin: 0 auto 24px;
+            width: calc(100% - 32px);
+            max-width: 1160px;
+            height: 68px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-pill);
+            padding: 0 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            flex-wrap: nowrap;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .btn-back {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-input);
+            color: var(--text-main);
+            transition: var(--transition-fast);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-back:hover,
+        .btn-back:active {
+            background: #E2E8F0;
+            transform: scale(0.95);
+        }
+
+        .btn-back svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2.5;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .brand-logo-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .brand-text-img {
+            height: 22px;
+            object-fit: contain;
+            margin-top: 2px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .topbar-login-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            border-radius: var(--radius-pill);
+            background: var(--bg-input);
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 1px solid var(--border-light);
+            transition: var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .topbar-login-btn:hover {
+            background: #E2E8F0;
+        }
+
+        .topbar-login-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2;
+        }
+
+        @media (max-width: 480px) {
+            .island-topbar {
+                padding: 0 10px;
+                height: 62px;
+            }
+
+            .brand-logo-img {
+                width: 32px;
+                height: 32px;
+            }
+
+            .brand-text-img {
+                height: 18px;
+            }
+
+            .topbar-login-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+
+            .topbar-login-btn span {
+                display: none;
+            }
+        }
+
+        /* ==========================================================================
+           4. MAIN RESPONSIVE CONTAINER & DESKTOP 2-COLUMN LAYOUT
+           ========================================================================== */
+        .page-wrapper {
+            width: 100%;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 16px 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            align-items: center;
+            width: 100%;
+        }
+
+        @media (min-width: 1024px) {
+            .auth-grid {
+                grid-template-columns: 1.05fr 0.95fr;
+                gap: 48px;
+            }
+        }
+
+        /* ==========================================================================
+           5. REGISTRATION CARD (Left Column) - STRICTLY 4 INPUTS
+           ========================================================================== */
+        .auth-card {
+            background: var(--bg-surface);
+            border-radius: var(--radius-island);
+            box-shadow: var(--shadow-island);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 36px 28px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--sigma-primary), var(--sigma-accent));
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .auth-header h1 {
+            font-size: 1.7rem;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .auth-header p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Dynamic Welcome Bonus Notice Banner */
+        .bonus-banner {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: var(--radius-btn);
+            background: var(--sigma-accent-light);
+            color: #065F46;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            animation: fadeInDown 0.4s ease;
+        }
+
+        .bonus-banner svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2;
+            flex-shrink: 0;
+        }
+
+        /* Auto-Referral Detected Banner */
+        .referral-alert {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border-radius: var(--radius-btn);
+            background: var(--bg-input);
+            border: 1px dashed var(--sigma-accent);
+            font-size: 0.8rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        .referral-alert b {
+            color: var(--sigma-accent);
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: var(--bg-input);
+            border-radius: var(--radius-input);
+            border: 1.5px solid transparent;
+            transition: var(--transition-smooth);
+            overflow: hidden;
+        }
+
+        .input-wrapper:focus-within {
+            background: var(--bg-surface);
+            border-color: var(--sigma-accent);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
+        }
+
+        .input-wrapper.error {
+            border-color: var(--sigma-danger);
+            background: var(--sigma-danger-light);
+        }
+
+        .input-icon {
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+
+        .input-wrapper:focus-within .input-icon {
+            color: var(--sigma-accent);
+        }
+
+        .input-wrapper.error .input-icon {
+            color: var(--sigma-danger);
+        }
+
+        .input-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .input-field {
+            flex: 1;
+            height: 58px;
+            padding: 22px 16px 6px 0;
+            font-size: 1rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .input-field::placeholder {
+            color: transparent;
+        }
+
+        .floating-label {
+            position: absolute;
+            left: 50px;
+            top: 18px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            pointer-events: none;
+            transition: 0.2s ease all;
+            font-weight: 500;
+        }
+
+        .input-field:focus~.floating-label,
+        .input-field:not(:placeholder-shown)~.floating-label {
+            top: 7px;
+            font-size: 0.7rem;
+            color: var(--sigma-accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-wrapper.error .input-field:focus~.floating-label,
+        .input-wrapper.error .input-field:not(:placeholder-shown)~.floating-label {
+            color: var(--sigma-danger);
+        }
+
+        /* Password Specifics */
+        .trailing-action {
+            width: 50px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .trailing-action:hover {
+            color: var(--text-main);
+        }
+
+        .trailing-action svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .pwd-strength-container {
+            display: none;
+            margin-top: 8px;
+            padding: 0 8px;
+        }
+
+        .pwd-strength-container.show {
+            display: block;
+            animation: fadeInDown 0.3s ease;
+        }
+
+        .strength-bars {
+            display: flex;
+            gap: 4px;
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .bar {
+            flex: 1;
+            background: #E2E8F0;
+            transition: 0.3s ease;
+        }
+
+        .strength-text {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        /* Terms & Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+
+        .checkbox-custom {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--text-muted);
+            border-radius: 6px;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .checkbox-custom::after {
+            content: '';
+            width: 10px;
+            height: 5px;
+            border-left: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(-45deg) scale(0);
+            transition: 0.2s ease;
+        }
+
+        .checkbox-custom:checked {
+            background: var(--sigma-primary);
+            border-color: var(--sigma-primary);
+        }
+
+        .checkbox-custom:checked::after {
+            transform: rotate(-45deg) scale(1);
+        }
+
+        .checkbox-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .checkbox-label a {
+            color: var(--sigma-primary);
+            font-weight: 700;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        /* Error Banner */
+        .global-error {
+            background: var(--sigma-danger-light);
+            color: var(--sigma-danger);
+            padding: 12px 16px;
+            border-radius: var(--radius-btn);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 18px;
+            display: none;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            animation: shake 0.4s ease;
+        }
+
+        /* Buttons & Actions */
+        .btn-submit {
+            width: 100%;
+            height: 56px;
+            border-radius: var(--radius-input);
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2);
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.28);
+        }
+
+        .btn-submit:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .auth-footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 24px;
+        }
+
+        .auth-footer a {
+            color: var(--sigma-primary);
+            font-weight: 800;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .btn-submit.loading .spinner {
+            display: block;
+        }
+
+        .btn-submit.loading span {
+            display: none;
+        }
+
+        /* ==========================================================================
+           6. DESKTOP SHOWCASE PANEL (Right Column - Desktop Only)
+           ========================================================================== */
+        .showcase-panel {
+            display: none;
+            flex-direction: column;
+            gap: 24px;
+            padding: 32px;
+            background: linear-gradient(145deg, #FFFFFF, var(--bg-subtle));
+            border-radius: var(--radius-island);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-island);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+        }
+
+        @media (min-width: 1024px) {
+            .showcase-panel {
+                display: flex;
+            }
+        }
+
+        .showcase-badge {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--sigma-accent-hover);
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .showcase-heading h2 {
+            font-size: 2.1rem;
+            line-height: 1.15;
+            margin-bottom: 8px;
+        }
+
+        .showcase-heading p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* 3-Tier Bonus Highlight Card */
+        .showcase-bonus-card {
+            background: var(--sigma-primary);
+            color: white;
+            border-radius: var(--radius-card);
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .showcase-bonus-card::after {
+            content: '';
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .showcase-bonus-card h4 {
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+
+        .bonus-tier-box {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 10px 4px;
+        }
+
+        .bonus-tier-box small {
+            display: block;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .bonus-tier-box b {
+            font-size: 1.15rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--sigma-accent-light);
+        }
+
+        /* Trust List */
+        .trust-points {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .trust-check-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--sigma-accent-light);
+            color: var(--sigma-accent-hover);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .trust-check-icon svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 3;
+        }
+
+        /* Supported Local Gateways Pill */
+        .local-payout-pill {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            border-radius: var(--radius-btn);
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-xs);
+        }
+
+        .local-payout-pill span {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .local-payout-pill b {
+            font-size: 0.9rem;
+            color: var(--sigma-primary);
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-6px);
+            }
+
+            75% {
+                transform: translateX(6px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =======================================================================
+         SVG SPRITES
+         ======================================================================= -->
+    <svg width="0" height="0" style="display:none;" aria-hidden="true">
+        <symbol id="icon-back" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+        </symbol>
+        <symbol id="icon-mail" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="22,6 12,13 2,6" />
+        </symbol>
+        <symbol id="icon-phone" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 5a2 2 0 0 1 2-2h3.28a1 1 0 0 1 .948.684l1.498 4.493a1 1 0 0 1-.502 1.21l-2.257 1.13a11.042 11.042 0 0 0 5.516 5.516l1.13-2.257a1 1 0 0 1 1.21-.502l4.493 1.498a1 1 0 0 1 .684.949V19a2 2 0 0 1-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+        </symbol>
+        <symbol id="icon-lock" viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </symbol>
+        <symbol id="icon-eye" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+            <circle cx="12" cy="12" r="3" />
+        </symbol>
+        <symbol id="icon-eye-off" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+            <line x1="1" y1="1" x2="23" y2="23" />
+        </symbol>
+        <symbol id="icon-login" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" />
+        </symbol>
+        <symbol id="icon-check" viewBox="0 0 24 24">
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="20 6 9 17 4 12" />
+        </symbol>
+        <symbol id="icon-shield" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </symbol>
+        <symbol id="icon-gift" viewBox="0 0 24 24">
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="20 12 20 22 4 22 4 12" />
+            <rect x="2" y="7" width="20" height="5" stroke-linecap="round" stroke-linejoin="round" />
+            <line x1="12" y1="22" x2="12" y2="7" stroke-linecap="round" stroke-linejoin="round" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+        </symbol>
+    </svg>
+
+    <div class="page-wrapper">
+
+        <!-- SINGLE-ROW ISLAND HEADER -->
+        <header class="island-topbar">
+            <div class="topbar-left">
+                <a href="index" class="btn-back" aria-label="Go to Homepage">
+                    <svg>
+                        <use href="#icon-back"></use>
+                    </svg>
+                </a>
+                <a href="index" class="brand-cluster">
+                    <img src="assets/logo.png" alt="Sigma" class="brand-logo-img"
+                        onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310B981\'/><text x=\'50\' y=\'65\' font-family=\'Arial\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\'>S</text></svg>'">
+                    <img src="assets/textlogo.png" alt="Sigma" class="brand-text-img"
+                        onerror="this.style.display='none'">
+                </a>
+            </div>
+
+            <div class="topbar-right">
+                <a href="login" class="topbar-login-btn">
+                    <svg>
+                        <use href="#icon-login"></use>
+                    </svg>
+                    <span>Member Login</span>
+                </a>
+            </div>
+        </header>
+
+        <div class="auth-grid">
+
+            <!-- LEFT COLUMN: REGISTRATION FORM CARD (STRICTLY 4 INPUTS) -->
+            <main class="auth-card">
+                <div class="auth-header">
+                    <h1>Create Account</h1>
+                    <p>Start your automated investment journey today.</p>
+                </div>
+
+                <!-- Dynamic Welcome Bonus Banner -->
+                <div class="bonus-banner" id="bonusBanner">
+                    <svg>
+                        <use href="#icon-gift"></use>
+                    </svg>
+                    <span>Welcome Bonus: <b id="bonusAmountText">Rs. 0</b> credited on registration!</span>
+                </div>
+
+                <!-- Auto Referral Notification -->
+                <div class="referral-alert" id="referralAlert">
+                    <span>Referred by: <b id="refCodeText">N/A</b></span>
+                    <span style="color: var(--sigma-accent); font-weight: 800;">✓ Active</span>
+                </div>
+
+                <form id="regForm" novalidate autocomplete="off">
+                    <div class="global-error" id="globalError"></div>
+
+                    <!-- INPUT 1: USERNAME (NO FULL NAME) - STRICTLY 5-9 CHARACTERS, NO @ SYMBOL -->
+                    <div class="form-group">
+                        <div class="input-wrapper" id="wrapUsername">
+                            <div class="input-icon"><svg>
+                                    <use href="#icon-user"></use>
+                                </svg></div>
+                            <input type="text" id="username" class="input-field" placeholder=" " minlength="5"
+                                maxlength="9" autocomplete="username" required>
+                            <label class="floating-label">Choose Username</label>
+                        </div>
+                    </div>
+
+                    <!-- INPUT 2: EMAIL ADDRESS -->
+                    <div class="form-group">
+                        <div class="input-wrapper" id="wrapEmail">
+                            <div class="input-icon"><svg>
+                                    <use href="#icon-mail"></use>
+                                </svg></div>
+                            <input type="email" id="email" class="input-field" placeholder=" " autocomplete="email"
+                                required>
+                            <label class="floating-label">Email Address</label>
+                        </div>
+                    </div>
+
+                    <!-- INPUT 3: MOBILE NUMBER -->
+                    <div class="form-group">
+                        <div class="input-wrapper" id="wrapMobile">
+                            <div class="input-icon"><svg>
+                                    <use href="#icon-phone"></use>
+                                </svg></div>
+                            <input type="tel" id="mobile" class="input-field" placeholder=" " inputmode="numeric"
+                                minlength="10" maxlength="15" autocomplete="tel" required>
+                            <label class="floating-label">Mobile Number / WhatsApp</label>
+                        </div>
+                    </div>
+
+                    <!-- INPUT 4: PASSWORD (NO CONFIRM PASSWORD) -->
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <div class="input-wrapper" id="wrapPassword">
+                            <div class="input-icon"><svg>
+                                    <use href="#icon-lock"></use>
+                                </svg></div>
+                            <input type="password" id="password" class="input-field" placeholder=" "
+                                autocomplete="new-password" minlength="6" required>
+                            <label class="floating-label">Create Password</label>
+                            <button type="button" class="trailing-action" id="btnTogglePwd" tabindex="-1"
+                                aria-label="Toggle password visibility">
+                                <svg id="iconPwd">
+                                    <use href="#icon-eye"></use>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Live Password Strength Meter -->
+                        <div class="pwd-strength-container" id="pwdStrengthBox">
+                            <div class="strength-bars">
+                                <div class="bar" id="bar1"></div>
+                                <div class="bar" id="bar2"></div>
+                                <div class="bar" id="bar3"></div>
+                                <div class="bar" id="bar4"></div>
+                            </div>
+                            <div class="strength-text" id="strengthText">Weak</div>
+                        </div>
+                    </div>
+
+                    <!-- Terms & Privacy -->
+                    <label class="checkbox-group">
+                        <input type="checkbox" id="terms" class="checkbox-custom" checked>
+                        <span class="checkbox-label">
+                            I accept the <a href="terms">Terms of Service</a> & <a href="privacy">Privacy Policy</a>.
+                        </span>
+                    </label>
+
+                    <!-- Hidden Referral Input Parameter -->
+                    <input type="hidden" id="hiddenRefCode" value="">
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit" id="btnSubmit">
+                        <span>Create Account</span>
+                        <div class="spinner"></div>
+                    </button>
+
+                    <!-- Route to Login -->
+                    <div class="auth-footer" style="margin-top: 24px;">
+                        Already have an account? <a href="login">Log In</a>
+                    </div>
+                </form>
+            </main>
+
+            <!-- RIGHT COLUMN: DESKTOP SHOWCASE (Desktop Viewport Only) -->
+            <aside class="showcase-panel">
+                <div class="showcase-badge">
+                    <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5;">
+                        <use href="#icon-shield"></use>
+                    </svg>
+                    Official Sigma Network
+                </div>
+
+                <div class="showcase-heading">
+                    <h2>Smart Investing.<br>Guaranteed Scalability.</h2>
+                    <p>Join Pakistan's premier financial network designed to automate growth, distribute instant
+                        bonuses, and secure user liquidity.</p>
+                </div>
+
+                <!-- 3-Tier Bonus Structure Showcase Card -->
+                <div class="showcase-bonus-card">
+                    <h4>
+                        <svg
+                            style="width: 20px; height: 20px; stroke: var(--sigma-accent-light); fill: none; stroke-width: 2;">
+                            <use href="#icon-gift"></use>
+                        </svg>
+                        3-Tier Referral Rewards
+                    </h4>
+                    <div class="bonus-grid">
+                        <div class="bonus-tier-box">
+                            <small>Level 1</small>
+                            <b>Rs. 400</b>
+                        </div>
+                        <div class="bonus-tier-box">
+                            <small>Level 2</small>
+                            <b>Rs. 250</b>
+                        </div>
+                        <div class="bonus-tier-box">
+                            <small>Level 3</small>
+                            <b>2%</b>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Trust Pillars -->
+                <div class="trust-points">
+                    <div class="trust-item">
+                        <div class="trust-check-icon"><svg>
+                                <use href="#icon-check"></use>
+                            </svg></div>
+                        <span>Instant dynamic welcome bonus upon signup</span>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-check-icon"><svg>
+                                <use href="#icon-check"></use>
+                            </svg></div>
+                        <span>Automated daily profit distribution in PKR</span>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-check-icon"><svg>
+                                <use href="#icon-check"></use>
+                            </svg></div>
+                        <span>256-bit encrypted authentication & account safety</span>
+                    </div>
+                </div>
+
+                <!-- Supported Local Channels -->
+                <div class="local-payout-pill">
+                    <span>Supported Payment Channels:</span>
+                    <b>Easypaisa • JazzCash • Bank IBFT</b>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- =======================================================================
+         JAVASCRIPT LOGIC & FIREBASE BACKEND INTEGRATION (Fully Patched)
+         ======================================================================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. Initialize DOM Elements ---
+            const form = document.getElementById('regForm');
+            const inUser = document.getElementById('username');
+            const inEmail = document.getElementById('email');
+            const inMobile = document.getElementById('mobile');
+            const inPwd = document.getElementById('password');
+            const btnTogglePwd = document.getElementById('btnTogglePwd');
+            const iconPwd = document.getElementById('iconPwd');
+            const terms = document.getElementById('terms');
+            const btnSubmit = document.getElementById('btnSubmit');
+            const globalError = document.getElementById('globalError');
+
+            // Referral & Bonus Elements
+            const hiddenRefCode = document.getElementById('hiddenRefCode');
+            const refAlert = document.getElementById('referralAlert');
+            const refCodeText = document.getElementById('refCodeText');
+
+            const bonusBanner = document.getElementById('bonusBanner');
+            const bonusAmountText = document.getElementById('bonusAmountText');
+
+            const pwdBox = document.getElementById('pwdStrengthBox');
+            const bars = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3'), document.getElementById('bar4')];
+            const strText = document.getElementById('strengthText');
+
+            let activeBonusAmount = 0; // Default
+
+            // --- 2. Firebase Verification Helper ---
+            const isFirebaseReady = () => typeof firebase !== 'undefined' && firebase.apps.length > 0;
+
+            // --- 3. Dynamic Admin-Controlled Welcome Bonus Fetching (Firestore) ---
+            const syncWelcomeBonusConfig = async () => {
+                if (isFirebaseReady()) {
+                    try {
+                        const db = firebase.firestore();
+                        const doc = await db.collection('settings').doc('system').get();
+                        if (doc.exists) {
+                            const data = doc.data();
+                            if (data.welcome_bonus_enabled === false) {
+                                bonusBanner.style.display = 'none';
+                                activeBonusAmount = 0;
+                            } else if (typeof data.welcome_bonus !== 'undefined') {
+                                activeBonusAmount = Number(data.welcome_bonus) || 0;
+                                bonusAmountText.textContent = `Rs. ${activeBonusAmount}`;
+                                bonusBanner.style.display = activeBonusAmount > 0 ? 'flex' : 'none';
+                            }
+                        }
+                    } catch (e) {
+                        console.warn("Using default welcome bonus config due to read error.");
+                    }
+                }
+            };
+            syncWelcomeBonusConfig();
+
+            // --- 4. Referral Code Handling (URL Parsing) ---
+            // Dash.html creates URLs like: ?ref=SIG-${secureSlug} where secureSlug = uid.substring(0, 5)
+            const urlParams = new URLSearchParams(window.location.search);
+            const referralCodeFromUrl = urlParams.get('ref') || urlParams.get('reference') || urlParams.get('invite');
+            if (referralCodeFromUrl) {
+                // Remove 'SIG-' if present, and sanitize to keep alphanumeric characters
+                let sanitizedCode = referralCodeFromUrl.replace(/^SIG-/i, '');
+                sanitizedCode = sanitizedCode.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 20);
+
+                if (sanitizedCode) {
+                    hiddenRefCode.value = sanitizedCode.toLowerCase(); // Match case used in db checks
+                    refCodeText.textContent = `SIG-${sanitizedCode.toUpperCase()}`;
+                    refAlert.style.display = 'flex';
+                }
+            }
+
+            // --- 5. UI Error & State Handling ---
+            const showError = (msg, inputWrapId = null) => {
+                globalError.textContent = msg;
+                globalError.style.display = 'block';
+                globalError.classList.remove('shake');
+                void globalError.offsetWidth; // Reflow
+                globalError.classList.add('shake');
+
+                if (inputWrapId) {
+                    const el = document.getElementById(inputWrapId);
+                    if (el) el.classList.add('error');
+                }
+            };
+
+            const clearErrors = () => {
+                globalError.style.display = 'none';
+                document.querySelectorAll('.input-wrapper').forEach(w => w.classList.remove('error'));
+            };
+
+            [inUser, inEmail, inMobile, inPwd].forEach(input => {
+                input.addEventListener('input', clearErrors);
+            });
+
+            // STRICT USERNAME LOGIC: 5 to 9 chars, remove everything from @ onwards, alphanumeric lowercase only
+            inUser.addEventListener('input', (e) => {
+                let val = e.target.value;
+                if (val.includes('@')) {
+                    val = val.split('@')[0]; // Remove @ and everything after
+                }
+                val = val.replace(/[^a-zA-Z0-9]/g, '').toLowerCase().slice(0, 9); // Max 9 chars
+                if (e.target.value !== val) {
+                    e.target.value = val;
+                }
+            });
+
+            inMobile.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '').slice(0, 15);
+            });
+
+            // --- 6. Password Visibility & Strength ---
+            btnTogglePwd.addEventListener('click', () => {
+                const isPassword = inPwd.getAttribute('type') === 'password';
+                inPwd.setAttribute('type', isPassword ? 'text' : 'password');
+                iconPwd.innerHTML = isPassword ? '<use href="#icon-eye-off"></use>' : '<use href="#icon-eye"></use>';
+                inPwd.focus();
+            });
+
+            const evaluateStrength = (pwd) => {
+                let score = 0;
+                if (!pwd) return score;
+                if (pwd.length >= 6) score++;
+                if (pwd.length >= 10) score++;
+                if (/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) score++;
+                if (/[0-9]/.test(pwd) || /[^A-Za-z0-9]/.test(pwd)) score++;
+                return score;
+            };
+
+            inPwd.addEventListener('input', (e) => {
+                const val = e.target.value;
+                if (val.length > 0) {
+                    pwdBox.classList.add('show');
+                } else {
+                    pwdBox.classList.remove('show');
+                }
+
+                const score = evaluateStrength(val);
+                const colors = ['#EF4444', '#F59E0B', '#10B981', '#059669'];
+                const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+
+                bars.forEach((bar, idx) => {
+                    bar.style.backgroundColor = (idx < score) ? colors[score - 1] : '#E2E8F0';
+                });
+
+                if (score > 0) {
+                    strText.textContent = labels[score - 1];
+                    strText.style.color = colors[score - 1];
+                }
+            });
+
+            // --- 7. User Account Provisioning & Firestore Sync ---
+            const provisionAccountProfile = async (user, profileMeta = {}) => {
+                const db = firebase.firestore();
+                const userRef = db.collection('users').doc(user.uid);
+
+                try {
+                    const doc = await userRef.get();
+                    if (!doc.exists) {
+                        const assignedBonus = activeBonusAmount;
+                        const assignedUsername = (profileMeta.username || inUser.value.trim() || user.email.split('@')[0]).toLowerCase();
+                        const inviterCode = hiddenRefCode.value || null;
+
+                        // Create User Document
+                        await userRef.set({
+                            uid: user.uid,
+                            username: assignedUsername,
+                            fullName: assignedUsername, // Default fullname to username
+                            email: user.email.toLowerCase(),
+                            phone: profileMeta.phone || inMobile.value.trim() || '',
+                            referredBy: inviterCode,
+                            balance: assignedBonus,
+                            depositBalance: assignedBonus, // Welcome bonus goes to deposit
+                            profitBalance: 0,
+                            commissionBalance: 0,
+                            totalInvested: 0,
+                            totalWithdrawn: 0,
+                            teamBonus: 0,
+                            status: 'active',
+                            role: 'user',
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+
+                        // Welcome Bonus Ledger Entry
+                        if (assignedBonus > 0) {
+                            await db.collection('users').doc(user.uid).collection('transactions').add({
+                                type: 'welcome_bonus',
+                                amount: assignedBonus,
+                                currency: 'PKR',
+                                status: 'completed',
+                                referenceId: 'WB-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
+                                description: `Welcome Bonus Credited (Rs. ${assignedBonus})`,
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                        }
+                    }
+                } catch (firestoreError) {
+                    console.error("Firestore Profile Sync Error (Proceeding anyway):", firestoreError);
+                }
+            };
+
+            // --- 8. Registration Form Submission (Strict 4 Fields) ---
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearErrors();
+
+                const username = inUser.value.trim();
+                const email = inEmail.value.trim();
+                const mobile = inMobile.value.trim();
+                const password = inPwd.value;
+
+                // Validation
+                if (!username || username.length < 5) return showError("Username must be between 5 and 9 characters.", "wrapUsername");
+                if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError("Please enter a valid email address.", "wrapEmail");
+                if (!mobile || mobile.length < 10) return showError("Mobile number must be at least 10 digits.", "wrapMobile");
+                if (!password || password.length < 6) return showError("Password must be at least 6 characters.", "wrapPassword");
+                if (!terms.checked) return showError("Please accept the Terms of Service to proceed.");
+
+                btnSubmit.disabled = true;
+                btnSubmit.classList.add('loading');
+
+                try {
+                    if (typeof firebase === 'undefined' || !firebase.apps.length) {
+                        throw new Error("firebase_offline");
+                    }
+
+                    const auth = firebase.auth();
+                    const db = firebase.firestore();
+
+                    // Optional Username Collision Check 
+                    // Uses try/catch to bypass if security rules block public user listing
+                    try {
+                        const userCheck = await db.collection('users').where('username', '==', username).limit(1).get();
+                        if (!userCheck.empty) {
+                            btnSubmit.disabled = false;
+                            btnSubmit.classList.remove('loading');
+                            return showError("This username is already taken. Please pick another.", "wrapUsername");
+                        }
+                    } catch (e) {
+                        console.warn("Username public check skipped. Proceeding to auth.");
+                    }
+
+                    // 1. Create Firebase Auth User (Will automatically throw if email exists)
+                    const userCred = await auth.createUserWithEmailAndPassword(email, password);
+
+                    // Update Auth Profile immediately
+                    try {
+                        await userCred.user.updateProfile({ displayName: username });
+                    } catch (e) { }
+
+                    // 2. Initialize Profile & Ledger Transaction
+                    try {
+                        await provisionAccountProfile(userCred.user, {
+                            username: username,
+                            phone: mobile
+                        });
+                    } catch (e) {
+                        console.error("Firestore sync bypassed. Proceeding to dashboard.");
+                    }
+
+                    // 3. Success Feedback & Force Routing
+                    btnSubmit.classList.remove('loading');
+                    btnSubmit.innerHTML = `<span><svg style="width:20px;height:20px;stroke:white;fill:none;stroke-width:2.5;"><use href="#icon-check"></use></svg> Account Created</span>`;
+                    btnSubmit.style.background = 'var(--sigma-accent)';
+
+                    // Use replace to prevent going back to the form and apply clean URL
+                    setTimeout(() => {
+                        window.location.replace('dash');
+                    }, 800);
+
+                } catch (err) {
+                    btnSubmit.disabled = false;
+                    btnSubmit.classList.remove('loading');
+
+                    let message = "Unable to complete registration. Please try again.";
+                    if (err.code === 'auth/email-already-in-use') {
+                        message = "This email is already registered. Please log in.";
+                        showError(message, "wrapEmail");
+                    } else if (err.code === 'auth/weak-password') {
+                        message = "Password is too weak. Please include letters and numbers.";
+                        showError(message, "wrapPassword");
+                    } else if (err.code === 'auth/network-request-failed') {
+                        message = "Network error. Please check your internet connection.";
+                        showError(message);
+                    } else if (err.message === "firebase_offline") {
+                        message = "System config missing or offline. Please contact support.";
+                        showError(message);
+                    } else {
+                        showError(message);
+                        console.error("Auth Exception:", err);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

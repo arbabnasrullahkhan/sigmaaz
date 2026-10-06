@@ -1,0 +1,1618 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Sigma Ops | Deposit Verification & Approvals</title>
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="theme-color" content="#FFFFFF">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="shortcut icon" href="../assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="../assets/favicon.png">
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="../firebase-config.js"></script>
+
+    <!-- Fallback Firebase Initialization -->
+    <script>
+        if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+            firebase.initializeApp({
+                apiKey: "AIzaSyCTRe2w4juZ55DrayIw61qKz_UYlZfw1H8",
+                authDomain: "week-team.firebaseapp.com",
+                projectId: "week-team",
+                storageBucket: "week-team.firebasestorage.app",
+                messagingSenderId: "480334485782",
+                appId: "1:480334485782:web:c0c886ed710567b9e6d837"
+            });
+        }
+    </script>
+
+    <style>
+        /* ==========================================================================
+           1. LIGHT MODE FINTECH DESIGN SYSTEM (NO DARK MODE)
+           ========================================================================== */
+        :root {
+            --sigma-primary: #0B132B;
+            --sigma-secondary: #1C2541;
+            --sigma-tertiary: #3A506B;
+
+            --sigma-surface: #FFFFFF;
+            --sigma-surface-alt: #F8FAFC;
+            --sigma-subtle: #F1F5F9;
+
+            --border-light: #E2E8F0;
+            --border-muted: #CBD5E1;
+
+            --sigma-accent: #10B981;
+            --sigma-accent-dark: #059669;
+            --sigma-accent-soft: #ECFDF5;
+
+            --sigma-gold: #F59E0B;
+            --sigma-gold-dark: #D97706;
+            --sigma-gold-soft: #FEF3C7;
+
+            --sigma-danger: #EF4444;
+            --sigma-danger-dark: #DC2626;
+            --sigma-danger-soft: #FEE2E2;
+
+            --sigma-info: #3B82F6;
+            --sigma-info-soft: #EFF6FF;
+
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --text-light: #94A3B8;
+
+            --radius-pill: 9999px;
+            --radius-2xl: 28px;
+            --radius-xl: 20px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+
+            --shadow-subtle: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+            --shadow-card: 0 16px 32px -8px rgba(15, 23, 42, 0.08);
+            --shadow-float: 0 24px 48px -12px rgba(15, 23, 42, 0.16);
+
+            --z-dock: 1000;
+            --z-drawer: 2000;
+            --z-modal: 3000;
+            --z-auth: 9999;
+            --safe-area-bottom: env(safe-area-inset-bottom, 16px);
+            --transition: 0.25s ease;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--sigma-subtle);
+            color: var(--text-body);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+            padding-bottom: calc(90px + var(--safe-area-bottom));
+        }
+
+        body.locked {
+            overflow: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            background: none;
+        }
+
+        button {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: var(--text-heading);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Loading Auth Overlay */
+        #authOverlay {
+            position: fixed;
+            inset: 0;
+            background: var(--sigma-surface);
+            z-index: var(--z-auth);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-heading);
+            transition: opacity 0.3s;
+        }
+
+        .auth-spinner {
+            width: 44px;
+            height: 44px;
+            border: 4px solid var(--border-light);
+            border-top-color: var(--sigma-accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        /* ==========================================================================
+           2. UNIFIED ADMIN SIDEBAR (DESKTOP)
+           ========================================================================== */
+        .admin-sidebar {
+            width: 270px;
+            background: var(--sigma-surface);
+            border-right: 1px solid var(--border-light);
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            transition: transform var(--transition);
+        }
+
+        .sidebar-brand-header {
+            padding: 22px 20px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .brand-text-img {
+            height: 20px;
+            object-fit: contain;
+            margin-top: 2px;
+        }
+
+        .sidebar-scroll {
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            color: var(--text-body);
+            font-size: 0.92rem;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .nav-link-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-link svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .nav-link:hover {
+            background: var(--sigma-subtle);
+            color: var(--sigma-primary);
+        }
+
+        .nav-link.active {
+            background: var(--sigma-primary);
+            color: white;
+        }
+
+        .nav-link.active svg {
+            stroke: var(--sigma-accent);
+        }
+
+        .nav-badge {
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: var(--radius-pill);
+            background: var(--sigma-danger-soft);
+            color: var(--sigma-danger-dark);
+        }
+
+        .sidebar-logout-btn {
+            margin: 16px 12px;
+            background: var(--sigma-danger-soft);
+            color: var(--sigma-danger-dark);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .sidebar-logout-btn:active {
+            background: var(--sigma-danger);
+            color: white;
+        }
+
+        /* ==========================================================================
+           3. MAIN WORKSPACE
+           ========================================================================== */
+        .admin-main {
+            flex: 1;
+            margin-left: 270px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .admin-topbar {
+            height: 70px;
+            background: var(--sigma-surface);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .topbar-brand-mobile {
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .page-content {
+            padding: 28px 24px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Filter Tabs */
+        .tabs-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 22px;
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            background: var(--sigma-surface);
+            border: 1px solid var(--border-light);
+            transition: var(--transition);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .tab-btn.active {
+            background: var(--sigma-primary);
+            color: white;
+            border-color: var(--sigma-primary);
+        }
+
+        /* Table Card */
+        .table-card {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-subtle);
+            overflow: hidden;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 760px;
+        }
+
+        th {
+            background: var(--sigma-surface-alt);
+            padding: 14px 18px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        td {
+            padding: 16px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: var(--sigma-surface-alt);
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .status-badge.pending {
+            background: var(--sigma-gold-soft);
+            color: var(--sigma-gold-dark);
+        }
+
+        .status-badge.approved {
+            background: var(--sigma-accent-soft);
+            color: var(--sigma-accent-dark);
+        }
+
+        .status-badge.rejected {
+            background: var(--sigma-danger-soft);
+            color: var(--sigma-danger-dark);
+        }
+
+        .btn-review {
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            background: var(--sigma-subtle);
+            color: var(--sigma-primary);
+            font-size: 0.82rem;
+            font-weight: 800;
+            border: 1px solid var(--border-light);
+            transition: var(--transition);
+        }
+
+        .btn-review:hover {
+            background: var(--sigma-primary);
+            color: white;
+        }
+
+        /* ==========================================================================
+           4. REVIEW MODAL & PROOF LIGHTBOX
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 19, 43, 0.65);
+            backdrop-filter: blur(8px);
+            z-index: var(--z-modal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            width: 100%;
+            max-width: 580px;
+            padding: 28px 24px;
+            box-shadow: var(--shadow-float);
+            border: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-height: 92vh;
+            overflow-y: auto;
+        }
+
+        .modal-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 14px;
+        }
+
+        .modal-head h3 {
+            font-size: 1.2rem;
+        }
+
+        .modal-close-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--sigma-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+        }
+
+        .modal-close-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .proof-img-preview {
+            width: 100%;
+            height: 240px;
+            background: var(--sigma-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .proof-img-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .m-box {
+            background: var(--sigma-surface-alt);
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+        }
+
+        .m-box small {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-weight: 800;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .m-box b {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            word-break: break-all;
+        }
+
+        .reject-input-wrap {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .reject-input-wrap input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--sigma-danger);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            background: var(--sigma-danger-soft);
+            color: var(--sigma-danger-dark);
+            font-weight: 600;
+        }
+
+        .modal-actions-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .btn-modal-action {
+            flex: 1;
+            padding: 14px;
+            border-radius: var(--radius-lg);
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-approve {
+            background: var(--sigma-accent);
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background: var(--sigma-accent-dark);
+        }
+
+        .btn-reject {
+            background: var(--sigma-danger-soft);
+            color: var(--sigma-danger-dark);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* ==========================================================================
+           5. UNIFIED 5-BUTTON ADMIN MOBILE DOCK
+           ========================================================================== */
+        .admin-mobile-dock {
+            display: none;
+            position: fixed;
+            bottom: var(--safe-area-bottom);
+            left: 50%;
+            transform: translateX(-50%);
+            height: 74px;
+            width: calc(100% - 24px);
+            max-width: 460px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-float);
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: var(--z-dock);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .dock-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: var(--text-muted);
+            flex: 1;
+            height: 100%;
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .dock-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2;
+        }
+
+        .dock-btn span {
+            font-size: 0.65rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .dock-btn.active {
+            color: var(--sigma-primary);
+        }
+
+        .dock-btn.active svg {
+            stroke: var(--sigma-accent-dark);
+            stroke-width: 2.6;
+            transform: translateY(-2px);
+        }
+
+        .dock-badge {
+            position: absolute;
+            top: 8px;
+            right: 18px;
+            min-width: 18px;
+            height: 18px;
+            background: var(--sigma-danger);
+            color: white;
+            border-radius: 9px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            border: 2px solid white;
+        }
+
+        .dock-center-action {
+            position: relative;
+            top: -20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 22px rgba(11, 19, 43, 0.35);
+            border: 4px solid var(--sigma-subtle);
+            color: white;
+            flex-shrink: 0;
+            margin: 0 4px;
+        }
+
+        .dock-center-action:active {
+            transform: scale(0.92);
+        }
+
+        .dock-center-action svg {
+            width: 26px;
+            height: 26px;
+            stroke: white;
+            stroke-width: 2.2;
+        }
+
+        /* ==========================================================================
+           6. DRAWER SHEET
+           ========================================================================== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: var(--z-drawer);
+            background: rgba(11, 19, 43, 0.65);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sheet {
+            width: 100%;
+            max-width: 520px;
+            background: var(--sigma-surface);
+            border-radius: 32px 32px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -20px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        .overlay.show .sheet {
+            transform: translateY(0);
+        }
+
+        .sheet-handle {
+            width: 48px;
+            height: 6px;
+            border-radius: 99px;
+            background: var(--border-muted);
+            margin: 14px auto 8px;
+        }
+
+        .sheet-header {
+            padding: 12px 24px 18px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sheet-header h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .sheet-close-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--sigma-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+        }
+
+        .sheet-body {
+            padding: 20px 24px 36px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sheet-menu-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: var(--sigma-surface-alt);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-heading);
+            transition: var(--transition);
+        }
+
+        .sheet-menu-link:active {
+            background: var(--sigma-subtle);
+            transform: scale(0.98);
+        }
+
+        .sheet-menu-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sheet-menu-left svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--sigma-primary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        @media (max-width: 860px) {
+            .admin-sidebar {
+                display: none;
+            }
+
+            .admin-main {
+                margin-left: 0;
+            }
+
+            .admin-mobile-dock {
+                display: flex;
+            }
+
+            .topbar-brand-mobile {
+                display: flex;
+            }
+
+            .desktop-only {
+                display: none;
+            }
+
+            .page-content {
+                padding: 20px 16px;
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Auth Protection Overlay -->
+    <div id="authOverlay">
+        <div class="auth-spinner"></div>
+        <h2 style="font-size: 1.15rem; font-weight: 800;">Verifying Administrator Access...</h2>
+    </div>
+
+    <!-- =======================================================================
+         DESKTOP ADMIN SIDEBAR
+         ======================================================================= -->
+    <aside class="admin-sidebar" id="sidebar">
+        <div class="sidebar-brand-header">
+            <img src="../assets/logo.png" alt="Sigma Logo" class="brand-logo-img"
+                onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310B981\'/><text x=\'50\' y=\'65\' font-family=\'Arial\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\'>S</text></svg>'">
+            <img src="../assets/textlogo.png" alt="Sigma" class="brand-text-img" onerror="this.style.display='none'">
+        </div>
+
+        <div class="sidebar-scroll">
+            <a href="dashboard.html" class="nav-link">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Overview</span>
+                </div>
+            </a>
+            <a href="users.html" class="nav-link">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Users</span>
+                </div>
+            </a>
+            <a href="deposits.html" class="nav-link active">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                    <span>Deposits</span>
+                </div>
+                <span class="nav-badge" id="sideBadgeDeposits" style="display:none;">0</span>
+            </a>
+            <a href="withdrawals.html" class="nav-link">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                        <polyline points="5 12 12 5 19 12"></polyline>
+                    </svg>
+                    <span>Withdrawals</span>
+                </div>
+            </a>
+            <a href="plans.html" class="nav-link">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Plans & Tiers</span>
+                </div>
+            </a>
+            <a href="wallet.html" class="nav-link">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                    </svg>
+                    <span>Ledger & Wallet</span>
+                </div>
+            </a>
+            <a href="roi.html" class="nav-link">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    <span>ROI Engine</span>
+                </div>
+            </a>
+            <a href="team.html" class="nav-link">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Team Network</span>
+                </div>
+            </a>
+            <a href="tickets.html" class="nav-link">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Support Tickets</span>
+                </div>
+            </a>
+            <a href="security.html" class="nav-link">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>Security & Admins</span>
+                </div>
+            </a>
+            <a href="settings.html" class="nav-link">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                        </path>
+                    </svg>
+                    <span>Global Settings</span>
+                </div>
+            </a>
+            <a href="content.html" class="nav-link">
+                <div class="nav-link-left">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                    <span>UI Content Config</span>
+                </div>
+            </a>
+        </div>
+
+        <button class="sidebar-logout-btn" onclick="DepositsController.terminateSession()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+            </svg>
+            Secure Logout
+        </button>
+    </aside>
+
+    <!-- =======================================================================
+         MAIN VIEWPORT
+         ======================================================================= -->
+    <main class="admin-main">
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <div class="topbar-brand-mobile">
+                    <img src="../assets/logo.png" alt="Sigma Logo" class="brand-logo-img">
+                    <img src="../assets/textlogo.png" alt="Sigma" class="brand-text-img">
+                </div>
+                <h2 style="font-size: 1.15rem; font-weight: 800;" class="desktop-only">Deposit & Payment Verification
+                </h2>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="tabs-row">
+                <button class="tab-btn active" id="tabPending" onclick="DepositsController.switchTab('pending')">Pending
+                    Reviews</button>
+                <button class="tab-btn" id="tabHistory" onclick="DepositsController.switchTab('history')">Processed
+                    Audit Trail</button>
+            </div>
+
+            <div class="table-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date & Time</th>
+                                <th>Request ID</th>
+                                <th>Target Portfolio</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="depositsTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align:center; padding: 40px; color: var(--text-light);">
+                                    Loading payment requests...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- REVIEW MODAL & PROOF LIGHTBOX -->
+    <div class="modal-overlay" id="reviewModal">
+        <div class="modal-card">
+            <div class="modal-head">
+                <h3 id="modalTitle">Review Deposit Proof</h3>
+                <button class="modal-close-btn" onclick="DepositsController.closeReviewModal()">
+                    <svg>
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Proof Image Preview Container -->
+            <div class="proof-img-preview" id="proofImgContainer" style="cursor: pointer;"
+                title="Click to view full image" onclick="DepositsController.expandProofImage()">
+                <img id="mProofImg" src="" alt="Payment Receipt Proof">
+            </div>
+
+            <div class="modal-details-grid">
+                <div class="m-box">
+                    <small>User UID</small>
+                    <b id="mUid" class="font-mono">---</b>
+                </div>
+                <div class="m-box">
+                    <small>Transaction ID (TID)</small>
+                    <b id="mTid" class="font-mono" style="color: var(--sigma-primary);">---</b>
+                </div>
+                <div class="m-box">
+                    <small>Deposit Amount</small>
+                    <b id="mAmount" class="font-mono text-accent">Rs. 0</b>
+                </div>
+                <div class="m-box">
+                    <small>Target Portfolio</small>
+                    <b id="mPlan">---</b>
+                </div>
+            </div>
+
+            <div class="reject-input-wrap" id="rejectReasonBox">
+                <small style="font-weight: 800; color: var(--sigma-danger);">Rejection Reason Note:</small>
+                <input type="text" id="inpRejectReason"
+                    placeholder="e.g. Invalid Transaction ID or incorrect amount transferred">
+                <button class="btn-modal-action btn-reject" onclick="DepositsController.confirmRejection()"
+                    style="width: 100%;">Confirm Rejection</button>
+            </div>
+
+            <div class="modal-actions-row" id="modalActionGroup">
+                <button class="btn-modal-action btn-approve" onclick="DepositsController.approveDeposit()">Approve &
+                    Credit Balance</button>
+                <button class="btn-modal-action btn-reject"
+                    onclick="DepositsController.promptRejection()">Reject</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =======================================================================
+         UNIFIED 5-BUTTON ADMIN MOBILE DOCK
+         ======================================================================= -->
+    <nav class="admin-mobile-dock">
+        <a href="dashboard.html" class="dock-btn">
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Overview</span>
+        </a>
+
+        <a href="deposits.html" class="dock-btn active">
+            <svg viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <polyline points="19 12 12 19 5 12"></polyline>
+            </svg>
+            <span>Deposits</span>
+            <span class="dock-badge" id="dockBadgeDeposits">0</span>
+        </a>
+
+        <a href="withdrawals.html" class="dock-center-action" aria-label="Withdrawals">
+            <svg viewBox="0 0 24 24">
+                <line x1="12" y1="19" x2="12" y2="5"></line>
+                <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+        </a>
+
+        <a href="users.html" class="dock-btn">
+            <svg viewBox="0 0 24 24">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+            </svg>
+            <span>Users</span>
+        </a>
+
+        <button class="dock-btn" onclick="DepositsController.openMenuSheet()">
+            <svg viewBox="0 0 24 24">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span>Menu</span>
+        </button>
+    </nav>
+
+    <!-- UNIFIED DRAWER SHEET -->
+    <div class="overlay" id="sheetAdminMenu">
+        <div class="sheet">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3>Admin Operations Menu</h3>
+                <button class="sheet-close-btn" onclick="DepositsController.closeMenuSheet()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="sheet-body">
+                <a href="plans.html" class="sheet-menu-link">
+                    <div class="sheet-menu-left">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        <span>Plans & Portfolios</span>
+                    </div>
+                    &rarr;
+                </a>
+                <a href="wallet.html" class="sheet-menu-link">
+                    <div class="sheet-menu-left">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="2" y1="10" x2="22" y2="10"></line>
+                        </svg>
+                        <span>Wallet Ledger & Balances</span>
+                    </div>
+                    &rarr;
+                </a>
+                <a href="roi.html" class="sheet-menu-link">
+                    <div class="sheet-menu-left">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        <span>Daily ROI Engine</span>
+                    </div>
+                    &rarr;
+                </a>
+                <a href="team.html" class="sheet-menu-link">
+                    <div class="sheet-menu-left">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                        </svg>
+                        <span>Team Tree Tracker</span>
+                    </div>
+                    &rarr;
+                </a>
+                <a href="tickets.html" class="sheet-menu-link">
+                    <div class="sheet-menu-left">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span>Support Desk (Chat)</span>
+                    </div>
+                    &rarr;
+                </a>
+                <a href="security.html" class="sheet-menu-link">
+                    <div class="sheet-menu-left">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <span>Security & Admins</span>
+                    </div>
+                    &rarr;
+                </a>
+                <a href="settings.html" class="sheet-menu-link">
+                    <div class="sheet-menu-left">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                            </path>
+                        </svg>
+                        <span>Global Settings</span>
+                    </div>
+                    &rarr;
+                </a>
+                <a href="content.html" class="sheet-menu-link">
+                    <div class="sheet-menu-left">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
+                        <span>UI Configuration</span>
+                    </div>
+                    &rarr;
+                </a>
+
+                <div style="height: 1px; background: var(--border-light); margin: 6px 0;"></div>
+
+                <button onclick="DepositsController.terminateSession()" class="sheet-menu-link"
+                    style="color: var(--sigma-danger); background: var(--sigma-danger-soft);">
+                    <div class="sheet-menu-left">
+                        <svg viewBox="0 0 24 24" style="stroke: var(--sigma-danger);">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+                        </svg>
+                        <span>Sign Out of Terminal</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =======================================================================
+         JAVASCRIPT CONTROLLER (FIRESTORE BATCH APPROVALS & ACTIVE PLAN INITIALIZATION)
+         ======================================================================= -->
+    <script>
+        const DepositsController = (() => {
+
+            let adminUser = null;
+            let allRequests = [];
+            let currentTab = 'pending';
+            let activeRequest = null;
+
+            const db = firebase.firestore();
+            const auth = firebase.auth();
+
+            const dom = {
+                authOverlay: document.getElementById('authOverlay'),
+                tableBody: document.getElementById('depositsTableBody'),
+                tabPending: document.getElementById('tabPending'),
+                tabHistory: document.getElementById('tabHistory'),
+                menuSheet: document.getElementById('sheetAdminMenu'),
+                sideBadgeDeposits: document.getElementById('sideBadgeDeposits'),
+                dockBadgeDeposits: document.getElementById('dockBadgeDeposits'),
+
+                reviewModal: document.getElementById('reviewModal'),
+                mProofImg: document.getElementById('mProofImg'),
+                mUid: document.getElementById('mUid'),
+                mTid: document.getElementById('mTid'),
+                mAmount: document.getElementById('mAmount'),
+                mPlan: document.getElementById('mPlan'),
+                actionGroup: document.getElementById('modalActionGroup'),
+                rejectBox: document.getElementById('rejectReasonBox'),
+                inpRejectReason: document.getElementById('inpRejectReason')
+            };
+
+            const openMenuSheet = () => {
+                dom.menuSheet.classList.add('show');
+                document.body.classList.add('locked');
+            };
+
+            const closeMenuSheet = () => {
+                dom.menuSheet.classList.remove('show');
+                document.body.classList.remove('locked');
+            };
+
+            const terminateSession = async () => {
+                await auth.signOut();
+                window.location.replace('login.html');
+            };
+
+            const verifyAdminAccess = () => {
+                auth.onAuthStateChanged(async (user) => {
+                    if (user) {
+                        try {
+                            const userDoc = await db.collection('users').doc(user.uid).get();
+                            if (userDoc.exists) {
+                                const data = userDoc.data();
+                                const role = (data.role || '').toLowerCase();
+
+                                if (role === 'admin' || role === 'superadmin') {
+                                    adminUser = user;
+                                    dom.authOverlay.style.opacity = '0';
+                                    setTimeout(() => dom.authOverlay.style.display = 'none', 300);
+
+                                    bindRealtimeDeposits();
+                                    return;
+                                }
+                            }
+                            throw new Error("Unauthorized");
+                        } catch (e) {
+                            await auth.signOut();
+                            window.location.replace('login.html');
+                        }
+                    } else {
+                        window.location.replace('login.html');
+                    }
+                });
+            };
+
+            const bindRealtimeDeposits = () => {
+                db.collection('payment_requests').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+                    allRequests = [];
+                    let pendingCount = 0;
+
+                    snapshot.forEach(doc => {
+                        const d = doc.data();
+                        if (d.status === 'pending_verification') pendingCount++;
+                        allRequests.push({ id: doc.id, ...d });
+                    });
+
+                    if (pendingCount > 0) {
+                        dom.sideBadgeDeposits.style.display = 'inline-block';
+                        dom.sideBadgeDeposits.textContent = pendingCount;
+                        dom.dockBadgeDeposits.style.display = 'flex';
+                        dom.dockBadgeDeposits.textContent = pendingCount;
+                    } else {
+                        dom.sideBadgeDeposits.style.display = 'none';
+                        dom.dockBadgeDeposits.style.display = 'none';
+                    }
+
+                    renderTable();
+                }, err => {
+                    console.error("Deposits Query Error:", err);
+                    dom.tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:32px; color:var(--sigma-danger);">Unable to load payment requests.</td></tr>`;
+                });
+            };
+
+            const switchTab = (tab) => {
+                currentTab = tab;
+                if (tab === 'pending') {
+                    dom.tabPending.className = 'tab-btn active';
+                    dom.tabHistory.className = 'tab-btn';
+                } else {
+                    dom.tabHistory.className = 'tab-btn active';
+                    dom.tabPending.className = 'tab-btn';
+                }
+                renderTable();
+            };
+
+            const renderTable = () => {
+                const filtered = allRequests.filter(r => {
+                    if (currentTab === 'pending') return r.status === 'pending_verification';
+                    return r.status !== 'pending_verification';
+                });
+
+                if (filtered.length === 0) {
+                    dom.tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:40px; color:var(--text-light);">No deposit requests found in this view.</td></tr>`;
+                    return;
+                }
+
+                let html = '';
+                filtered.forEach(r => {
+                    const dateStr = r.createdAt ? new Date(r.createdAt.seconds * 1000).toLocaleString() : 'Recent';
+                    let badge = '<span class="status-badge pending">Pending</span>';
+                    if (r.status === 'approved') badge = '<span class="status-badge approved">Approved</span>';
+                    else if (r.status === 'rejected') badge = '<span class="status-badge rejected">Rejected</span>';
+
+                    html += `
+                        <tr>
+                            <td>${dateStr}</td>
+                            <td class="font-mono" style="font-weight: 800;">${r.id}</td>
+                            <td>
+                                <div style="font-weight: 800;">${r.planSnapshot?.name || 'Custom Deposit'}</div>
+                                <small style="color:var(--text-muted);">${r.methodSnapshot?.name || 'Online Transfer'}</small>
+                            </td>
+                            <td class="font-mono text-accent" style="font-weight: 900;">Rs. ${Number(r.amount || 0).toLocaleString('en-PK')}</td>
+                            <td>${badge}</td>
+                            <td>
+                                <button class="btn-review" onclick="DepositsController.openReview('${r.id}')">${r.status === 'pending_verification' ? 'Review' : 'Inspect'}</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                dom.tableBody.innerHTML = html;
+            };
+
+            const openReview = (id) => {
+                activeRequest = allRequests.find(r => r.id === id);
+                if (!activeRequest) return;
+
+                dom.mProofImg.src = activeRequest.proofUrl || '';
+                dom.mUid.textContent = activeRequest.uid;
+                dom.mTid.textContent = activeRequest.trxIdRaw || activeRequest.trxIdNormalized || 'N/A';
+                dom.mAmount.textContent = `Rs. ${Number(activeRequest.amount || 0).toLocaleString('en-PK')}`;
+                dom.mPlan.textContent = activeRequest.planSnapshot?.name || 'General Deposit';
+
+                dom.rejectBox.style.display = 'none';
+                dom.inpRejectReason.value = '';
+
+                if (activeRequest.status === 'pending_verification') {
+                    dom.actionGroup.style.display = 'flex';
+                } else {
+                    dom.actionGroup.style.display = 'none';
+                }
+
+                dom.reviewModal.classList.add('show');
+                document.body.classList.add('locked');
+            };
+
+            const closeReviewModal = () => {
+                dom.reviewModal.classList.remove('show');
+                document.body.classList.remove('locked');
+                activeRequest = null;
+            };
+
+            const expandProofImage = () => {
+                if (activeRequest && activeRequest.proofUrl) {
+                    window.open(activeRequest.proofUrl, '_blank');
+                }
+            };
+
+            const promptRejection = () => {
+                dom.actionGroup.style.display = 'none';
+                dom.rejectBox.style.display = 'flex';
+            };
+
+            // APPROVE DEPOSIT (Atomic Batched Write + Active Plan Initialization)
+            const approveDeposit = async () => {
+                if (!activeRequest) return;
+                const confirmed = confirm(`Are you sure you want to APPROVE deposit ${activeRequest.id} (Rs. ${activeRequest.amount})? This will initialize the user's active portfolio and credit their main balance.`);
+                if (!confirmed) return;
+
+                const btn = dom.actionGroup.querySelector('.btn-approve');
+                btn.disabled = true;
+                btn.textContent = 'Processing Approval...';
+
+                try {
+                    const batch = db.batch();
+                    const reqRef = db.collection('payment_requests').doc(activeRequest.id);
+                    const userRef = db.collection('users').doc(activeRequest.uid);
+
+                    // 1. Mark request as approved
+                    batch.update(reqRef, {
+                        status: 'approved',
+                        approvedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        approvedBy: adminUser.uid
+                    });
+
+                    // 2. Update user deposit balance
+                    batch.update(userRef, {
+                        depositBalance: firebase.firestore.FieldValue.increment(Number(activeRequest.amount)),
+                        totalInvested: firebase.firestore.FieldValue.increment(Number(activeRequest.amount))
+                    });
+
+                    // 3. Initialize Active Plan Subcollection for Exact 24h Timer
+                    const planSnap = activeRequest.planSnapshot || {};
+                    const activePlanRef = userRef.collection('active_plans').doc();
+
+                    const dailyProfit = planSnap.daily || (planSnap.price ? planSnap.price * 0.045 : activeRequest.amount * 0.045);
+                    const durationDays = planSnap.duration || 25;
+
+                    batch.set(activePlanRef, {
+                        planId: planSnap.id || 'custom_plan',
+                        name: planSnap.name || 'Sigma Custom Portfolio',
+                        price: Number(activeRequest.amount),
+                        dailyProfit: Number(dailyProfit),
+                        totalProfit: Number(dailyProfit) * Number(durationDays),
+                        durationDays: Number(durationDays),
+                        status: 'active',
+                        activatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    // 4. Update user ledger transaction
+                    const txQuery = await userRef.collection('transactions').where('referenceId', '==', activeRequest.id).get();
+                    txQuery.forEach(tDoc => {
+                        batch.update(tDoc.ref, { status: 'completed' });
+                    });
+
+                    await batch.commit();
+                    closeReviewModal();
+
+                } catch (e) {
+                    console.error("Deposit approval failed:", e);
+                    alert("Approval failed. Check database permissions.");
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Approve & Credit Balance';
+                }
+            };
+
+            // CONFIRM REJECTION
+            const confirmRejection = async () => {
+                if (!activeRequest) return;
+                const reason = dom.inpRejectReason.value.trim();
+                if (!reason) { alert("Please provide a rejection reason note."); return; }
+
+                try {
+                    const batch = db.batch();
+                    const reqRef = db.collection('payment_requests').doc(activeRequest.id);
+
+                    batch.update(reqRef, {
+                        status: 'rejected',
+                        rejectionReason: reason,
+                        rejectedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        rejectedBy: adminUser.uid
+                    });
+
+                    const txQuery = await db.collection('users').doc(activeRequest.uid)
+                        .collection('transactions').where('referenceId', '==', activeRequest.id).get();
+                    txQuery.forEach(tDoc => {
+                        batch.update(tDoc.ref, { status: 'rejected', rejectionReason: reason });
+                    });
+
+                    await batch.commit();
+                    closeReviewModal();
+
+                } catch (e) {
+                    console.error("Rejection error:", e);
+                    alert("Failed to reject request.");
+                }
+            };
+
+            const init = () => {
+                dom.reviewModal.addEventListener('click', e => {
+                    if (e.target === dom.reviewModal) closeReviewModal();
+                });
+                dom.menuSheet.addEventListener('click', e => {
+                    if (e.target === dom.menuSheet) closeMenuSheet();
+                });
+
+                verifyAdminAccess();
+            };
+
+            return {
+                init,
+                switchTab,
+                openReview,
+                closeReviewModal,
+                expandProofImage,
+                promptRejection,
+                approveDeposit,
+                confirmRejection,
+                openMenuSheet,
+                closeMenuSheet,
+                terminateSession
+            };
+        })();
+
+        document.addEventListener('DOMContentLoaded', DepositsController.init);
+    </script>
+</body>
+
+</html>

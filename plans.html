@@ -1,0 +1,1893 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+    <title>Sigma | Institutional Investment Portfolios</title>
+
+    <!-- SEO, Privacy & PWA Metadata -->
+    <meta name="description"
+        content="Explore institutional-grade automated investment portfolios by Sigma. Fixed daily returns, compounding liquidity, and instant verified local payouts.">
+    <meta name="keywords"
+        content="Sigma Plans, Investment Packages, Daily ROI Pakistan, EasyPaisa Investment, JazzCash Profit">
+    <meta name="author" content="Sigma Technologies">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="theme-color" content="#0B132B">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sigma Portfolios">
+    <link rel="canonical" href="https://sigmaaz.vercel.app/plans.html">
+
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sigmaaz.vercel.app/plans.html">
+    <meta property="og:title" content="Sigma | Institutional Investment Portfolios">
+    <meta property="og:description" content="Automated daily returns deposited directly into your verified PKR wallet.">
+    <meta property="og:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sigma | Investment Portfolios">
+    <meta name="twitter:description" content="Fixed daily ROI portfolios with automated capital compounding.">
+    <meta name="twitter:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <!-- Fallback Firebase Initialization -->
+    <script>
+        if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+            firebase.initializeApp({
+                apiKey: "AIzaSyCTRe2w4juZ55DrayIw61qKz_UYlZfw1H8",
+                authDomain: "week-team.firebaseapp.com",
+                projectId: "week-team",
+                storageBucket: "week-team.firebasestorage.app",
+                messagingSenderId: "480334485782",
+                appId: "1:480334485782:web:c0c886ed710567b9e6d837"
+            });
+        }
+    </script>
+
+    <style>
+        /* ==========================================================================
+           1. PREMIUM DESIGN TOKENS (LIGHT FINTECH OBSIDIAN)
+           ========================================================================== */
+        :root {
+            --sigma-primary: #0B132B;
+            --sigma-secondary: #1C2541;
+            --sigma-tertiary: #3A506B;
+
+            --sigma-surface: #FFFFFF;
+            --sigma-surface-alt: #F8FAFC;
+            --sigma-subtle: #F1F5F9;
+
+            --sigma-muted-border: #E2E8F0;
+            --sigma-input-border: #CBD5E1;
+
+            --sigma-accent: #10B981;
+            --sigma-accent-dark: #059669;
+            --sigma-accent-soft: #ECFDF5;
+            --sigma-gold: #F59E0B;
+            --sigma-gold-dark: #D97706;
+            --sigma-gold-soft: #FEF3C7;
+            --sigma-danger: #EF4444;
+            --sigma-danger-soft: #FEE2E2;
+
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --text-light: #94A3B8;
+
+            --radius-pill: 9999px;
+            --radius-2xl: 32px;
+            --radius-xl: 22px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+
+            --shadow-subtle: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+            --shadow-card: 0 16px 32px -8px rgba(15, 23, 42, 0.08), 0 4px 16px -4px rgba(15, 23, 42, 0.04);
+            --shadow-float: 0 24px 48px -12px rgba(15, 23, 42, 0.16);
+            --shadow-glow-gold: 0 12px 32px rgba(245, 158, 11, 0.28);
+
+            --z-dock: 1000;
+            --z-header: 900;
+            --z-overlay: 1900;
+            --z-modal: 2000;
+            --z-toast: 3000;
+
+            --transition-smooth: 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            --transition-bounce: 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --safe-area-bottom: env(safe-area-inset-bottom, 16px);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--sigma-surface-alt);
+            color: var(--text-body);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: calc(110px + var(--safe-area-bottom));
+            background-image:
+                radial-gradient(circle at 10% 0%, rgba(244, 114, 182, 0.035) 0%, transparent 45vw),
+                radial-gradient(circle at 90% 100%, rgba(16, 185, 129, 0.04) 0%, transparent 45vw);
+            background-attachment: fixed;
+        }
+
+        body.locked {
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            background: none;
+        }
+
+        button {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: var(--text-heading);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-feature-settings: "tnum" 1;
+        }
+
+        .text-accent {
+            color: var(--sigma-accent-dark);
+        }
+
+        .text-gold {
+            color: var(--sigma-gold-dark);
+        }
+
+        #networkOfflineBanner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--sigma-danger);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-align: center;
+            padding: 8px;
+            z-index: var(--z-toast);
+            display: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================================================
+           2. DYNAMIC ISLAND HEADER
+           ========================================================================== */
+        .app-container {
+            width: 100%;
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .island-topbar {
+            position: sticky;
+            top: 12px;
+            margin: 0 16px 20px;
+            height: 68px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-pill);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 14px;
+            z-index: var(--z-header);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .island-topbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-card);
+            border-color: var(--sigma-muted-border);
+        }
+
+        .btn-back {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--sigma-surface);
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--sigma-muted-border);
+            transition: var(--transition-bounce);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-back:active {
+            transform: scale(0.92);
+            background: var(--sigma-subtle);
+        }
+
+        .btn-back svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2.5;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .brand-text-img {
+            height: 20px;
+            object-fit: contain;
+            margin-top: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-top-action {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--sigma-subtle);
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--sigma-muted-border);
+            transition: var(--transition-bounce);
+        }
+
+        .btn-top-action:active {
+            transform: scale(0.92);
+        }
+
+        .btn-top-action svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2.2;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        /* ==========================================================================
+           3. WORKSPACE & PAGE HEADER
+           ========================================================================== */
+        .workspace {
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 4px 0 8px;
+            animation: fadeInDown 0.5s ease-out;
+        }
+
+        .page-header h1 {
+            font-size: 2.1rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 460px;
+            margin: 0 auto;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* Category Filter Pills */
+        .filter-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin: 0 -16px;
+            padding-left: 16px;
+            padding-right: 16px;
+            scrollbar-width: none;
+        }
+
+        .filter-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-pill {
+            padding: 10px 22px;
+            border-radius: var(--radius-pill);
+            background: var(--sigma-surface);
+            border: 1px solid var(--sigma-muted-border);
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            white-space: nowrap;
+            transition: var(--transition-bounce);
+            box-shadow: var(--shadow-subtle);
+            cursor: pointer;
+        }
+
+        .filter-pill:active {
+            transform: scale(0.95);
+        }
+
+        .filter-pill.active {
+            background: var(--sigma-primary);
+            color: white;
+            border-color: var(--sigma-primary);
+            box-shadow: 0 6px 16px rgba(11, 19, 43, 0.2);
+        }
+
+        /* ==========================================================================
+           4. DUAL-LAYER PLAN CARDS (PUBLIC LAYER DISPLAY)
+           ========================================================================== */
+        .plan-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+            min-height: 400px;
+        }
+
+        .plan-card {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            border: 1px solid var(--sigma-muted-border);
+            box-shadow: var(--shadow-subtle);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-bounce);
+            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-card);
+            border-color: var(--sigma-input-border);
+        }
+
+        .plan-card:active {
+            transform: scale(0.985);
+        }
+
+        /* HERO CARD SURFACE */
+        .plan-card-hero {
+            position: relative;
+            width: 100%;
+            height: 185px;
+            padding: 24px 24px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Metallic themes */
+        .theme-bronze {
+            background: linear-gradient(135deg, #1f1a18 0%, #7c4d37 55%, #b47455 100%);
+        }
+
+        .theme-silver {
+            background: linear-gradient(135deg, #18202d 0%, #475569 55%, #94a3b8 100%);
+        }
+
+        .theme-gold {
+            background: linear-gradient(135deg, #1e1b13 0%, #b45309 50%, #f59e0b 100%);
+        }
+
+        .theme-platinum {
+            background: linear-gradient(135deg, #090e1c 0%, #1e293b 50%, #334155 100%);
+        }
+
+        .theme-diamond {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1d4ed8 50%, #60a5fa 100%);
+        }
+
+        .theme-master {
+            background: linear-gradient(135deg, #170d2b 0%, #6b21a8 50%, #a855f7 100%);
+        }
+
+        .theme-obsidian {
+            background: linear-gradient(135deg, #000000 0%, #111827 50%, #040812 100%);
+            border-bottom: 2px solid var(--sigma-gold);
+        }
+
+        .plan-card-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.18;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10%);
+            background-size: 6px 6px;
+            pointer-events: none;
+        }
+
+        .plan-card-hero::after {
+            content: '';
+            position: absolute;
+            right: -25px;
+            bottom: -25px;
+            width: 170px;
+            height: 170px;
+            background-image: url('assets/logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.12;
+            transform: rotate(-12deg);
+            filter: grayscale(100%) contrast(180%);
+            pointer-events: none;
+        }
+
+        .card-inner-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+
+        .chip-nfc-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sim-chip {
+            width: 44px;
+            height: 32px;
+            border-radius: 7px;
+            background: linear-gradient(135deg, #FDE68A 0%, #D97706 100%);
+            position: relative;
+            box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.8), 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .sim-chip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 14px;
+            right: 14px;
+            border-left: 1px solid rgba(0, 0, 0, 0.2);
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .sim-chip::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 11px;
+            bottom: 11px;
+            border-top: 1px solid rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .nfc-icon {
+            width: 22px;
+            height: 22px;
+            opacity: 0.85;
+            color: white;
+        }
+
+        /* SIDE BADGE (Public Plan / Tier Label Placed on the Side) */
+        .plan-side-badge {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
+            padding: 4px 12px;
+            border-radius: var(--radius-pill);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .plan-hero-content {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2;
+            margin-top: auto;
+        }
+
+        .brand-subtext {
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 2px;
+        }
+
+        .plan-main-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .plan-price-display {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .plan-price-display .currency {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--sigma-accent-soft);
+        }
+
+        .plan-price-display .amount {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        /* Recommended Badge */
+        .plan-card.featured {
+            border-color: rgba(245, 158, 11, 0.6);
+            box-shadow: var(--shadow-card), var(--shadow-glow-gold);
+        }
+
+        .featured-banner {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--sigma-gold), var(--sigma-gold-dark));
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 4px 18px;
+            border-radius: 0 0 12px 12px;
+            letter-spacing: 1.2px;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4);
+            z-index: 5;
+        }
+
+        /* PUBLIC CARD METRICS (ENGLISH ONLY) */
+        .plan-card-body {
+            padding: 22px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            background: var(--sigma-surface);
+        }
+
+        .plan-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            background: var(--sigma-surface-alt);
+            padding: 16px 10px;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--sigma-muted-border);
+            text-align: center;
+        }
+
+        .metric-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+        }
+
+        .metric-item small {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-item strong {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: var(--text-heading);
+        }
+
+        .btn-buy-plan {
+            width: 100%;
+            height: 58px;
+            border-radius: var(--radius-xl);
+            background: var(--sigma-surface);
+            color: var(--sigma-primary);
+            font-size: 1.05rem;
+            font-weight: 900;
+            border: 2px solid var(--sigma-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition-bounce);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .plan-card:hover .btn-buy-plan {
+            background: var(--sigma-subtle);
+        }
+
+        .plan-card.featured .btn-buy-plan {
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            color: white;
+            border: none;
+            box-shadow: 0 10px 24px rgba(11, 19, 43, 0.25);
+        }
+
+        .btn-buy-plan svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        /* Skeletons */
+        .skeleton-card {
+            height: 380px;
+            border-radius: var(--radius-2xl);
+            border: 1px solid var(--sigma-muted-border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: white;
+        }
+
+        .skeleton {
+            background: #E2E8F0;
+            color: transparent !important;
+            animation: pulseSkel 1.5s infinite ease-in-out;
+        }
+
+        .skel-hero {
+            height: 185px;
+            width: 100%;
+        }
+
+        .skel-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .skel-grid {
+            height: 75px;
+            width: 100%;
+            border-radius: var(--radius-xl);
+        }
+
+        .skel-btn {
+            height: 58px;
+            width: 100%;
+            border-radius: var(--radius-xl);
+        }
+
+        @keyframes pulseSkel {
+            0% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        /* ==========================================================================
+           5. CHECKOUT MODAL (PUBLIC LAYER SUMMARY + ACTIVE GATEWAYS)
+           ========================================================================== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: var(--z-overlay);
+            background: rgba(11, 19, 43, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sheet {
+            width: 100%;
+            max-width: 640px;
+            background: var(--sigma-surface);
+            border-radius: 36px 36px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+            max-height: 94vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -30px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .overlay.show .sheet {
+            transform: translateY(0);
+        }
+
+        .sheet-handle {
+            width: 54px;
+            height: 6px;
+            border-radius: 99px;
+            background: var(--sigma-input-border);
+            margin: 14px auto 10px;
+            flex-shrink: 0;
+        }
+
+        .sheet-header {
+            padding: 8px 24px 16px;
+            border-bottom: 1px solid var(--sigma-muted-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .sheet-header h3 {
+            font-size: 1.35rem;
+            font-weight: 900;
+        }
+
+        .sheet-header p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .sheet-close-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--sigma-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: var(--transition-fast);
+            border: 1px solid var(--sigma-muted-border);
+        }
+
+        .sheet-close-btn:active {
+            transform: scale(0.9);
+        }
+
+        .sheet-close-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .sheet-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            overscroll-behavior: contain;
+        }
+
+        .detail-summary-card {
+            background: var(--sigma-surface-alt);
+            border: 1px solid var(--sigma-muted-border);
+            padding: 20px 22px;
+            border-radius: var(--radius-2xl);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .detail-row span {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .detail-row strong {
+            font-size: 1.05rem;
+            color: var(--text-heading);
+            font-weight: 800;
+        }
+
+        .detail-divider {
+            height: 1px;
+            background: var(--sigma-muted-border);
+        }
+
+        .detail-row.total {
+            margin-top: 4px;
+            padding-top: 14px;
+            border-top: 2px dashed var(--sigma-input-border);
+        }
+
+        .detail-row.total span {
+            font-weight: 800;
+            color: var(--text-heading);
+            font-size: 1rem;
+        }
+
+        .detail-row.total strong {
+            font-size: 1.6rem;
+            color: var(--sigma-accent-dark);
+            font-weight: 900;
+        }
+
+        .gateway-section-title {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: -8px;
+        }
+
+        .gateway-section-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--sigma-primary);
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .gateway-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .gateway-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            padding: 18px 12px;
+            border-radius: var(--radius-xl);
+            border: 2px solid var(--sigma-muted-border);
+            background: var(--sigma-surface);
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            position: relative;
+        }
+
+        .gateway-card:active {
+            transform: scale(0.96);
+        }
+
+        .gateway-card.selected {
+            border-color: var(--sigma-primary);
+            background: var(--sigma-subtle);
+            box-shadow: 0 6px 16px rgba(11, 19, 43, 0.08);
+        }
+
+        .gw-icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid var(--sigma-input-border);
+            padding: 4px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .gw-icon-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .gw-icon-box svg {
+            width: 26px;
+            height: 26px;
+            stroke: var(--text-heading);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .gw-info b {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-heading);
+        }
+
+        .gw-check {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--sigma-input-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            transition: 0.2s;
+        }
+
+        .gw-check svg {
+            width: 12px;
+            height: 12px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            transform: scale(0);
+            transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .gateway-card.selected .gw-check {
+            border-color: var(--sigma-primary);
+            background: var(--sigma-primary);
+        }
+
+        .gateway-card.selected .gw-check svg {
+            transform: scale(1);
+        }
+
+        .sheet-footer {
+            padding: 16px 24px 24px;
+            border-top: 1px solid var(--sigma-muted-border);
+            background: var(--sigma-surface);
+            flex-shrink: 0;
+        }
+
+        .btn-sheet-submit {
+            width: 100%;
+            height: 60px;
+            border-radius: var(--radius-xl);
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            color: white;
+            font-size: 1.15rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 12px 28px rgba(11, 19, 43, 0.25);
+            transition: var(--transition-bounce);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-sheet-submit:active {
+            transform: scale(0.96);
+        }
+
+        .btn-sheet-submit:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .btn-sheet-submit.loading .spinner {
+            display: block;
+        }
+
+        .btn-sheet-submit.loading span,
+        .btn-sheet-submit.loading svg {
+            display: none;
+        }
+
+        /* ==========================================================================
+           6. 3-BUTTON MOBILE DOCK (.html FULL NAVIGATION)
+           ========================================================================== */
+        .mobile-dock {
+            position: fixed;
+            bottom: var(--safe-area-bottom);
+            left: 50%;
+            transform: translateX(-50%);
+            height: 78px;
+            width: calc(100% - 32px);
+            max-width: 440px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-float);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: var(--z-dock);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .dock-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--text-muted);
+            width: 64px;
+            height: 100%;
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .dock-slot svg {
+            width: 26px;
+            height: 26px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2;
+        }
+
+        .dock-slot span {
+            font-size: 0.72rem;
+            font-weight: 800;
+        }
+
+        .dock-slot.active {
+            color: var(--sigma-primary);
+        }
+
+        .dock-slot.active svg {
+            stroke-width: 2.8;
+            transform: translateY(-2px);
+            color: var(--sigma-accent-dark);
+        }
+
+        .dock-crest-btn {
+            position: relative;
+            top: -26px;
+            width: 72px;
+            height: 72px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 26px rgba(11, 19, 43, 0.35);
+            border: 6px solid var(--sigma-surface-alt);
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .dock-crest-btn:active {
+            transform: scale(0.9);
+        }
+
+        .dock-crest-btn img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .dock-crest-btn::after {
+            content: 'MY PLANS';
+            position: absolute;
+            bottom: -24px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: var(--text-heading);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 860px) {
+            .mobile-dock {
+                display: none;
+            }
+
+            body {
+                padding-bottom: 50px;
+            }
+        }
+
+        /* Toast Component */
+        .toast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translate(-50%, -20px) scale(0.9);
+            background: var(--sigma-primary);
+            color: white;
+            padding: 15px 30px;
+            border-radius: var(--radius-pill);
+            font-size: 0.95rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-float);
+            z-index: var(--z-toast);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toast.error {
+            background: var(--sigma-danger);
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0) scale(1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(32px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="networkOfflineBanner">Reconnecting to Sigma Core Node...</div>
+
+    <!-- Complete SVG Sprite Architecture -->
+    <svg width="0" height="0" style="display:none;" aria-hidden="true">
+        <symbol id="icon-back" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22" />
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-bell" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </symbol>
+        <symbol id="icon-wallet" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6v12c0 1.1.9 2 2 2h14v-4" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z" />
+        </symbol>
+        <symbol id="icon-x" viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18" stroke-linecap="round" stroke-linejoin="round" />
+            <line x1="6" y1="6" x2="18" y2="18" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-check" viewBox="0 0 24 24">
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="20 6 9 17 4 12" />
+        </symbol>
+        <symbol id="icon-zap" viewBox="0 0 24 24">
+            <polygon stroke-linecap="round" stroke-linejoin="round" points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+        </symbol>
+        <symbol id="icon-shield" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </symbol>
+    </svg>
+
+    <div class="app-container">
+
+        <!-- SINGLE ROW TOPBAR HEADER -->
+        <header class="island-topbar" id="topHeader">
+            <a href="dash.html" class="btn-back" aria-label="Back to Dashboard">
+                <svg>
+                    <use href="#icon-back" />
+                </svg>
+            </a>
+            <div class="brand-cluster">
+                <img src="assets/logo.png" alt="Sigma Logo" class="brand-logo-img"
+                    onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310B981\'/><text x=\'50\' y=\'65\' font-family=\'Arial\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\'>S</text></svg>'">
+                <img src="assets/textlogo.png" alt="Sigma" class="brand-text-img" onerror="this.style.display='none'">
+            </div>
+            <div class="header-actions">
+                <button class="btn-top-action" aria-label="Notifications" onclick="window.location.href='dash.html'">
+                    <svg>
+                        <use href="#icon-bell" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN WORKSPACE -->
+        <main class="workspace">
+
+            <div class="page-header">
+                <h1>Investment Plans</h1>
+                <p>Institutional automated portfolios tailored to compound wealth daily with absolute liquidity.</p>
+            </div>
+
+            <!-- Filter Pills -->
+            <div class="filter-scroll" id="categoryFilters">
+                <button class="filter-pill active" onclick="appController.filterCategory('all', this)">All
+                    Portfolios</button>
+                <button class="filter-pill"
+                    onclick="appController.filterCategory('featured', this)">Recommended</button>
+                <button class="filter-pill" onclick="appController.filterCategory('starter', this)">Starter
+                    Tier</button>
+                <button class="filter-pill" onclick="appController.filterCategory('high', this)">High Yield</button>
+            </div>
+
+            <!-- Plans Render Container -->
+            <div class="plan-list-container" id="plansContainer">
+                <div class="skeleton-card">
+                    <div class="skel-hero skeleton"></div>
+                    <div class="skel-body">
+                        <div class="skel-grid skeleton"></div>
+                        <div class="skel-btn skeleton"></div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- 3-BUTTON MOBILE DOCK (Center points to my-plans.html) -->
+    <nav class="mobile-dock">
+        <a href="dash.html" class="dock-slot">
+            <svg>
+                <use href="#icon-home" />
+            </svg>
+            <span>Home</span>
+        </a>
+
+        <a href="my-plans.html" class="dock-crest-btn"
+            onclick="appController.logAction('dock_my_plans', 'Opened my active plans')">
+            <img src="assets/logo.png" alt="Sigma Crest"
+                onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310B981\'/><text x=\'50\' y=\'65\' font-family=\'Arial\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\'>S</text></svg>'">
+        </a>
+
+        <a href="profile.html" class="dock-slot">
+            <div style="width: 26px; height: 26px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--sigma-subtle);"
+                id="dockAvatarContainer">
+                <svg style="width: 18px; height: 18px;">
+                    <use href="#icon-user" />
+                </svg>
+            </div>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- UNIFIED CHECKOUT MODAL (PUBLIC LAYER TERMS + ACTIVE GATEWAYS) -->
+    <div class="overlay" id="sheetPlanDetails">
+        <div class="sheet">
+            <div class="sheet-handle"></div>
+
+            <div class="sheet-header">
+                <div>
+                    <h3 id="uiDetailName">Sigma Portfolio</h3>
+                    <p>Verified Gateway Checkout</p>
+                </div>
+                <button class="sheet-close-btn" onclick="appController.closeSheet('sheetPlanDetails')">
+                    <svg>
+                        <use href="#icon-x" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="sheet-body">
+                <!-- Public Layer Terms Summary Card -->
+                <div class="detail-summary-card">
+                    <div class="detail-row">
+                        <span>Required Deposit</span>
+                        <strong class="font-mono" id="uiDetailPrice">Rs. 0</strong>
+                    </div>
+                    <div class="detail-divider"></div>
+                    <div class="detail-row">
+                        <span>Daily Expected Profit</span>
+                        <strong class="font-mono text-accent" id="uiDetailDaily">Rs. 0</strong>
+                    </div>
+                    <div class="detail-divider"></div>
+                    <div class="detail-row">
+                        <span>Compounding Term</span>
+                        <strong class="font-mono" id="uiDetailDuration">0 Days</strong>
+                    </div>
+
+                    <div class="detail-row total">
+                        <span>Total Expected Return</span>
+                        <strong class="font-mono" id="uiDetailTotal">Rs. 0</strong>
+                    </div>
+                </div>
+
+                <!-- Payment Methods Grid (Active Only) -->
+                <div class="gateway-section-title">
+                    <svg>
+                        <use href="#icon-shield" />
+                    </svg>
+                    Select Payment Gateway
+                </div>
+
+                <div class="gateway-grid" id="gatewayListContainer">
+                    <div
+                        style="padding: 20px; text-align: center; color: var(--text-light); font-size: 0.95rem; grid-column: 1 / -1;">
+                        Loading verified gateways...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Action Footer -->
+            <div class="sheet-footer">
+                <button class="btn-sheet-submit" id="btnConfirmPayment" onclick="appController.initiateManualPayment()"
+                    disabled>
+                    <span id="buyBtnText">Continue to Verification</span>
+                    <svg style="width:20px;height:20px;stroke:white;fill:none;stroke-width:2.5;">
+                        <use href="#icon-zap" />
+                    </svg>
+                    <div class="spinner"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toastBox">
+        <svg style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.5;">
+            <use href="#icon-check" />
+        </svg>
+        <span id="toastMsg">Verified</span>
+    </div>
+
+    <!-- ==========================================================================
+         JAVASCRIPT CONTROLLER (PUBLIC LAYER PRESENTATION & IMMUTABLE SNAPSHOTS)
+         ========================================================================== -->
+    <script>
+        const appController = (() => {
+
+            let authUser = null;
+            let loadedPlans = [];
+            let loadedMethods = [];
+            let currentSelectedPlan = null;
+            let currentSelectedMethodId = null;
+            let currentCategoryFilter = 'all';
+
+            // Default fallback plans if Firestore is initialized without plans
+            const defaultBlueprintPlans = [
+                { id: "plan_01", order: 1, tierTag: "Plan 01", name: "Sigma Bronze", price: 1000, displayDailyROI: 450, displayDuration: 25, displayTotalReturn: 11250, isFeatured: true, theme: "theme-bronze", calculationRules: { firstDayReward: 240, subsequentMode: "percentage", subsequentRate: 0.1, calculationBasis: "investment_amount", calculationDuration: 25, maxPayoutCap: 11250 } },
+                { id: "plan_02", order: 2, tierTag: "Plan 02", name: "Sigma Silver", price: 2300, displayDailyROI: 1035, displayDuration: 25, displayTotalReturn: 25875, isFeatured: false, theme: "theme-silver", calculationRules: { firstDayReward: 500, subsequentMode: "percentage", subsequentRate: 0.1, calculationBasis: "investment_amount", calculationDuration: 25, maxPayoutCap: 25875 } },
+                { id: "plan_03", order: 3, tierTag: "Plan 03", name: "Sigma Gold", price: 6000, displayDailyROI: 2100, displayDuration: 25, displayTotalReturn: 52500, isFeatured: true, theme: "theme-gold", calculationRules: { firstDayReward: 1200, subsequentMode: "percentage", subsequentRate: 0.1, calculationBasis: "investment_amount", calculationDuration: 25, maxPayoutCap: 52500 } },
+                { id: "plan_04", order: 4, tierTag: "Plan 04", name: "Sigma Platinum", price: 14000, displayDailyROI: 4900, displayDuration: 25, displayTotalReturn: 122500, isFeatured: false, theme: "theme-platinum", calculationRules: { firstDayReward: 2800, subsequentMode: "percentage", subsequentRate: 0.1, calculationBasis: "investment_amount", calculationDuration: 25, maxPayoutCap: 122500 } },
+                { id: "plan_05", order: 5, tierTag: "Plan 05", name: "Sigma Diamond", price: 28000, displayDailyROI: 9800, displayDuration: 25, displayTotalReturn: 245000, isFeatured: true, theme: "theme-diamond", calculationRules: { firstDayReward: 5600, subsequentMode: "percentage", subsequentRate: 0.1, calculationBasis: "investment_amount", calculationDuration: 25, maxPayoutCap: 245000 } },
+                { id: "plan_06", order: 6, tierTag: "Plan 06", name: "Sigma Master", price: 46000, displayDailyROI: 16100, displayDuration: 25, displayTotalReturn: 402500, isFeatured: false, theme: "theme-master", calculationRules: { firstDayReward: 9200, subsequentMode: "percentage", subsequentRate: 0.1, calculationBasis: "investment_amount", calculationDuration: 25, maxPayoutCap: 402500 } },
+                { id: "plan_07", order: 7, tierTag: "Plan 07", name: "Sigma Obsidian", price: 60000, displayDailyROI: 21000, displayDuration: 25, displayTotalReturn: 525000, isFeatured: false, theme: "theme-obsidian", calculationRules: { firstDayReward: 12000, subsequentMode: "percentage", subsequentRate: 0.1, calculationBasis: "investment_amount", calculationDuration: 25, maxPayoutCap: 525000 } }
+            ];
+
+            const dom = {
+                plansContainer: document.getElementById('plansContainer'),
+                toastBox: document.getElementById('toastBox'),
+                toastMsg: document.getElementById('toastMsg'),
+                gatewayListContainer: document.getElementById('gatewayListContainer'),
+                btnConfirmPayment: document.getElementById('btnConfirmPayment'),
+                offlineBanner: document.getElementById('networkOfflineBanner')
+            };
+
+            const haptic = (ms = 25) => {
+                try {
+                    if (navigator.userActivation && !navigator.userActivation.hasBeenActive) return;
+                    if ('vibrate' in navigator) navigator.vibrate(ms);
+                } catch (e) { }
+            };
+
+            const toast = (msg, isError = false) => {
+                if (!dom.toastBox) return;
+                dom.toastMsg.textContent = msg;
+                dom.toastBox.className = `toast show ${isError ? 'error' : ''}`;
+                haptic(isError ? 50 : 25);
+                setTimeout(() => { dom.toastBox.classList.remove('show'); }, 3000);
+            };
+
+            const openSheet = (id) => {
+                document.querySelectorAll('.overlay.show').forEach(el => el.classList.remove('show'));
+                const el = document.getElementById(id);
+                if (el) { el.classList.add('show'); document.body.classList.add('locked'); haptic(20); }
+            };
+
+            const closeSheet = (id) => {
+                const el = document.getElementById(id);
+                if (el) { el.classList.remove('show'); document.body.classList.remove('locked'); }
+            };
+
+            const logAction = async (actionType, description) => {
+                if (!authUser || typeof firebase === 'undefined') return;
+                try {
+                    const db = firebase.firestore();
+                    await db.collection('users').doc(authUser.uid).collection('notifications').add({
+                        type: actionType,
+                        title: actionType.replace(/_/g, ' ').toUpperCase(),
+                        body: description,
+                        read: false,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        device: navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop'
+                    });
+                } catch (e) { }
+            };
+
+            const getThemeClass = (price) => {
+                const p = Number(price);
+                if (p >= 60000) return 'theme-obsidian';
+                if (p >= 46000) return 'theme-master';
+                if (p >= 28000) return 'theme-diamond';
+                if (p >= 14000) return 'theme-platinum';
+                if (p >= 6000) return 'theme-gold';
+                if (p >= 2300) return 'theme-silver';
+                return 'theme-bronze';
+            };
+
+            const filterCategory = (category, btnElem) => {
+                currentCategoryFilter = category;
+                document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+                if (btnElem) btnElem.classList.add('active');
+                haptic(15);
+                renderPlans();
+            };
+
+            // RENDER PLANS: Strictly Public Layer Terms
+            const renderPlans = () => {
+                if (!dom.plansContainer) return;
+                dom.plansContainer.innerHTML = '';
+
+                let filtered = loadedPlans;
+                if (currentCategoryFilter === 'featured') {
+                    filtered = loadedPlans.filter(p => p.isFeatured);
+                } else if (currentCategoryFilter === 'starter') {
+                    filtered = loadedPlans.filter(p => p.price <= 5000);
+                } else if (currentCategoryFilter === 'high') {
+                    filtered = loadedPlans.filter(p => p.price > 5000);
+                }
+
+                if (filtered.length === 0) {
+                    dom.plansContainer.innerHTML = `
+                        <div style="text-align:center; padding: 40px 20px; color: var(--text-muted); background: white; border-radius: var(--radius-2xl); border: 1px dashed var(--sigma-input-border);">
+                            <p style="font-weight: 700; font-size: 1rem;">No investment portfolios match this filter.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                filtered.forEach((plan, index) => {
+                    const delay = index * 0.08;
+                    const card = document.createElement('article');
+                    card.className = `plan-card ${plan.isFeatured ? 'featured' : ''}`;
+                    card.style.animationDelay = `${delay}s`;
+
+                    const featuredBanner = plan.isFeatured ? `<div class="featured-banner">Recommended</div>` : '';
+                    const themeClass = plan.theme || getThemeClass(plan.price);
+
+                    const sideTag = plan.tierTag || `Plan ${String(index + 1).padStart(2, '0')}`;
+                    let mainName = plan.name;
+                    if (!mainName.toLowerCase().startsWith('sigma')) {
+                        mainName = `Sigma ${mainName}`;
+                    }
+
+                    // PUBLIC LAYER DISPLAY NUMBERS ONLY
+                    const displayDaily = Number(plan.displayDailyROI || plan.dailyROI || 0);
+                    const displayDuration = Number(plan.displayDuration || plan.durationDays || 25);
+                    const displayTotal = Number(plan.displayTotalReturn || (displayDaily * displayDuration) || 0);
+
+                    card.innerHTML = `
+                        <div class="plan-card-hero ${themeClass}">
+                            ${featuredBanner}
+                            <div class="card-inner-topbar">
+                                <div class="chip-nfc-block">
+                                    <div class="sim-chip"></div>
+                                    <svg class="nfc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 12h.01M12 12h.01M15 12h.01M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z" />
+                                    </svg>
+                                </div>
+                                <span class="plan-side-badge font-mono">${sideTag}</span>
+                            </div>
+
+                            <div class="plan-hero-content">
+                                <span class="brand-subtext">Automated Portfolio</span>
+                                <h2 class="plan-main-title">${mainName}</h2>
+                                <div class="plan-price-display font-mono">
+                                    <span class="currency">PKR</span>
+                                    <span class="amount">${Number(plan.price).toLocaleString('en-PK')}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="plan-card-body">
+                            <div class="plan-metrics-grid font-mono">
+                                <div class="metric-item">
+                                    <small>Daily Return</small>
+                                    <strong class="text-accent">Rs. ${displayDaily.toLocaleString('en-PK')}</strong>
+                                </div>
+                                <div class="metric-item" style="border-left: 1px solid var(--sigma-input-border); border-right: 1px solid var(--sigma-input-border);">
+                                    <small>Duration</small>
+                                    <strong>${displayDuration} Days</strong>
+                                </div>
+                                <div class="metric-item">
+                                    <small>Total Expected</small>
+                                    <strong>Rs. ${displayTotal.toLocaleString('en-PK')}</strong>
+                                </div>
+                            </div>
+
+                            <button class="btn-buy-plan" onclick="appController.openPlanDetails('${plan.id}')">
+                                Invest in ${mainName} <svg><use href="#icon-zap"/></svg>
+                            </button>
+                        </div>
+                    `;
+                    dom.plansContainer.appendChild(card);
+                });
+            };
+
+            const renderPaymentMethods = () => {
+                if (!dom.gatewayListContainer) return;
+                const grid = dom.gatewayListContainer;
+                grid.innerHTML = '';
+
+                const activeGateways = loadedMethods.filter(m => m.isActive !== false);
+
+                if (activeGateways.length === 0) {
+                    grid.innerHTML = `<div style="padding: 20px; text-align: center; color: var(--sigma-danger); grid-column: 1 / -1;">No active payment gateways found. Please contact administration.</div>`;
+                    return;
+                }
+
+                activeGateways.forEach((method) => {
+                    const card = document.createElement('div');
+                    card.className = 'gateway-card';
+                    card.onclick = () => selectPaymentMethod(method.id, card);
+
+                    let iconVisual = `<svg><use href="#icon-wallet"/></svg>`;
+                    if (method.iconUrl) {
+                        iconVisual = `<img src="${method.iconUrl}" alt="${method.name}" onerror="this.src='assets/pay/bank.png'">`;
+                    }
+
+                    card.innerHTML = `
+                        <div class="gw-check"><svg><use href="#icon-check"/></svg></div>
+                        <div class="gw-icon-box">${iconVisual}</div>
+                        <div class="gw-info">
+                            <b>${method.name}</b>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            };
+
+            const openPlanDetails = (planId) => {
+                currentSelectedPlan = loadedPlans.find(p => p.id === planId);
+                if (!currentSelectedPlan) return;
+
+                const displayDaily = Number(currentSelectedPlan.displayDailyROI || currentSelectedPlan.dailyROI || 0);
+                const displayDuration = Number(currentSelectedPlan.displayDuration || currentSelectedPlan.durationDays || 25);
+                const displayTotal = Number(currentSelectedPlan.displayTotalReturn || (displayDaily * displayDuration) || 0);
+
+                document.getElementById('uiDetailName').textContent = currentSelectedPlan.name;
+                document.getElementById('uiDetailPrice').textContent = "Rs. " + Number(currentSelectedPlan.price).toLocaleString('en-PK');
+                document.getElementById('uiDetailDaily').textContent = "Rs. " + displayDaily.toLocaleString('en-PK');
+                document.getElementById('uiDetailDuration').textContent = `${displayDuration} Days`;
+                document.getElementById('uiDetailTotal').textContent = "Rs. " + displayTotal.toLocaleString('en-PK');
+
+                document.getElementById('buyBtnText').textContent = `Continue to Verification`;
+
+                currentSelectedMethodId = null;
+                if (dom.btnConfirmPayment) dom.btnConfirmPayment.disabled = true;
+                document.querySelectorAll('.gateway-card').forEach(c => c.classList.remove('selected'));
+
+                logAction('viewed_checkout', `Opened checkout for ${currentSelectedPlan.name}`);
+                openSheet('sheetPlanDetails');
+            };
+
+            const selectPaymentMethod = (methodId, elementCard) => {
+                currentSelectedMethodId = methodId;
+                document.querySelectorAll('.gateway-card').forEach(c => c.classList.remove('selected'));
+                elementCard.classList.add('selected');
+
+                if (dom.btnConfirmPayment) dom.btnConfirmPayment.disabled = false;
+                haptic(15);
+            };
+
+            // DUAL-LAYER SNAPSHOT CONTRACT PACKAGER (Passes to manual-payment.html)
+            const initiateManualPayment = () => {
+                if (!currentSelectedPlan || !currentSelectedMethodId) {
+                    toast("Please select a verified payment gateway.", true);
+                    return;
+                }
+
+                const selectedMethod = loadedMethods.find(m => m.id === currentSelectedMethodId);
+                if (!selectedMethod) return;
+
+                if (dom.btnConfirmPayment) {
+                    dom.btnConfirmPayment.classList.add('loading');
+                    dom.btnConfirmPayment.disabled = true;
+                }
+
+                const displayDaily = Number(currentSelectedPlan.displayDailyROI || currentSelectedPlan.dailyROI || 0);
+                const displayDuration = Number(currentSelectedPlan.displayDuration || currentSelectedPlan.durationDays || 25);
+                const displayTotal = Number(currentSelectedPlan.displayTotalReturn || (displayDaily * displayDuration) || 0);
+
+                // Package Layer 1 terms and Layer 2 rules snapshot into immutable session contract
+                const paymentContract = {
+                    planId: currentSelectedPlan.id,
+                    planName: currentSelectedPlan.name,
+                    tierTag: currentSelectedPlan.tierTag || "Plan",
+                    payableAmount: Number(currentSelectedPlan.price),
+
+                    // Layer 1 Snapshot
+                    displayDailyROI: displayDaily,
+                    displayDuration: displayDuration,
+                    displayTotalReturn: displayTotal,
+
+                    // Layer 2 Calculation Rules Snapshot
+                    calculationRules: currentSelectedPlan.calculationRules || {
+                        firstDayReward: 240,
+                        subsequentMode: "percentage",
+                        subsequentRate: 0.1,
+                        calculationBasis: "investment_amount",
+                        calculationDuration: displayDuration,
+                        maxPayoutCap: displayTotal
+                    },
+
+                    // Gateway Details
+                    methodId: selectedMethod.id,
+                    methodName: selectedMethod.name,
+                    timestamp: Date.now(),
+                    requestSignature: Math.random().toString(36).substring(2, 15)
+                };
+
+                sessionStorage.setItem('sigma_pending_payment_contract', JSON.stringify(paymentContract));
+                logAction('proceed_to_payment', `Proceeding to checkout via ${selectedMethod.name}`);
+
+                setTimeout(() => {
+                    window.location.href = 'manual-payment.html';
+                }, 600);
+            };
+
+            // Real-Time Database Sync (Listens directly to x/plans.html and settings)
+            const syncFirestoreData = (db) => {
+                // 1. Primary plans collection (Admin Dual-Layer plans)
+                db.collection('plans').orderBy('price', 'asc').onSnapshot(snap => {
+                    if (!snap.empty) {
+                        const syncedPlans = [];
+                        snap.forEach(doc => {
+                            const d = doc.data();
+                            if (d.status === 'active') {
+                                syncedPlans.push({
+                                    id: doc.id,
+                                    name: d.name,
+                                    tierTag: d.tierTag || `Plan 0${syncedPlans.length + 1}`,
+                                    price: Number(d.price),
+                                    displayDailyROI: Number(d.displayDailyROI || d.dailyROI || 0),
+                                    displayDuration: Number(d.displayDuration || d.durationDays || 25),
+                                    displayTotalReturn: Number(d.displayTotalReturn || (d.dailyROI * d.durationDays) || 0),
+                                    isFeatured: (d.isFeatured === true || d.isFeatured === 'true'),
+                                    theme: d.theme || getThemeClass(d.price),
+                                    calculationRules: d.calculationRules || null
+                                });
+                            }
+                        });
+
+                        if (syncedPlans.length > 0) {
+                            loadedPlans = syncedPlans;
+                            renderPlans();
+                            return;
+                        }
+                    }
+
+                    // Fallback to defaults if collection is empty
+                    loadedPlans = defaultBlueprintPlans;
+                    renderPlans();
+                }, err => {
+                    console.warn("Plans sync fallback:", err);
+                    loadedPlans = defaultBlueprintPlans;
+                    renderPlans();
+                });
+
+                // 2. Payment methods collection
+                db.collection('settings').doc('payment_methods').onSnapshot(doc => {
+                    if (doc.exists && doc.data().methods && Array.isArray(doc.data().methods)) {
+                        loadedMethods = doc.data().methods;
+                    } else {
+                        loadedMethods = [];
+                    }
+                    renderPaymentMethods();
+                }, err => {
+                    console.warn("Payment methods sync error:", err);
+                });
+            };
+
+            const initFirebase = () => {
+                if (typeof firebase === 'undefined' || !firebase.apps.length) return;
+                const auth = firebase.auth();
+                const db = firebase.firestore();
+
+                syncFirestoreData(db);
+
+                auth.onAuthStateChanged(user => {
+                    if (!user) {
+                        window.location.replace('login.html');
+                        return;
+                    }
+                    authUser = user;
+
+                    if (user.photoURL) {
+                        const dockAvatar = document.getElementById('dockAvatarContainer');
+                        if (dockAvatar) dockAvatar.innerHTML = `<img src="${user.photoURL}" alt="User" style="width:100%;height:100%;object-fit:cover;" referrerpolicy="no-referrer">`;
+                    }
+                });
+            };
+
+            const init = () => {
+                document.querySelectorAll('.overlay').forEach(ov => {
+                    ov.addEventListener('click', e => { if (e.target === ov) closeSheet(ov.id); });
+                });
+
+                const header = document.getElementById('topHeader');
+                if (header) {
+                    window.addEventListener('scroll', () => {
+                        if (window.scrollY > 20) header.classList.add('scrolled');
+                        else header.classList.remove('scrolled');
+                    }, { passive: true });
+                }
+
+                window.addEventListener('offline', () => { if (dom.offlineBanner) dom.offlineBanner.style.display = 'block'; });
+                window.addEventListener('online', () => { if (dom.offlineBanner) dom.offlineBanner.style.display = 'none'; toast('Connection verified'); });
+
+                initFirebase();
+            };
+
+            return {
+                init,
+                closeSheet,
+                openPlanDetails,
+                initiateManualPayment,
+                filterCategory,
+                logAction
+            };
+
+        })();
+
+        document.addEventListener('DOMContentLoaded', appController.init);
+    </script>
+</body>
+
+</html>

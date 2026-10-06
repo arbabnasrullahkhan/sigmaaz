@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Admin Panel is strictly blocked from search engines
+Disallow: /x/
+
+# Sitemap location
+Sitemap: https://sigmaaz.vercel.app/sitemap.xml

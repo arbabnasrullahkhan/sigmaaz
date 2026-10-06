@@ -1,0 +1,2792 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>SIGMA | Premium Investment & Trading Platform in Pakistan</title>
+
+    <!-- =======================================================================
+         SEO, META TAGS & OPEN GRAPH (Optimized for Vercel Deployment)
+         ======================================================================= -->
+    <meta name="description"
+        content="SIGMA is Pakistan's leading smart investment platform. Earn daily profits in PKR, utilize automated trading, and enjoy a massive 3-level referral bonus system.">
+    <meta name="keywords"
+        content="SIGMA, Trading Pakistan, Earn PKR, Investment Platform, Crypto, Stocks, Wealth Management, Easypaisa, JazzCash, Passive Income">
+    <meta name="author" content="SIGMA Technologies">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Mobile App Settings & PWA Capabilities -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SIGMA">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://sigmaaz.vercel.app/">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Open Graph / Social / Twitter Cards -->
+    <meta property="og:locale" content="en_PK">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sigmaaz.vercel.app/">
+    <meta property="og:title" content="SIGMA | Smart Investment Platform Pakistan">
+    <meta property="og:description"
+        content="Experience professional trading and wealth growth with SIGMA's state-of-the-art platform. Fast withdrawals via Easypaisa & JazzCash.">
+    <meta property="og:site_name" content="SIGMA">
+    <meta property="og:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SIGMA | Smart Investment Platform">
+    <meta name="twitter:description" content="Secure, fast, and reliable trading in PKR. Join SIGMA today.">
+    <meta name="twitter:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+
+    <!-- Preconnect & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Firebase SDKs (Compat Libraries for Vanilla JS / A to Z Connection) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js" defer></script>
+
+    <!-- Connect Centralized Firebase Configuration -->
+    <script src="firebase-config.js" defer></script>
+
+    <!-- Schema.org JSON-LD for Maximum SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      "name": "SIGMA",
+      "url": "https://sigmaaz.vercel.app/",
+      "logo": "https://sigmaaz.vercel.app/assets/logo.png",
+      "image": "https://sigmaaz.vercel.app/assets/preview.png",
+      "description": "Premium Investment & Trading Platform in Pakistan. Earn daily ROI and referral bonuses.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "PK"
+      },
+      "currenciesAccepted": "PKR",
+      "paymentAccepted": "Easypaisa, JazzCash, Bank Transfer",
+      "areaServed": "Pakistan",
+      "sameAs": [
+        "https://whatsapp.com/channel/sigma_official"
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do I start investing with SIGMA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Create an account, deposit funds via Easypaisa, JazzCash or Bank transfer, and select an automated portfolio from the Plans section. Profits generate daily."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is the minimum withdrawal amount?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The minimum withdrawal limit varies by method but generally starts as low as 500 PKR. Withdrawals are processed quickly and securely."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How does the Referral Program work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Earn 400 Rs for Level 1 direct invites, 250 Rs for Level 2, and a 2% lifetime commission on Level 3 investments."
+        }
+      }]
+    }
+    </script>
+
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & DESIGN SYSTEM (Premium Light Mode)
+           ========================================================================== */
+        :root {
+            /* SIGMA Brand Palette */
+            --sigma-primary: #0F172A;
+            --sigma-secondary: #1E293B;
+            --sigma-accent: #10B981;
+            --sigma-accent-hover: #059669;
+            --sigma-accent-light: #D1FAE5;
+            --sigma-gold: #F59E0B;
+            --sigma-gold-light: #FEF3C7;
+            --sigma-danger: #EF4444;
+            --sigma-danger-light: #FEE2E2;
+
+            /* Surfaces */
+            --bg-body: #F8FAFC;
+            --bg-surface: #FFFFFF;
+            --bg-subtle: #F1F5F9;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+
+            /* Typography Colors */
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --text-inverse: #FFFFFF;
+
+            /* Borders & Focus */
+            --border-light: rgba(15, 23, 42, 0.08);
+            --border-focus: #10B981;
+
+            /* Island UI Layout Settings */
+            --radius-pill: 9999px;
+            --radius-island: 28px;
+            --radius-card: 20px;
+            --radius-btn: 16px;
+
+            /* Premium Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+            --shadow-island: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
+            --shadow-float: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            --shadow-glow: 0 0 30px rgba(16, 185, 129, 0.2);
+
+            /* Z-Indexes */
+            --z-behind: -1;
+            --z-normal: 1;
+            --z-header: 100;
+            --z-dock: 900;
+            --z-whatsapp: 950;
+            --z-modal: 2000;
+            --z-blocker: 9999;
+
+            /* Transitions */
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ==========================================================================
+           2. CSS RESET & GLOBAL STYLES
+           ========================================================================== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+            background-image:
+                radial-gradient(circle at 10% 0%, rgba(16, 185, 129, 0.05) 0%, transparent 50vw),
+                radial-gradient(circle at 90% 100%, rgba(15, 23, 42, 0.03) 0%, transparent 50vw);
+            background-attachment: fixed;
+        }
+
+        body.locked {
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            background: none;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+            height: auto;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            color: var(--text-main);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .text-accent {
+            color: var(--sigma-accent);
+        }
+
+        .text-primary {
+            color: var(--sigma-primary);
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ==========================================================================
+           3. ISLAND UI HEADER (Strictly 1 Row, Fully Responsive)
+           ========================================================================== */
+        .island-header {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 1160px;
+            height: 72px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-pill);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 12px 0 20px;
+            z-index: var(--z-header);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: var(--transition-smooth);
+            flex-wrap: nowrap;
+        }
+
+        .island-header.scrolled {
+            top: 10px;
+            box-shadow: var(--shadow-island);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+
+        .brand-logo-img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .brand-text-img {
+            height: 26px;
+            object-fit: contain;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .nav-desktop {
+            display: none;
+            gap: 32px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            flex-shrink: 1;
+        }
+
+        .nav-desktop a {
+            transition: var(--transition-fast);
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .nav-desktop a:hover {
+            color: var(--sigma-primary);
+        }
+
+        .nav-desktop a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--sigma-accent);
+            transition: var(--transition-smooth);
+            border-radius: 2px;
+        }
+
+        .nav-desktop a:hover::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: var(--radius-pill);
+            font-weight: 800;
+            font-size: 0.95rem;
+            transition: var(--transition-bounce);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-ghost {
+            color: var(--text-main);
+            background: transparent;
+            padding: 12px 18px;
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-subtle);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            color: var(--text-inverse);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.35);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 1024px) {
+            .nav-desktop {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .island-header {
+                padding: 0 8px 0 12px;
+                height: 66px;
+                gap: 8px;
+            }
+
+            .brand-cluster {
+                gap: 8px;
+            }
+
+            .brand-logo-img {
+                width: 36px;
+                height: 36px;
+            }
+
+            .brand-text-img {
+                height: 22px;
+            }
+
+            .header-actions {
+                gap: 6px;
+            }
+
+            .btn-primary {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+
+            .btn-ghost {
+                padding: 10px;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                background: var(--bg-subtle);
+            }
+
+            .btn-ghost span {
+                display: none;
+            }
+
+            .btn-ghost svg {
+                display: block !important;
+                width: 18px;
+                height: 18px;
+                stroke: var(--sigma-primary);
+                fill: none;
+                stroke-width: 2.5;
+            }
+        }
+
+        /* ==========================================================================
+           4. STRICTLY 3-BUTTON MOBILE DOCK
+           ========================================================================== */
+        .mobile-dock {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 76px;
+            width: calc(100% - 40px);
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-island);
+            box-shadow: var(--shadow-float);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: var(--z-dock);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .dock-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: var(--text-muted);
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .dock-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            transition: var(--transition-smooth);
+        }
+
+        .dock-btn span {
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        .dock-btn.active {
+            color: var(--sigma-primary);
+            background: var(--bg-subtle);
+        }
+
+        .dock-btn.active svg {
+            transform: translateY(-2px);
+            stroke-width: 2.5;
+        }
+
+        .dock-center {
+            position: relative;
+            top: -24px;
+            width: 76px;
+            height: 76px;
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);
+            border: 5px solid var(--bg-body);
+            transition: var(--transition-bounce);
+            z-index: 2;
+        }
+
+        .dock-center:active {
+            transform: scale(0.92);
+        }
+
+        .dock-center img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .dock-center::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 2px solid var(--sigma-accent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .dock-center:hover::after {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        @media (min-width: 768px) {
+            .mobile-dock {
+                display: none;
+            }
+
+            body {
+                padding-bottom: 0;
+            }
+
+            .nav-desktop {
+                display: flex;
+            }
+        }
+
+        /* ==========================================================================
+           5. FLOATING WHATSAPP BUTTON
+           ========================================================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+            z-index: var(--z-whatsapp);
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .whatsapp-float svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(-10deg);
+        }
+
+        .whatsapp-float::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid #25D366;
+            animation: waPulse 2s infinite;
+            z-index: -1;
+        }
+
+        @keyframes waPulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .whatsapp-float {
+                bottom: 30px;
+                right: 30px;
+                width: 64px;
+                height: 64px;
+            }
+
+            .whatsapp-float svg {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* ==========================================================================
+           6. HERO SECTION & ROTATING TEXT
+           ========================================================================== */
+        .hero {
+            padding: 180px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+            z-index: var(--z-behind);
+            border-radius: 50%;
+        }
+
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 20px;
+            background: var(--bg-surface);
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-main);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            margin-bottom: 32px;
+            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .trust-badge .stars {
+            color: var(--sigma-gold);
+            display: flex;
+            gap: 2px;
+        }
+
+        .trust-badge .stars svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            margin-bottom: 24px;
+            letter-spacing: -0.05em;
+            line-height: 1.05;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rotating-wrapper {
+            display: inline-block;
+            position: relative;
+            height: 1.1em;
+            overflow: hidden;
+            vertical-align: bottom;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .rotating-text {
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 100%;
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .rotating-text.active {
+            top: 0;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rotating-text.exit {
+            top: -100%;
+            opacity: 0;
+            transform: translateY(0);
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: var(--text-muted);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+        }
+
+        .hero-preview-wrapper {
+            margin: 60px auto 0;
+            max-width: 1000px;
+            width: 95%;
+            border-radius: var(--radius-island);
+            box-shadow: var(--shadow-float);
+            border: 8px solid white;
+            background: var(--bg-subtle);
+            animation: slideUpFloat 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+            transform-origin: bottom;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .preview-fallback {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            background: #F8FAFC;
+            border-radius: 12px;
+            z-index: 1;
+            padding: 5%;
+        }
+
+        .fb-header {
+            height: 10%;
+            background: #E2E8F0;
+            border-radius: 8px;
+            margin-bottom: 4%;
+            width: 100%;
+        }
+
+        .fb-body {
+            display: flex;
+            gap: 4%;
+            height: 86%;
+        }
+
+        .fb-sidebar {
+            width: 20%;
+            background: #E2E8F0;
+            border-radius: 8px;
+            height: 100%;
+        }
+
+        .fb-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4%;
+        }
+
+        .fb-card-top {
+            height: 40%;
+            background: linear-gradient(135deg, #CBD5E1, #94A3B8);
+            border-radius: 8px;
+        }
+
+        .fb-card-bottom {
+            display: flex;
+            gap: 4%;
+            height: 56%;
+        }
+
+        .fb-card-mini {
+            flex: 1;
+            background: #E2E8F0;
+            border-radius: 8px;
+        }
+
+        /* ==========================================================================
+           7. LIVE MARKET SIGNALS (PKR)
+           ========================================================================== */
+        .market-section {
+            padding: 60px 0;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            overflow: hidden;
+        }
+
+        .market-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .market-header h3 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--sigma-accent);
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: var(--bg-surface);
+            padding: 10px 0;
+        }
+
+        .ticker {
+            display: flex;
+            width: max-content;
+            animation: tickerAnim 30s linear infinite;
+            gap: 24px;
+            padding-right: 24px;
+        }
+
+        .ticker:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes tickerAnim {
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .market-card {
+            background: var(--bg-subtle);
+            padding: 24px;
+            border-radius: var(--radius-card);
+            border: 1px solid var(--border-light);
+            transition: var(--transition-smooth);
+            text-align: left;
+            width: 300px;
+            flex-shrink: 0;
+        }
+
+        .market-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            background: var(--bg-surface);
+            border-color: var(--sigma-accent);
+        }
+
+        .market-card .pair {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .market-card .price {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin: 8px 0;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -1px;
+        }
+
+        .market-card .change {
+            font-size: 1rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .market-card .change.up {
+            color: var(--sigma-accent);
+        }
+
+        .market-card .change.down {
+            color: var(--sigma-danger);
+        }
+
+        .market-card .change svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 3;
+            fill: none;
+        }
+
+        /* ==========================================================================
+           8. FEATURES SECTION
+           ========================================================================== */
+        .features-section {
+            padding: 120px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-inline: auto;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 16px;
+        }
+
+        .section-heading p {
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-surface);
+            padding: 40px;
+            border-radius: var(--radius-island);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--sigma-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition-smooth);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-island);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+            background: var(--sigma-accent);
+        }
+
+        .feature-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
+            background: var(--bg-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sigma-primary);
+            margin-bottom: 24px;
+            border: 1px solid var(--border-light);
+        }
+
+        .feature-icon svg {
+            width: 36px;
+            height: 36px;
+            stroke-width: 1.5;
+            fill: none;
+            stroke: currentColor;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* ==========================================================================
+           9. HOW IT WORKS
+           ========================================================================== */
+        .hiw-section {
+            padding: 100px 0;
+            background: var(--bg-subtle);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            left: 36px;
+            top: 20px;
+            bottom: 20px;
+            width: 2px;
+            background: var(--border-light);
+            z-index: 0;
+        }
+
+        @media (max-width: 600px) {
+            .steps-container::before {
+                left: 24px;
+            }
+        }
+
+        .step-row {
+            display: flex;
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            border: 2px solid var(--sigma-accent);
+            color: var(--sigma-primary);
+            font-size: 1.5rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (max-width: 600px) {
+            .step-number {
+                width: 48px;
+                height: 48px;
+                font-size: 1.2rem;
+            }
+
+            .step-row {
+                gap: 16px;
+            }
+        }
+
+        .step-content {
+            background: var(--bg-surface);
+            padding: 30px;
+            border-radius: var(--radius-card);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            flex: 1;
+        }
+
+        .step-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* ==========================================================================
+           10. REFERRAL PROGRAM SECTION
+           ========================================================================== */
+        .referral-section {
+            padding: 120px 0;
+            background: var(--sigma-primary);
+            color: white;
+            border-radius: 40px;
+            margin: 40px 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-island);
+        }
+
+        .referral-section::after {
+            content: '';
+            position: absolute;
+            right: -150px;
+            bottom: -150px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .referral-section .section-heading h2 {
+            color: white;
+        }
+
+        .referral-section .section-heading p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ref-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-island);
+            padding: 50px 30px 40px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .ref-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(16, 185, 129, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .ref-level {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--sigma-accent);
+            color: white;
+            font-weight: 900;
+            font-size: 1rem;
+            padding: 10px 30px;
+            border-radius: var(--radius-pill);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+            border: 2px solid var(--sigma-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .ref-amount {
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            margin: 10px 0 16px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -2px;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .ref-amount span {
+            font-size: 1.5rem;
+            color: var(--sigma-accent);
+            font-weight: 800;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0;
+        }
+
+        .ref-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 900px) {
+            .ref-grid {
+                grid-template-columns: 1fr;
+                max-width: 450px;
+                gap: 40px;
+            }
+
+            .referral-section {
+                border-radius: 24px;
+                padding: 80px 20px;
+                margin: 20px;
+            }
+
+            .ref-amount {
+                font-size: 3.5rem;
+            }
+        }
+
+        /* ==========================================================================
+           11. TRUST & REVIEWS
+           ========================================================================== */
+        .reviews-section {
+            padding: 120px 0;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .review-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-island);
+            padding: 40px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .review-stars {
+            color: var(--sigma-gold);
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+        }
+
+        .review-stars svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .review-text {
+            font-size: 1.15rem;
+            color: var(--text-main);
+            font-weight: 600;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 24px;
+        }
+
+        .reviewer-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--bg-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: var(--sigma-primary);
+            font-size: 1.2rem;
+            border: 1px solid var(--border-light);
+        }
+
+        .reviewer-info b {
+            display: block;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+
+        .reviewer-info small {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: var(--sigma-accent);
+            font-weight: 700;
+        }
+
+        .verified-icon {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 3;
+        }
+
+        /* ==========================================================================
+           12. SECURITY & WITHDRAWALS VISUALIZATION
+           ========================================================================== */
+        .security-section {
+            padding: 120px 0;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .sec-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .sec-item {
+            display: flex;
+            gap: 24px;
+        }
+
+        .sec-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--sigma-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .sec-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .sec-text b {
+            font-size: 1.3rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .sec-text p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .sec-visual-box {
+            background: var(--bg-subtle);
+            border-radius: var(--radius-island);
+            padding: 50px 40px;
+            border: 1px solid var(--border-light);
+            position: relative;
+            box-shadow: var(--shadow-island);
+            text-align: center;
+        }
+
+        .sec-visual-box h4 {
+            margin-bottom: 30px;
+            font-size: 1.6rem;
+            color: var(--sigma-primary);
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .pm-card {
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-card);
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: var(--shadow-sm);
+            text-align: left;
+            transition: var(--transition-smooth);
+        }
+
+        .pm-card:hover {
+            transform: translateX(10px);
+            border-color: var(--sigma-accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pm-card .icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: var(--bg-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sigma-primary);
+        }
+
+        .pm-card .icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .pm-card b {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        .pm-card small {
+            color: var(--sigma-accent);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .split-layout {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .sec-visual-box {
+                order: -1;
+                padding: 40px 20px;
+            }
+        }
+
+        /* ==========================================================================
+           13. FAQ SECTION (Structured Data Ready)
+           ========================================================================== */
+        .faq-section {
+            padding: 120px 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-card);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 28px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .faq-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .faq-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--sigma-primary);
+            fill: none;
+            stroke-width: 3;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: var(--bg-subtle);
+        }
+
+        .faq-answer p {
+            padding: 0 30px 30px;
+            margin: 0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+        }
+
+        .faq-item.active {
+            border-color: var(--sigma-accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+            background: var(--sigma-accent);
+        }
+
+        .faq-item.active .faq-icon svg {
+            stroke: white;
+        }
+
+        /* ==========================================================================
+           14. CTA & MASSIVE FOOTER
+           ========================================================================== */
+        .cta-section {
+            padding: 60px 20px 100px;
+            text-align: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .cta-island {
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            border-radius: 40px;
+            padding: 100px 40px;
+            color: white;
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-island::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cta-island h2 {
+            color: white;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-island p {
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 650px;
+            margin: 0 auto 40px;
+            font-size: 1.25rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-island .btn {
+            background: white;
+            color: var(--sigma-primary);
+            font-size: 1.2rem;
+            padding: 24px 50px;
+            border-radius: var(--radius-pill);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer {
+            padding: 100px 0 40px;
+            border-top: 1px solid var(--border-light);
+            background: var(--bg-surface);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-brand .brand-logo-img {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand .brand-text-img {
+            height: 28px;
+            margin-bottom: 24px;
+        }
+
+        .footer-brand p {
+            max-width: 350px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+        }
+
+        .footer-col h4 {
+            margin-bottom: 28px;
+            font-size: 1.2rem;
+            color: var(--sigma-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .footer-col ul {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            transition: var(--transition-fast);
+            font-weight: 500;
+        }
+
+        .footer-col a:hover {
+            color: var(--sigma-accent);
+            padding-left: 8px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-bottom p {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .footer-bottom small {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 960px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 50px;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .cta-island {
+                padding: 60px 20px;
+                border-radius: 30px;
+            }
+        }
+
+        /* ==========================================================================
+           15. MODALS & FIREBASE BLOCKER SCREEN
+           ========================================================================== */
+        #blockerScreen {
+            position: fixed;
+            inset: 0;
+            z-index: var(--z-blocker);
+            background: var(--bg-body);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            text-align: center;
+        }
+
+        #blockerScreen.active {
+            display: flex;
+        }
+
+        #blockerScreen svg {
+            width: 90px;
+            height: 90px;
+            stroke: var(--sigma-danger);
+            fill: none;
+            stroke-width: 1.5;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        #blockerScreen h1 {
+            font-size: 3rem;
+            color: var(--sigma-danger);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        #blockerScreen p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+            color: var(--text-main);
+        }
+
+        #blockerScreen .btn {
+            background: var(--sigma-danger);
+            color: white;
+            padding: 18px 40px;
+            border-radius: var(--radius-pill);
+            font-weight: 800;
+            font-size: 1.15rem;
+        }
+
+        .hidden-icon {
+            display: none !important;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUpFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =======================================================================
+         SVG SPRITES (Massive Icon Library for Premium Look)
+         ======================================================================= -->
+    <svg width="0" height="0" style="display:none;" aria-hidden="true">
+        <symbol id="icon-shield" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </symbol>
+        <symbol id="icon-mobile" viewBox="0 0 24 24">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round" />
+            <line x1="12" y1="18" x2="12.01" y2="18" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-chart" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" />
+        </symbol>
+        <symbol id="icon-wallet" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6v12c0 1.1.9 2 2 2h14v-4" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z" />
+        </symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22" />
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+        </symbol>
+        <symbol id="icon-arrow-up" viewBox="0 0 24 24">
+            <line x1="12" y1="19" x2="12" y2="5" stroke-linecap="round" stroke-linejoin="round" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="5 12 12 5 19 12" />
+        </symbol>
+        <symbol id="icon-arrow-down" viewBox="0 0 24 24">
+            <line x1="12" y1="5" x2="12" y2="19" stroke-linecap="round" stroke-linejoin="round" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="19 12 12 19 5 12" />
+        </symbol>
+        <symbol id="icon-check-circle" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="22 4 12 14.01 9 11.01" />
+        </symbol>
+        <symbol id="icon-lock" viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </symbol>
+        <symbol id="icon-whatsapp" viewBox="0 0 24 24">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+        </symbol>
+        <symbol id="icon-plus" viewBox="0 0 24 24">
+            <line x1="12" y1="5" x2="12" y2="19" stroke-linecap="round" stroke-linejoin="round" />
+            <line x1="5" y1="12" x2="19" y2="12" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-bank" viewBox="0 0 24 24">
+            <rect x="3" y="21" width="18" height="2" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="4" y="10" width="2" height="8" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="10" y="10" width="2" height="8" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="16" y="10" width="2" height="8" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.5 8 12 2l9.5 6H2.5Z" />
+        </symbol>
+        <symbol id="icon-alert-triangle" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+            <line x1="12" y1="9" x2="12" y2="13" stroke-linecap="round" stroke-linejoin="round" />
+            <line x1="12" y1="17" x2="12.01" y2="17" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-login" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" />
+        </symbol>
+    </svg>
+
+    <!-- =======================================================================
+         FIREBASE ADMIN BLOCKER / MAINTENANCE SCREEN
+         ======================================================================= -->
+    <div id="blockerScreen">
+        <svg>
+            <use href="#icon-alert-triangle"></use>
+        </svg>
+        <h1 id="blockerTitle">Access Restricted</h1>
+        <p id="blockerMsg">Your account has been suspended or the platform is currently under maintenance. Please
+            contact support for more information.</p>
+        <a href="https://whatsapp.com/channel/sigma_official" class="btn"
+            style="background: var(--sigma-danger); color: white;">Contact Support</a>
+    </div>
+
+    <!-- =======================================================================
+         ISLAND HEADER (Strictly Single Row)
+         ======================================================================= -->
+    <header class="island-header" id="mainHeader">
+        <a href="index.html" class="brand-cluster">
+            <img src="assets/logo.png" alt="SIGMA Logo" class="brand-logo-img"
+                onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310B981\'/><text x=\'50\' y=\'65\' font-family=\'Arial\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\'>S</text></svg>'">
+            <img src="assets/textlogo.png" alt="SIGMA" class="brand-text-img" onerror="this.style.display='none'">
+        </a>
+
+        <nav class="nav-desktop">
+            <a href="#home">Home</a>
+            <a href="#markets">Markets</a>
+            <a href="#features">Features</a>
+            <a href="#referrals">Referrals</a>
+            <a href="#security">Security</a>
+        </nav>
+
+        <div class="header-actions">
+            <!-- Uses config cleanUrls equivalent or fallback HTML -->
+            <a href="login.html" class="btn btn-ghost">
+                <svg class="hidden-icon">
+                    <use href="#icon-login"></use>
+                </svg>
+                <span>Login</span>
+            </a>
+            <a href="reg.html" class="btn btn-primary" id="headerRegBtn">Create Account</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- =======================================================================
+             HERO SECTION & ROTATING TEXT
+             ======================================================================= -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="trust-badge">
+                    <div class="stars">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                    </div>
+                    <span>#1 Rated Trading Platform in Pakistan</span>
+                </div>
+
+                <h1 id="cmsHeroTitle">
+                    Trade Smart. Scale
+                    <span class="rotating-wrapper">
+                        <span class="rotating-text active" data-index="0">Wealth.</span>
+                        <span class="rotating-text" data-index="1">Portfolios.</span>
+                        <span class="rotating-text" data-index="2">Profits.</span>
+                    </span>
+                </h1>
+
+                <p id="cmsHeroDesc">Join thousands of Pakistanis earning daily profits. Experience institutional-grade
+                    trading, automated portfolios, and frictionless <b>Easypaisa & JazzCash</b> withdrawals.</p>
+
+                <div class="hero-actions">
+                    <a href="reg.html" class="btn btn-primary" id="heroRegBtn">Start Earning Today</a>
+                    <a href="login.html" class="btn btn-ghost"
+                        style="border: 2px solid var(--border-light); padding: 14px 28px;">Member Login</a>
+                </div>
+
+                <div class="hero-preview-wrapper">
+                    <img src="assets/preview.png" alt="SIGMA Dashboard Interface" class="hero-preview-img"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="preview-fallback" style="display: none;">
+                        <div class="fb-header"></div>
+                        <div class="fb-body">
+                            <div class="fb-sidebar"></div>
+                            <div class="fb-main">
+                                <div class="fb-card-top"></div>
+                                <div class="fb-card-bottom">
+                                    <div class="fb-card-mini"></div>
+                                    <div class="fb-card-mini"></div>
+                                    <div class="fb-card-mini"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================================================================
+             LIVE MARKET SIGNALS (Strictly PKR / Rs - Animated Ticker)
+             ======================================================================= -->
+        <section class="market-section" id="markets">
+            <div class="market-header reveal">
+                <h3>
+                    <div class="pulse-dot"></div> Live Market Overview
+                </h3>
+            </div>
+
+            <div class="ticker-wrap">
+                <div class="ticker">
+                    <div class="market-card">
+                        <div class="pair">SIGMA Blue-Chip <span>SBC/PKR</span></div>
+                        <div class="price">Rs <span class="dyn-price">14,285.40</span></div>
+                        <div class="change up"><svg>
+                                <use href="#icon-arrow-up"></use>
+                            </svg> +3.24%</div>
+                    </div>
+                    <div class="market-card">
+                        <div class="pair">Tech Growth Fund <span>TGF/PKR</span></div>
+                        <div class="price">Rs <span class="dyn-price">8,824.10</span></div>
+                        <div class="change up"><svg>
+                                <use href="#icon-arrow-up"></use>
+                            </svg> +1.80%</div>
+                    </div>
+                    <div class="market-card">
+                        <div class="pair">Islamic Yield <span>IYD/PKR</span></div>
+                        <div class="price">Rs <span class="dyn-price">2,145.60</span></div>
+                        <div class="change down" style="color: var(--sigma-danger);"><svg>
+                                <use href="#icon-arrow-down"></use>
+                            </svg> -0.45%</div>
+                    </div>
+                    <div class="market-card">
+                        <div class="pair">Global Defi <span>GDF/PKR</span></div>
+                        <div class="price">Rs <span class="dyn-price">1,024.30</span></div>
+                        <div class="change up"><svg>
+                                <use href="#icon-arrow-up"></use>
+                            </svg> +5.12%</div>
+                    </div>
+
+                    <div class="market-card">
+                        <div class="pair">SIGMA Blue-Chip <span>SBC/PKR</span></div>
+                        <div class="price">Rs <span class="dyn-price">14,285.40</span></div>
+                        <div class="change up"><svg>
+                                <use href="#icon-arrow-up"></use>
+                            </svg> +3.24%</div>
+                    </div>
+                    <div class="market-card">
+                        <div class="pair">Tech Growth Fund <span>TGF/PKR</span></div>
+                        <div class="price">Rs <span class="dyn-price">8,824.10</span></div>
+                        <div class="change up"><svg>
+                                <use href="#icon-arrow-up"></use>
+                            </svg> +1.80%</div>
+                    </div>
+                    <div class="market-card">
+                        <div class="pair">Islamic Yield <span>IYD/PKR</span></div>
+                        <div class="price">Rs <span class="dyn-price">2,145.60</span></div>
+                        <div class="change down" style="color: var(--sigma-danger);"><svg>
+                                <use href="#icon-arrow-down"></use>
+                            </svg> -0.45%</div>
+                    </div>
+                    <div class="market-card">
+                        <div class="pair">Global Defi <span>GDF/PKR</span></div>
+                        <div class="price">Rs <span class="dyn-price">1,024.30</span></div>
+                        <div class="change up"><svg>
+                                <use href="#icon-arrow-up"></use>
+                            </svg> +5.12%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================================================================
+             HOW IT WORKS
+             ======================================================================= -->
+        <section class="hiw-section">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <h2>How It Works</h2>
+                    <p>Start generating passive income in three simple steps.</p>
+                </div>
+
+                <div class="steps-container">
+                    <div class="step-row reveal">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Create Your Account</h3>
+                            <p>Sign up securely in less than 60 seconds. Verify your identity to unlock full platform
+                                features and bank-grade security protocols.</p>
+                        </div>
+                    </div>
+                    <div class="step-row reveal" style="transition-delay: 0.1s;">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Fund & Select Plan</h3>
+                            <p>Deposit PKR instantly via Easypaisa, JazzCash, or local bank transfer. Browse our
+                                automated investment portfolios and select one that fits your goals.</p>
+                        </div>
+                    </div>
+                    <div class="step-row reveal" style="transition-delay: 0.2s;">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Earn & Withdraw</h3>
+                            <p>Watch your profits compound daily. Request lightning-fast withdrawals to your local
+                                wallet or bank account anytime, 24/7.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================================================================
+             FEATURES SECTION
+             ======================================================================= -->
+        <section class="features-section" id="features">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <h2>Engineered for Performance</h2>
+                    <p>Access premium financial tools packaged in a beautiful, mobile-first interface designed for every
+                        investor in Pakistan.</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card reveal">
+                        <div class="feature-icon"><svg>
+                                <use href="#icon-mobile"></use>
+                            </svg></div>
+                        <h3>Mobile-First Design</h3>
+                        <p>Execute trades, monitor active plans, and request payouts instantly from your smartphone with
+                            native-app speed and fluidity.</p>
+                    </div>
+
+                    <div class="feature-card reveal" style="transition-delay: 0.1s;">
+                        <div class="feature-icon"><svg>
+                                <use href="#icon-chart"></use>
+                            </svg></div>
+                        <h3>Automated Portfolios</h3>
+                        <p>Select from expertly curated investment plans that auto-compound your wealth using advanced
+                            market algorithms. Sit back and earn.</p>
+                    </div>
+
+                    <div class="feature-card reveal" style="transition-delay: 0.2s;">
+                        <div class="feature-icon"><svg>
+                                <use href="#icon-bank"></use>
+                            </svg></div>
+                        <h3>Local Payouts</h3>
+                        <p>Enjoy frictionless, lightning-fast withdrawals directly to your <b>Bank Account, Easypaisa,
+                                or JazzCash</b>. Your liquidity is our priority.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================================================================
+             REFERRAL PROGRAM SECTION
+             ======================================================================= -->
+        <section class="referral-section reveal" id="referrals">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Massive Team Bonus</h2>
+                    <p>Build your network and earn substantial passive income. SIGMA offers the most rewarding 3-Tier
+                        referral system in the industry.</p>
+                </div>
+
+                <div class="ref-grid">
+                    <div class="ref-card">
+                        <div class="ref-level">Level 1</div>
+                        <div class="ref-amount">400 <span>Rs</span></div>
+                        <p>Direct Invite Bonus. Earn instantly when your direct referral joins and activates a plan.</p>
+                    </div>
+
+                    <div class="ref-card" style="transition-delay: 0.1s;">
+                        <div class="ref-level" style="background: var(--sigma-secondary);">Level 2</div>
+                        <div class="ref-amount">250 <span>Rs</span></div>
+                        <p>Indirect Invite Bonus. Earn when your Level 1 members invite new investors.</p>
+                    </div>
+
+                    <div class="ref-card" style="transition-delay: 0.2s;">
+                        <div class="ref-level"
+                            style="background: var(--sigma-gold); color: black; border-color: white;">Level 3</div>
+                        <div class="ref-amount">2 <span>%</span></div>
+                        <p>Extended Network Bonus. Earn a 2% lifetime commission on all Level 3 investments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================================================================
+             TRUST & REVIEWS
+             ======================================================================= -->
+        <section class="reviews-section" id="reviews">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <h2>Trusted by Pakistani Investors</h2>
+                    <p>See what our community has to say about their SIGMA experience.</p>
+                </div>
+
+                <div class="reviews-grid">
+                    <div class="review-card reveal">
+                        <div class="review-stars">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                        </div>
+                        <p class="review-text">"I've used many platforms, but SIGMA's interface is unmatched. The daily
+                            ROI is consistent, and my Easypaisa withdrawal hit my account in just 10 minutes."</p>
+                        <div class="reviewer">
+                            <div class="reviewer-avatar">U</div>
+                            <div class="reviewer-info">
+                                <b>Usman Tariq</b>
+                                <small><svg class="verified-icon">
+                                        <use href="#icon-check-circle"></use>
+                                    </svg> Verified Investor</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card reveal" style="transition-delay: 0.1s;">
+                        <div class="review-stars">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                        </div>
+                        <p class="review-text">"The referral program is insane! Getting 400 Rs instantly for a direct
+                            invite allowed me to build a massive team and passive income stream seamlessly."</p>
+                        <div class="reviewer">
+                            <div class="reviewer-avatar" style="color: #8B5CF6; background: rgba(139, 92, 246, 0.1);">F
+                            </div>
+                            <div class="reviewer-info">
+                                <b>Fatima Noor</b>
+                                <small><svg class="verified-icon">
+                                        <use href="#icon-check-circle"></use>
+                                    </svg> Verified Investor</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card reveal" style="transition-delay: 0.2s;">
+                        <div class="review-stars">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                        </div>
+                        <p class="review-text">"Highly secure and professional. The 256-bit encryption gives me peace of
+                            mind. Best investment platform currently operating in Pakistan."</p>
+                        <div class="reviewer">
+                            <div class="reviewer-avatar" style="color: #F59E0B; background: rgba(245, 158, 11, 0.1);">A
+                            </div>
+                            <div class="reviewer-info">
+                                <b>Ali Raza</b>
+                                <small><svg class="verified-icon">
+                                        <use href="#icon-check-circle"></use>
+                                    </svg> Verified Investor</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================================================================
+             SECURITY & WITHDRAWALS VISUALIZATION
+             ======================================================================= -->
+        <section class="security-section" id="security">
+            <div class="container">
+                <div class="split-layout">
+                    <div class="sec-content reveal">
+                        <h2 style="font-size: 2.5rem; margin-bottom: 16px;">Bank-Grade Security</h2>
+                        <p style="font-size: 1.1rem; color: var(--text-muted);">Your capital is safeguarded by
+                            enterprise-level security architecture, ensuring absolute privacy and instant liquidity.</p>
+
+                        <div class="sec-list">
+                            <div class="sec-item">
+                                <div class="sec-icon"><svg>
+                                        <use href="#icon-lock"></use>
+                                    </svg></div>
+                                <div class="sec-text">
+                                    <b>AES-256 Encryption</b>
+                                    <p>All user data and transactions are encrypted with the highest global standard.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="sec-item">
+                                <div class="sec-icon"><svg>
+                                        <use href="#icon-shield"></use>
+                                    </svg></div>
+                                <div class="sec-text">
+                                    <b>DDoS Protection</b>
+                                    <p>Advanced cloud infrastructure guarantees 99.9% uptime against attacks.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sec-visual-box reveal">
+                        <h4>Supported Withdrawal Methods</h4>
+                        <div class="payment-methods">
+                            <div class="pm-card">
+                                <div class="icon"><svg>
+                                        <use href="#icon-mobile"></use>
+                                    </svg></div>
+                                <div>
+                                    <b>Easypaisa</b>
+                                    <small>Instant Processing</small>
+                                </div>
+                            </div>
+                            <div class="pm-card">
+                                <div class="icon"><svg>
+                                        <use href="#icon-mobile"></use>
+                                    </svg></div>
+                                <div>
+                                    <b>JazzCash</b>
+                                    <small>Instant Processing</small>
+                                </div>
+                            </div>
+                            <div class="pm-card">
+                                <div class="icon"><svg>
+                                        <use href="#icon-bank"></use>
+                                    </svg></div>
+                                <div>
+                                    <b>Local Bank Transfer</b>
+                                    <small>Meezan, HBL, Allied, etc.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================================================================
+             FAQ SECTION
+             ======================================================================= -->
+        <section class="faq-section" id="faq">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Everything you need to know about SIGMA.</p>
+                </div>
+
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        How do I start investing?
+                        <div class="faq-icon"><svg>
+                                <use href="#icon-plus"></use>
+                            </svg></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Simply create an account, deposit funds via Easypaisa, JazzCash or Bank transfer, and select
+                            an automated portfolio from the "Plans" section. Your profits will start generating daily.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        What is the minimum withdrawal amount?
+                        <div class="faq-icon"><svg>
+                                <use href="#icon-plus"></use>
+                            </svg></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The minimum withdrawal limit varies by method but generally starts as low as 500 PKR.
+                            Withdrawals are processed quickly and securely.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        How does the Referral Program work?
+                        <div class="faq-icon"><svg>
+                                <use href="#icon-plus"></use>
+                            </svg></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>When someone joins using your link and activates a plan, you earn 400 Rs for Level 1, 250 Rs
+                            for Level 2, and 2% lifetime commission on Level 3 investments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================================================================
+             CALL TO ACTION
+             ======================================================================= -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-island reveal">
+                    <h2>Ready to elevate your portfolio?</h2>
+                    <p>Create your free account today and join the future of digital wealth management in Pakistan.</p>
+                    <a href="reg.html" class="btn">Register Now</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =======================================================================
+         FOOTER
+         ======================================================================= -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="assets/logo.png" alt="SIGMA Logo" class="brand-logo-img"
+                        onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310B981\'/><text x=\'50\' y=\'65\' font-family=\'Arial\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\'>S</text></svg>'">
+                    <img src="assets/textlogo.png" alt="SIGMA" class="brand-text-img"
+                        onerror="this.style.display='none'">
+                    <p>Building the next generation of financial trading tools for ambitious investors in Pakistan.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#referrals">Referral Program</a></li>
+                        <li><a href="login.html">Member Login</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">AML/KYC Policy</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 SIGMA Technologies. All rights reserved.</p>
+                <small>Disclaimer: All investments carry risk. Please ensure you understand the risks involved before
+                    committing capital. Past performance is not indicative of future results.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =======================================================================
+         FLOATING WHATSAPP BUTTON
+         ======================================================================= -->
+    <a href="https://whatsapp.com/channel/sigma_official" target="_blank" class="whatsapp-float"
+        aria-label="Join our WhatsApp Channel" id="btnFloatingWhatsApp">
+        <svg>
+            <use href="#icon-whatsapp"></use>
+        </svg>
+    </a>
+
+    <!-- =======================================================================
+         MOBILE DOCK (Strictly 3 Buttons - Center is Logo)
+         ======================================================================= -->
+    <nav class="mobile-dock">
+        <!-- Button 1: Home -->
+        <a href="#home" class="dock-btn active">
+            <svg>
+                <use href="#icon-home"></use>
+            </svg>
+            <span>Home</span>
+        </a>
+
+        <!-- Button 2: Center Logo (Links to Dashboard/Plans) -->
+        <a href="login.html" class="dock-center" aria-label="SIGMA Dashboard">
+            <img src="assets/logo.png" alt="SIGMA"
+                onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310B981\'/><text x=\'50\' y=\'65\' font-family=\'Arial\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\'>S</text></svg>'">
+        </a>
+
+        <!-- Button 3: Account/Login -->
+        <a href="login.html" class="dock-btn">
+            <svg>
+                <use href="#icon-user"></use>
+            </svg>
+            <span>Account</span>
+        </a>
+    </nav>
+
+    <!-- =======================================================================
+         JAVASCRIPT & FIREBASE LOGIC
+         ======================================================================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. Island Header Scroll Logic ---
+            const header = document.getElementById('mainHeader');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }, { passive: true });
+
+            // --- 2. Mobile Dock Active State Tracking ---
+            const dockItems = document.querySelectorAll('.mobile-dock .dock-btn');
+            dockItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    dockItems.forEach(d => d.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // --- 3. Dynamic Market Ticker Simulation ---
+            const priceElements = document.querySelectorAll('.dyn-price');
+            setInterval(() => {
+                priceElements.forEach(el => {
+                    let currentPrice = parseFloat(el.innerText.replace(/,/g, ''));
+                    let fluctuation = currentPrice * (Math.random() * 0.002 - 0.001);
+                    let newPrice = currentPrice + fluctuation;
+                    el.innerText = newPrice.toLocaleString('en-PK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                });
+            }, 3500);
+
+            // --- 4. Rotating Hero Text Logic ---
+            const rotatingTexts = document.querySelectorAll('.rotating-text');
+            let currentIndex = 0;
+
+            if (rotatingTexts.length > 0) {
+                setInterval(() => {
+                    const nextIndex = (currentIndex + 1) % rotatingTexts.length;
+                    rotatingTexts[currentIndex].classList.remove('active');
+                    rotatingTexts[currentIndex].classList.add('exit');
+                    rotatingTexts[nextIndex].classList.remove('exit');
+                    rotatingTexts[nextIndex].classList.add('active');
+                    currentIndex = nextIndex;
+                }, 2500);
+            }
+
+            // --- 5. Scroll Reveal Animations ---
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // --- 6. FAQ Accordion Logic ---
+            window.toggleFaq = function (element) {
+                const item = element.parentElement;
+                const answer = item.querySelector('.faq-answer');
+
+                document.querySelectorAll('.faq-item').forEach(faq => {
+                    if (faq !== item) {
+                        faq.classList.remove('active');
+                        faq.querySelector('.faq-answer').style.maxHeight = null;
+                    }
+                });
+
+                item.classList.toggle('active');
+                if (item.classList.contains('active')) {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                } else {
+                    answer.style.maxHeight = null;
+                }
+            };
+
+            // --- 7. Firebase Integration & CMS Sync ---
+            const initFirebaseChecks = () => {
+                if (typeof firebase === 'undefined' || !firebase.apps.length) {
+                    console.warn("Firebase not initialized.");
+                    return;
+                }
+
+                const db = firebase.firestore();
+                const auth = firebase.auth();
+                const blockerScreen = document.getElementById('blockerScreen');
+
+                // 1. Sync Landing Page CMS Config
+                db.collection('config').doc('frontend_index').onSnapshot(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+
+                        // Update Hero Content
+                        if (data.heroTitle) document.getElementById('cmsHeroTitle').innerHTML = data.heroTitle;
+                        if (data.heroDesc) document.getElementById('cmsHeroDesc').textContent = data.heroDesc;
+
+                        // Register buttons visibility
+                        if (data.showRegister === false) {
+                            const heroBtn = document.getElementById('heroRegBtn');
+                            const headBtn = document.getElementById('headerRegBtn');
+                            if (heroBtn) heroBtn.style.display = 'none';
+                            if (headBtn) headBtn.style.display = 'none';
+                        }
+                    }
+                }, err => console.error("CMS Sync Error", err));
+
+                // 2. Sync Global Settings (Support URL)
+                db.collection('config').doc('global').onSnapshot(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const waBtn = document.getElementById('btnFloatingWhatsApp');
+                        if (data.supportUrl && waBtn) {
+                            waBtn.href = data.supportUrl;
+                        }
+                    }
+                });
+
+                // 3. Maintenance Blocker Check
+                db.collection('settings').doc('system').onSnapshot((doc) => {
+                    if (doc.exists && doc.data().maintenance === true) {
+                        document.body.classList.add('locked');
+                        blockerScreen.classList.add('active');
+                    } else {
+                        checkUserStatus(auth.currentUser, db);
+                    }
+                });
+
+                // 4. User Block Check
+                auth.onAuthStateChanged((user) => {
+                    checkUserStatus(user, db);
+                });
+
+                function checkUserStatus(user, db) {
+                    if (user) {
+                        db.collection('users').doc(user.uid).onSnapshot((doc) => {
+                            if (doc.exists && doc.data().status === 'suspended') {
+                                document.body.classList.add('locked');
+                                blockerScreen.classList.add('active');
+                                const msg = blockerScreen.querySelector('p');
+                                if (msg) msg.textContent = "Your account has been suspended for violating SIGMA terms of service. Contact support.";
+                            } else {
+                                db.collection('settings').doc('system').get().then((sysDoc) => {
+                                    if (!sysDoc.exists || sysDoc.data().maintenance !== true) {
+                                        document.body.classList.remove('locked');
+                                        blockerScreen.classList.remove('active');
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        // Unauthenticated - just check maintenance
+                        db.collection('settings').doc('system').get().then((sysDoc) => {
+                            if (!sysDoc.exists || sysDoc.data().maintenance !== true) {
+                                document.body.classList.remove('locked');
+                                blockerScreen.classList.remove('active');
+                            }
+                        });
+                    }
+                }
+            };
+
+            // Run Firebase checks after a short delay to ensure defer scripts loaded completely
+            setTimeout(initFirebaseChecks, 500);
+        });
+    </script>
+</body>
+
+</html>

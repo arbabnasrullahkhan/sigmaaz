@@ -1,0 +1,2347 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+    <title>Sigma | Referral Network & Commission Center</title>
+
+    <!-- SEO, Privacy & PWA Metadata -->
+    <meta name="description"
+        content="Manage your Sigma 3-Tier referral network, monitor downline activity, and track real-time commission disbursements securely.">
+    <meta name="keywords"
+        content="Sigma Team, Referral Network, Downline Commission, PKR Affiliate Earnings, EasyPaisa Bonuses">
+    <meta name="author" content="Sigma Technologies">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="theme-color" content="#0B132B">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sigma Network">
+    <link rel="canonical" href="https://sigmaaz.vercel.app/team.html">
+
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sigmaaz.vercel.app/team.html">
+    <meta property="og:title" content="Sigma | Referral Network Center">
+    <meta property="og:description"
+        content="Track verified downline members, team bonuses, and real-time commission yields.">
+    <meta property="og:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sigma | Referral Network Center">
+    <meta name="twitter:description" content="Manage multi-tier network commissions and automated team rewards.">
+    <meta name="twitter:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- QR Code Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <!-- Fallback Firebase Initialization -->
+    <script>
+        if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+            firebase.initializeApp({
+                apiKey: "AIzaSyCTRe2w4juZ55DrayIw61qKz_UYlZfw1H8",
+                authDomain: "week-team.firebaseapp.com",
+                projectId: "week-team",
+                storageBucket: "week-team.firebasestorage.app",
+                messagingSenderId: "480334485782",
+                appId: "1:480334485782:web:c0c886ed710567b9e6d837"
+            });
+        }
+    </script>
+
+    <style>
+        /* ==========================================================================
+           1. SIGMA PREMIUM DESIGN TOKENS
+           ========================================================================== */
+        :root {
+            --sigma-primary: #0B132B;
+            --sigma-secondary: #1C2541;
+            --sigma-tertiary: #3A506B;
+
+            --sigma-surface: #FFFFFF;
+            --sigma-surface-alt: #F8FAFC;
+            --sigma-subtle: #F1F5F9;
+
+            --sigma-muted-border: #E2E8F0;
+            --sigma-input-border: #CBD5E1;
+
+            --sigma-accent: #10B981;
+            --sigma-accent-dark: #059669;
+            --sigma-accent-soft: #ECFDF5;
+
+            --sigma-gold: #F59E0B;
+            --sigma-gold-dark: #D97706;
+            --sigma-gold-soft: #FEF3C7;
+
+            --sigma-danger: #EF4444;
+            --sigma-danger-dark: #DC2626;
+
+            --sigma-info: #3B82F6;
+            --sigma-info-dark: #2563EB;
+            --sigma-info-soft: #EFF6FF;
+
+            --sigma-pink: #F472B6;
+
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --text-light: #94A3B8;
+
+            --radius-pill: 9999px;
+            --radius-2xl: 32px;
+            --radius-xl: 22px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+
+            --shadow-subtle: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+            --shadow-card: 0 16px 32px -8px rgba(15, 23, 42, 0.08);
+            --shadow-float: 0 24px 48px -12px rgba(15, 23, 42, 0.16);
+
+            --z-dock: 1000;
+            --z-header: 900;
+            --z-modal: 2000;
+            --z-toast: 3000;
+
+            --transition-bounce: 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --safe-area-bottom: env(safe-area-inset-bottom, 16px);
+        }
+
+        /* ==========================================================================
+           2. GLOBAL RESET & BASE
+           ========================================================================== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--sigma-surface-alt);
+            color: var(--text-body);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: calc(110px + var(--safe-area-bottom));
+            background-image:
+                radial-gradient(circle at 10% 0%, rgba(244, 114, 182, 0.035) 0%, transparent 45vw),
+                radial-gradient(circle at 90% 100%, rgba(16, 185, 129, 0.04) 0%, transparent 45vw);
+            background-attachment: fixed;
+        }
+
+        body.locked {
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            background: none;
+        }
+
+        button {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            color: var(--text-heading);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-feature-settings: "tnum" 1;
+        }
+
+        #networkOfflineBanner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--sigma-danger);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-align: center;
+            padding: 8px;
+            z-index: var(--z-toast);
+            display: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================================================
+           3. SINGLE-ROW ISLAND HEADER WITH BOTH LOGOS & LEADERBOARD
+           ========================================================================== */
+        .app-container {
+            width: 100%;
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .island-topbar {
+            position: sticky;
+            top: 12px;
+            margin: 0 16px 20px;
+            height: 68px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-pill);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 14px;
+            z-index: var(--z-header);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .island-topbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-card);
+            border-color: var(--sigma-muted-border);
+        }
+
+        .btn-back {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--sigma-surface);
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--sigma-muted-border);
+            transition: var(--transition-bounce);
+        }
+
+        .btn-back:active {
+            transform: scale(0.92);
+            background: var(--sigma-subtle);
+        }
+
+        .btn-back svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2.5;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+        }
+
+        .brand-text-img {
+            height: 20px;
+            object-fit: contain;
+            margin-top: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-top-action {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--sigma-subtle);
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--sigma-muted-border);
+            transition: var(--transition-bounce);
+        }
+
+        .btn-top-action:active {
+            transform: scale(0.92);
+        }
+
+        .btn-top-action svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2.2;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .btn-leaderboard {
+            color: var(--sigma-gold-dark);
+            background: var(--sigma-gold-soft);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        /* ==========================================================================
+           4. WORKSPACE & COMMISSION VAULT
+           ========================================================================== */
+        .workspace {
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .vault-card {
+            background: linear-gradient(135deg, #0b132b 0%, #161c36 45%, #20172e 80%, #131b2e 100%);
+            border-radius: var(--radius-2xl);
+            padding: 28px 24px;
+            color: white;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border: 1px solid rgba(244, 114, 182, 0.2);
+            animation: fadeInDown 0.5s ease-out;
+        }
+
+        .vault-card::after {
+            content: '';
+            position: absolute;
+            right: -30px;
+            top: -30px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .vault-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .vault-header span {
+            font-size: 0.78rem;
+            color: #CBD5E1;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .vault-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sigma-gold);
+            backdrop-filter: blur(10px);
+        }
+
+        .vault-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .vault-amount {
+            position: relative;
+            z-index: 2;
+        }
+
+        .vault-amount h3 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: white;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            line-height: 1.1;
+        }
+
+        .vault-amount h3 span {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--sigma-accent-soft);
+        }
+
+        .vault-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            position: relative;
+            z-index: 2;
+        }
+
+        .v-metric {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .v-metric small {
+            font-size: 0.68rem;
+            color: rgba(255, 255, 255, 0.65);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .v-metric strong {
+            font-size: 1rem;
+            color: white;
+            font-weight: 800;
+        }
+
+        .v-metric.pending strong {
+            color: var(--sigma-gold);
+        }
+
+        /* ==========================================================================
+           5. REFERRAL LINK & SHARE CENTER
+           ========================================================================== */
+        .share-section {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            padding: 24px;
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--sigma-muted-border);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+        }
+
+        .share-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .share-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .share-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: var(--sigma-info-soft);
+            color: var(--sigma-info-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            flex-shrink: 0;
+        }
+
+        .share-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .share-title h2 {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: var(--text-heading);
+        }
+
+        .share-title p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .btn-qr {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--sigma-subtle);
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--sigma-muted-border);
+            transition: var(--transition-bounce);
+        }
+
+        .btn-qr:active {
+            transform: scale(0.9);
+        }
+
+        .btn-qr svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .link-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--sigma-surface-alt);
+            border: 1.5px solid var(--sigma-input-border);
+            border-radius: var(--radius-xl);
+            padding: 6px 6px 6px 16px;
+        }
+
+        .link-box input {
+            flex: 1;
+            min-width: 0;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            background: transparent;
+            font-family: 'JetBrains Mono', monospace;
+            text-overflow: ellipsis;
+        }
+
+        .btn-copy {
+            background: var(--sigma-primary);
+            color: white;
+            padding: 0 18px;
+            height: 42px;
+            border-radius: var(--radius-lg);
+            font-size: 0.85rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-bounce);
+        }
+
+        .btn-copy:active {
+            transform: scale(0.95);
+        }
+
+        .btn-copy svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2;
+        }
+
+        .social-share-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .btn-social {
+            flex: 1;
+            height: 48px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: white;
+            transition: var(--transition-bounce);
+        }
+
+        .btn-social:active {
+            transform: scale(0.96);
+        }
+
+        .btn-social.wa {
+            background: #25D366;
+        }
+
+        .btn-social.sys {
+            background: var(--sigma-subtle);
+            color: var(--text-heading);
+            border: 1px solid var(--sigma-muted-border);
+        }
+
+        .btn-social svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .btn-social.sys svg {
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* ==========================================================================
+           6. CONVERSION FUNNEL & ANALYTICS
+           ========================================================================== */
+        .funnel-section {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            padding: 24px;
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--sigma-muted-border);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .section-header h3 {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--text-heading);
+        }
+
+        .btn-rules {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--sigma-info-dark);
+            background: var(--sigma-info-soft);
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+        }
+
+        .funnel-track {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+        }
+
+        .funnel-track::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            bottom: 20px;
+            width: 2px;
+            background: var(--sigma-subtle);
+            z-index: 1;
+        }
+
+        .funnel-step {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .fs-indicator {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--sigma-surface);
+            border: 2px solid var(--sigma-muted-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-weight: 800;
+            font-size: 0.85rem;
+            box-shadow: 0 0 0 4px var(--sigma-surface);
+            flex-shrink: 0;
+        }
+
+        .funnel-step.completed .fs-indicator {
+            background: var(--sigma-accent);
+            border-color: var(--sigma-accent);
+            color: white;
+        }
+
+        .funnel-step.pending .fs-indicator {
+            background: var(--sigma-gold-soft);
+            border-color: var(--sigma-gold);
+            color: var(--sigma-gold-dark);
+        }
+
+        .fs-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--sigma-surface-alt);
+            padding: 12px 16px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--sigma-muted-border);
+        }
+
+        .fs-content b {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            display: block;
+        }
+
+        .fs-content small {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .fs-content .count {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--sigma-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* 3-Tier Commission Structure Cards */
+        .reward-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .reward-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--sigma-surface-alt);
+            padding: 14px 18px;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--sigma-muted-border);
+            transition: var(--transition-smooth);
+        }
+
+        .reward-item:hover {
+            border-color: var(--sigma-input-border);
+            background: white;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .reward-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .level-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--sigma-surface);
+            border: 1px solid var(--sigma-muted-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 900;
+            color: var(--text-heading);
+        }
+
+        .reward-item.primary .level-badge {
+            background: var(--sigma-accent);
+            color: white;
+            border-color: var(--sigma-accent);
+        }
+
+        .reward-left span {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-heading);
+        }
+
+        .reward-right {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--sigma-accent-dark);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .stat-card {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-xl);
+            padding: 16px 20px;
+            border: 1px solid var(--sigma-muted-border);
+            box-shadow: var(--shadow-subtle);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .stat-card.blue .stat-icon {
+            background: var(--sigma-info-soft);
+            color: var(--sigma-info-dark);
+        }
+
+        .stat-card.green .stat-icon {
+            background: var(--sigma-accent-soft);
+            color: var(--sigma-accent-dark);
+        }
+
+        .stat-card small {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .stat-card b {
+            font-size: 1.45rem;
+            font-weight: 900;
+            color: var(--text-heading);
+            line-height: 1;
+        }
+
+        /* ==========================================================================
+           7. MY TEAM LIST SECTION (MOBILE CARDS + DESKTOP TABLE)
+           ========================================================================== */
+        .team-section {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            padding: 24px;
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--sigma-muted-border);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .team-filters {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+
+        .team-filters::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tf-btn {
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            background: var(--sigma-surface-alt);
+            border: 1px solid var(--sigma-muted-border);
+            white-space: nowrap;
+            transition: var(--transition-fast);
+        }
+
+        .tf-btn.active {
+            background: var(--sigma-primary);
+            color: white;
+            border-color: var(--sigma-primary);
+        }
+
+        .team-list-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .team-member-card {
+            background: var(--sigma-surface-alt);
+            border: 1px solid var(--sigma-input-border);
+            border-radius: var(--radius-xl);
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+        }
+
+        .team-member-card:active {
+            transform: scale(0.98);
+            background: var(--sigma-subtle);
+        }
+
+        .tm-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tm-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--sigma-subtle);
+            border: 1px solid var(--sigma-muted-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--sigma-primary);
+            text-transform: uppercase;
+        }
+
+        .tm-info b {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            display: block;
+        }
+
+        .tm-info small {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .tm-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .badge-status {
+            padding: 3px 9px;
+            border-radius: var(--radius-pill);
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .badge-status.active {
+            background: var(--sigma-accent-soft);
+            color: var(--sigma-accent-dark);
+            border: 1px solid var(--sigma-accent-border);
+        }
+
+        .badge-status.pending {
+            background: var(--sigma-gold-soft);
+            color: var(--sigma-gold-dark);
+            border: 1px solid var(--sigma-gold-border);
+        }
+
+        .tm-level {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            background: var(--sigma-surface);
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--sigma-muted-border);
+        }
+
+        /* Desktop Table Layout */
+        .team-table-wrapper {
+            display: none;
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--sigma-muted-border);
+            border-radius: var(--radius-lg);
+        }
+
+        .team-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .team-table th {
+            background: var(--sigma-subtle);
+            padding: 12px 16px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--sigma-muted-border);
+        }
+
+        .team-table td {
+            padding: 14px 16px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            border-bottom: 1px solid var(--sigma-muted-border);
+            background: var(--sigma-surface);
+        }
+
+        .team-table tr:hover td {
+            background: var(--sigma-surface-alt);
+            cursor: pointer;
+        }
+
+        @media (min-width: 860px) {
+            .team-list-mobile {
+                display: none;
+            }
+
+            .team-table-wrapper {
+                display: block;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 34px 20px;
+            color: var(--text-muted);
+            border: 1px dashed var(--sigma-muted-border);
+            border-radius: var(--radius-xl);
+            background: var(--sigma-surface-alt);
+        }
+
+        .empty-state svg {
+            width: 44px;
+            height: 44px;
+            stroke: var(--sigma-input-border);
+            fill: none;
+            stroke-width: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .empty-state b {
+            display: block;
+            font-size: 1rem;
+            color: var(--text-heading);
+            margin-bottom: 3px;
+        }
+
+        /* ==========================================================================
+           8. MODALS & BOTTOM SHEETS
+           ========================================================================== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: var(--z-modal);
+            background: rgba(11, 19, 43, 0.65);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sheet {
+            width: 100%;
+            max-width: 520px;
+            background: var(--sigma-surface);
+            border-radius: 32px 32px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -24px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        .overlay.show .sheet {
+            transform: translateY(0);
+        }
+
+        .sheet-handle {
+            width: 48px;
+            height: 6px;
+            border-radius: 99px;
+            background: var(--sigma-input-border);
+            margin: 14px auto 10px;
+            flex-shrink: 0;
+        }
+
+        .sheet-header {
+            padding: 8px 24px 16px;
+            border-bottom: 1px solid var(--sigma-muted-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sheet-header h3 {
+            font-size: 1.25rem;
+            font-weight: 900;
+        }
+
+        .sheet-close-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--sigma-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            border: 1px solid var(--sigma-muted-border);
+        }
+
+        .sheet-close-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .sheet-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .qr-wrapper {
+            background: white;
+            padding: 22px;
+            border-radius: 24px;
+            border: 2px solid var(--sigma-muted-border);
+            display: inline-block;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .qr-logo-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 3px solid white;
+            z-index: 10;
+        }
+
+        .qr-logo-overlay img {
+            width: 26px;
+            height: 26px;
+            object-fit: contain;
+        }
+
+        .btn-sheet-action {
+            width: 100%;
+            height: 56px;
+            border-radius: var(--radius-xl);
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            color: white;
+            font-size: 1rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 24px rgba(11, 19, 43, 0.25);
+            transition: var(--transition-bounce);
+        }
+
+        .btn-sheet-action:active {
+            transform: scale(0.96);
+        }
+
+        .rules-content p {
+            font-size: 0.9rem;
+            color: var(--text-body);
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .rules-content ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .rules-content li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-heading);
+        }
+
+        .rules-content li svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--sigma-accent-dark);
+            fill: none;
+            stroke-width: 2.5;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Member Timeline */
+        .tl-container {
+            display: flex;
+            flex-direction: column;
+            padding-left: 6px;
+        }
+
+        .tl-item {
+            display: flex;
+            gap: 14px;
+            position: relative;
+            padding-bottom: 22px;
+        }
+
+        .tl-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 24px;
+            bottom: 0;
+            width: 2px;
+            background: var(--sigma-muted-border);
+            z-index: 1;
+        }
+
+        .tl-item:last-child::before {
+            display: none;
+        }
+
+        .tl-indicator {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--sigma-surface);
+            border: 2px solid var(--sigma-muted-border);
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .tl-indicator svg {
+            width: 12px;
+            height: 12px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            display: none;
+        }
+
+        .tl-item.completed .tl-indicator {
+            background: var(--sigma-accent);
+            border-color: var(--sigma-accent);
+        }
+
+        .tl-item.completed .tl-indicator svg {
+            display: block;
+        }
+
+        .tl-content b {
+            display: block;
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--text-heading);
+        }
+
+        .tl-content small {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 2px;
+        }
+
+        /* ==========================================================================
+           9. 3-BUTTON MOBILE DOCK (.html FULL NAVIGATION)
+           ========================================================================== */
+        .mobile-dock {
+            position: fixed;
+            bottom: var(--safe-area-bottom);
+            left: 50%;
+            transform: translateX(-50%);
+            height: 76px;
+            width: calc(100% - 32px);
+            max-width: 440px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-float);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: var(--z-dock);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .dock-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--text-muted);
+            width: 64px;
+            height: 100%;
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .dock-slot svg {
+            width: 26px;
+            height: 26px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2;
+        }
+
+        .dock-slot span {
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .dock-slot.active {
+            color: var(--sigma-primary);
+        }
+
+        .dock-slot.active svg {
+            stroke-width: 2.8;
+            transform: translateY(-2px);
+            color: var(--sigma-accent-dark);
+        }
+
+        .dock-crest-btn {
+            position: relative;
+            top: -24px;
+            width: 68px;
+            height: 68px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 24px rgba(11, 19, 43, 0.35);
+            border: 5px solid var(--sigma-surface-alt);
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .dock-crest-btn:active {
+            transform: scale(0.9);
+        }
+
+        .dock-crest-btn img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .dock-crest-btn::after {
+            content: 'PLANS';
+            position: absolute;
+            bottom: -22px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            color: var(--text-heading);
+            letter-spacing: 0.5px;
+        }
+
+        @media (min-width: 860px) {
+            .mobile-dock {
+                display: none;
+            }
+
+            body {
+                padding-bottom: 40px;
+            }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translate(-50%, -20px) scale(0.9);
+            background: var(--sigma-primary);
+            color: white;
+            padding: 14px 28px;
+            border-radius: var(--radius-pill);
+            font-size: 0.95rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-float);
+            z-index: var(--z-toast);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.error {
+            background: var(--sigma-danger-dark);
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0) scale(1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="networkOfflineBanner">Reconnecting to Sigma Core Node...</div>
+
+    <!-- Complete SVG Sprites -->
+    <svg width="0" height="0" style="display:none;" aria-hidden="true">
+        <symbol id="icon-back" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22" />
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-users" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round" />
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+        </symbol>
+        <symbol id="icon-bell" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </symbol>
+        <symbol id="icon-copy" viewBox="0 0 24 24">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+        </symbol>
+        <symbol id="icon-check" viewBox="0 0 24 24">
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="20 6 9 17 4 12" />
+        </symbol>
+        <symbol id="icon-gift" viewBox="0 0 24 24">
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="20 12 20 22 4 22 4 12" />
+            <rect x="2" y="7" width="20" height="5" stroke-linecap="round" stroke-linejoin="round" />
+            <line x1="12" y1="22" x2="12" y2="7" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-qr" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="14" y="3" width="7" height="7" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="14" y="14" width="7" height="7" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="3" y="14" width="7" height="7" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="8" y="8" width="8" height="8" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-link" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+        </symbol>
+        <symbol id="icon-share" viewBox="0 0 24 24">
+            <circle cx="18" cy="5" r="3" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="6" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="18" cy="19" r="3" stroke-linecap="round" stroke-linejoin="round" />
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke-linecap="round" stroke-linejoin="round" />
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-pie" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z" />
+        </symbol>
+        <symbol id="icon-trophy" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 9H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 9h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 3h16v7a8 8 0 0 1-16 0V3z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v5" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8" />
+        </symbol>
+        <symbol id="icon-x" viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18" stroke-linecap="round" stroke-linejoin="round" />
+            <line x1="6" y1="6" x2="18" y2="18" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-whatsapp" viewBox="0 0 24 24">
+            <path fill="currentColor"
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+        </symbol>
+    </svg>
+
+    <div class="app-container">
+
+        <!-- HEADER WITH LOGO, TEXT LOGO, BACK BUTTON & LEADERBOARD -->
+        <header class="island-topbar" id="topHeader">
+            <a href="dash.html" class="btn-back" aria-label="Back to Dashboard">
+                <svg>
+                    <use href="#icon-back" />
+                </svg>
+            </a>
+
+            <div class="brand-cluster">
+                <img src="assets/logo.png" alt="Sigma" class="brand-logo-img"
+                    onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310B981\'/><text x=\'50\' y=\'65\' font-family=\'Arial\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\'>S</text></svg>'">
+                <img src="assets/textlogo.png" alt="Sigma" class="brand-text-img" onerror="this.style.display='none'">
+            </div>
+
+            <div class="header-actions">
+                <a href="leaderboard.html" class="btn-top-action btn-leaderboard" aria-label="Global Ranking">
+                    <svg>
+                        <use href="#icon-trophy" />
+                    </svg>
+                </a>
+                <button class="btn-top-action" aria-label="Notifications" onclick="window.location.href='dash.html'">
+                    <svg>
+                        <use href="#icon-bell" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN WORKSPACE -->
+        <main class="workspace">
+
+            <!-- Commission Vault Card -->
+            <div class="vault-card">
+                <div class="vault-header">
+                    <span>Total Network Commission</span>
+                    <div class="vault-icon"><svg>
+                            <use href="#icon-gift" />
+                        </svg></div>
+                </div>
+                <div class="vault-amount">
+                    <h3><span>PKR</span> <span id="uiTotalEarnings" class="font-mono">...</span></h3>
+                </div>
+
+                <div class="vault-metrics">
+                    <div class="v-metric pending">
+                        <small>Pending Eligibility</small>
+                        <strong class="font-mono" id="uiPendingEarnings">Rs. 0.00</strong>
+                    </div>
+                    <div class="v-metric">
+                        <small>Available to Wallet</small>
+                        <strong class="font-mono" id="uiAvailableEarnings">Rs. 0.00</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Share & Link Center -->
+            <div class="share-section">
+                <div class="share-header">
+                    <div class="share-title-wrap">
+                        <div class="share-icon"><svg>
+                                <use href="#icon-users" />
+                            </svg></div>
+                        <div class="share-title">
+                            <h2>Invite Connections</h2>
+                            <p>Expand your team network to unlock automated multi-tier bonuses.</p>
+                        </div>
+                    </div>
+                    <button class="btn-qr" onclick="TeamController.openQrModal()" aria-label="Show QR Code">
+                        <svg>
+                            <use href="#icon-qr" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="link-box">
+                    <svg style="width:18px;height:18px;stroke:var(--sigma-muted);fill:none;stroke-width:2.5;">
+                        <use href="#icon-link" />
+                    </svg>
+                    <input type="text" id="refLinkInput" value="Generating unique link..." readonly>
+                    <button class="btn-copy" onclick="TeamController.copyLink()">
+                        <svg>
+                            <use href="#icon-copy" />
+                        </svg> Copy
+                    </button>
+                </div>
+
+                <!-- Instant Share Buttons -->
+                <div class="social-share-row">
+                    <button class="btn-social wa" onclick="TeamController.shareWhatsApp()"
+                        aria-label="Share on WhatsApp">
+                        <svg>
+                            <use href="#icon-whatsapp" />
+                        </svg> WhatsApp
+                    </button>
+                    <button class="btn-social sys" onclick="TeamController.shareSystem()" aria-label="Share via Device">
+                        <svg>
+                            <use href="#icon-share" />
+                        </svg> Share Options
+                    </button>
+                </div>
+            </div>
+
+            <!-- Referral Conversion Funnel -->
+            <div class="funnel-section">
+                <div class="section-header">
+                    <h3>Referral Funnel</h3>
+                    <button class="btn-rules" onclick="TeamController.openRulesModal()">How It Works</button>
+                </div>
+
+                <div class="funnel-track">
+                    <div class="funnel-step completed">
+                        <div class="fs-indicator"><svg
+                                style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:3;">
+                                <use href="#icon-check" />
+                            </svg></div>
+                        <div class="fs-content">
+                            <div><b>Total Clicks</b><small>Verified incoming visits</small></div>
+                            <span class="count" id="fnlClicks">0</span>
+                        </div>
+                    </div>
+                    <div class="funnel-step pending">
+                        <div class="fs-indicator">2</div>
+                        <div class="fs-content">
+                            <div><b>Registered Users</b><small>Downline accounts bound</small></div>
+                            <span class="count" id="fnlRegistered">0</span>
+                        </div>
+                    </div>
+                    <div class="funnel-step">
+                        <div class="fs-indicator">3</div>
+                        <div class="fs-content">
+                            <div><b>Active Investors</b><small>Subscribed portfolio owners</small></div>
+                            <span class="count" id="fnlActive">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3-Tier Commission Structure (Pure English) -->
+            <div class="share-section">
+                <div class="section-header">
+                    <h3>Reward Structure</h3>
+                    <span
+                        style="font-size: 0.72rem; font-weight: 800; color: var(--sigma-accent-dark); background: var(--sigma-accent-soft); padding: 4px 10px; border-radius: var(--radius-pill);">LIVE
+                        RULES</span>
+                </div>
+
+                <div class="reward-list" id="rewardListContainer">
+                    <div style="text-align: center; padding: 10px; color: var(--text-muted); font-size: 0.85rem;">
+                        Loading reward structure...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon"><svg>
+                            <use href="#icon-users" />
+                        </svg></div>
+                    <small>Total Downlines</small>
+                    <b id="statTotalMembers" class="font-mono">0</b>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon"><svg>
+                            <use href="#icon-pie" />
+                        </svg></div>
+                    <small>Active Tiers</small>
+                    <b id="statActiveLevels" class="font-mono">0</b>
+                </div>
+            </div>
+
+            <!-- Team Members List Section -->
+            <div class="team-section">
+                <div class="section-header">
+                    <h3>My Team Members</h3>
+                </div>
+
+                <div class="team-filters">
+                    <button class="tf-btn active" onclick="TeamController.filterTeam('all')">All Referrals</button>
+                    <button class="tf-btn" onclick="TeamController.filterTeam('active')">Qualified (Active)</button>
+                    <button class="tf-btn" onclick="TeamController.filterTeam('pending')">Pending (Unfunded)</button>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="teamEmptyState" style="display: none;">
+                    <svg>
+                        <use href="#icon-users" />
+                    </svg>
+                    <b>No Members Yet</b>
+                    <small>Share your referral link to build your investment tree.</small>
+                </div>
+
+                <!-- Mobile Cards -->
+                <div class="team-list-mobile" id="teamListMobile"></div>
+
+                <!-- Desktop Table View -->
+                <div class="team-table-wrapper" id="teamTableWrapper">
+                    <table class="team-table">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Network Tier</th>
+                                <th>Registration Date</th>
+                                <th>Status</th>
+                                <th>Commission Disbursed</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teamTableBody"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- 3-BUTTON MOBILE DOCK (.html FULL NAVIGATION) -->
+    <nav class="mobile-dock" id="mobileDock">
+        <a href="dash.html" class="dock-slot">
+            <svg>
+                <use href="#icon-home" />
+            </svg>
+            <span>Home</span>
+        </a>
+
+        <!-- Central Crest points to plans.html -->
+        <a href="plans.html" class="dock-crest-btn"
+            onclick="TeamController.logAction('dock_plans', 'Opened investment plans from mobile dock')">
+            <img src="assets/logo.png" alt="Sigma Crest" onerror="this.style.display='none'">
+        </a>
+
+        <a href="profile.html" class="dock-slot active" aria-current="page">
+            <div style="width: 26px; height: 26px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--sigma-subtle);"
+                id="dockAvatarContainer">
+                <svg style="width: 18px; height: 18px; stroke: var(--sigma-primary);">
+                    <use href="#icon-user" />
+                </svg>
+            </div>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- QR CODE MODAL -->
+    <div class="overlay" id="sheetQr">
+        <div class="sheet" style="max-width: 460px;">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3>Personal Invite Code</h3>
+                <button class="sheet-close-btn" onclick="TeamController.closeSheet('sheetQr')">
+                    <svg>
+                        <use href="#icon-x" />
+                    </svg>
+                </button>
+            </div>
+            <div class="sheet-body" style="text-align: center;">
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px; font-weight: 500;">
+                    Scan with any mobile camera to securely bind downlines to your team tree.
+                </p>
+                <div class="qr-wrapper">
+                    <div id="qrBoxContainer"></div>
+                    <div class="qr-logo-overlay">
+                        <img src="assets/logo.png" alt="S"
+                            onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310B981\'/></svg>'">
+                    </div>
+                </div>
+
+                <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
+                    <button class="btn-sheet-action" onclick="TeamController.copyLink()">
+                        <svg style="width:18px;height:18px;stroke:white;fill:none;stroke-width:2.5;">
+                            <use href="#icon-copy" />
+                        </svg>
+                        Copy Referral URL
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RULES MODAL (ENGLISH ONLY) -->
+    <div class="overlay" id="sheetRules">
+        <div class="sheet">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <h3>Program Guidelines</h3>
+                <button class="sheet-close-btn" onclick="TeamController.closeSheet('sheetRules')">
+                    <svg>
+                        <use href="#icon-x" />
+                    </svg>
+                </button>
+            </div>
+            <div class="sheet-body rules-content">
+                <p>Referral bonuses are governed by automated ledger rules to guarantee fair distribution:</p>
+                <ul>
+                    <li><svg>
+                            <use href="#icon-check" />
+                        </svg> Direct Level 1 commissions are credited immediately after a downline's portfolio is
+                        verified by administration.</li>
+                    <li><svg>
+                            <use href="#icon-check" />
+                        </svg> Level 2 and Level 3 commissions compound automatically into your Commission Pocket.</li>
+                    <li><svg>
+                            <use href="#icon-check" />
+                        </svg> Commission balances are 100% eligible for transfer or direct cashout via EasyPaisa and
+                        JazzCash.</li>
+                    <li><svg>
+                            <use href="#icon-check" />
+                        </svg> Self-referral abuse and duplicate accounts result in permanent network disqualification.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- MEMBER DETAILS MODAL -->
+    <div class="overlay" id="sheetMemberDetails">
+        <div class="sheet">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <div>
+                    <h3 id="mdlName">Downline Details</h3>
+                    <p id="mdlId" class="font-mono" style="font-size: 0.8rem; margin-top: 2px;">UID: ---</p>
+                </div>
+                <button class="sheet-close-btn" onclick="TeamController.closeSheet('sheetMemberDetails')">
+                    <svg>
+                        <use href="#icon-x" />
+                    </svg>
+                </button>
+            </div>
+            <div class="sheet-body">
+                <div class="tl-container">
+                    <div class="tl-item completed">
+                        <div class="tl-indicator"><svg>
+                                <use href="#icon-check" />
+                            </svg></div>
+                        <div class="tl-content">
+                            <b>Registered Account</b>
+                            <small id="mdlRegDate">--</small>
+                        </div>
+                    </div>
+                    <div class="tl-item" id="mdlTlPayment">
+                        <div class="tl-indicator"><svg>
+                                <use href="#icon-check" />
+                            </svg></div>
+                        <div class="tl-content">
+                            <b>Portfolio Status</b>
+                            <small id="mdlPayStatus">Pending / Unfunded</small>
+                        </div>
+                    </div>
+                    <div class="tl-item" id="mdlTlEligible">
+                        <div class="tl-indicator"><svg>
+                                <use href="#icon-check" />
+                            </svg></div>
+                        <div class="tl-content">
+                            <b>Commission Credited</b>
+                            <small id="mdlRewardStatus">Awaiting Plan Activation</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toastBox">
+        <svg style="width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.5;">
+            <use href="#icon-check" />
+        </svg>
+        <span id="toastMsg">Action successful</span>
+    </div>
+
+    <!-- ==========================================================================
+         JAVASCRIPT CONTROLLER (FIREBASE & REAL REFERRAL ENGINE)
+         ========================================================================== -->
+    <script>
+        const TeamController = (() => {
+
+            let authUser = null;
+            let referralLink = "";
+            let qrcodeInstance = null;
+            let loadedTeam = [];
+            let currentFilter = 'all';
+
+            const dom = {
+                toast: { box: document.getElementById('toastBox'), msg: document.getElementById('toastMsg') },
+                invite: { linkInput: document.getElementById('refLinkInput'), qrContainer: document.getElementById('qrBoxContainer') },
+                vault: { total: document.getElementById('uiTotalEarnings'), pending: document.getElementById('uiPendingEarnings'), available: document.getElementById('uiAvailableEarnings') },
+                funnel: { clicks: document.getElementById('fnlClicks'), registered: document.getElementById('fnlRegistered'), active: document.getElementById('fnlActive') },
+                stats: { members: document.getElementById('statTotalMembers'), levels: document.getElementById('statActiveLevels') },
+                team: {
+                    empty: document.getElementById('teamEmptyState'),
+                    mobile: document.getElementById('teamListMobile'),
+                    tableBody: document.getElementById('teamTableBody')
+                },
+                modal: {
+                    name: document.getElementById('mdlName'),
+                    id: document.getElementById('mdlId'),
+                    regDate: document.getElementById('mdlRegDate'),
+                    payStatus: document.getElementById('mdlPayStatus'),
+                    rewardStatus: document.getElementById('mdlRewardStatus'),
+                    tlPayment: document.getElementById('mdlTlPayment'),
+                    tlEligible: document.getElementById('mdlTlEligible')
+                },
+                offlineBanner: document.getElementById('networkOfflineBanner')
+            };
+
+            const haptic = (ms = 20) => {
+                try {
+                    if (navigator.userActivation && !navigator.userActivation.hasBeenActive) return;
+                    if (navigator.vibrate) navigator.vibrate(ms);
+                } catch (e) { }
+            };
+
+            const toast = (msg, isError = false) => {
+                if (!dom.toast.box) return;
+                dom.toast.msg.textContent = msg;
+                dom.toast.box.className = `toast show ${isError ? 'error' : ''}`;
+                haptic(isError ? 50 : 25);
+                setTimeout(() => dom.toast.box.classList.remove('show'), 3000);
+            };
+
+            const openSheet = (id) => {
+                document.querySelectorAll('.overlay.show').forEach(el => el.classList.remove('show'));
+                const el = document.getElementById(id);
+                if (el) { el.classList.add('show'); document.body.classList.add('locked'); haptic(20); }
+            };
+
+            const closeSheet = (id) => {
+                const el = document.getElementById(id);
+                if (el) { el.classList.remove('show'); document.body.classList.remove('locked'); }
+            };
+
+            const logAction = async (actionType, description) => {
+                if (!authUser || typeof firebase === 'undefined') return;
+                try {
+                    const db = firebase.firestore();
+                    await db.collection('users').doc(authUser.uid).collection('notifications').add({
+                        type: actionType,
+                        title: actionType.replace(/_/g, ' ').toUpperCase(),
+                        body: description,
+                        read: false,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        device: navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop'
+                    });
+                } catch (e) { }
+            };
+
+            const buildReferralLink = (user) => {
+                const compactSlug = user.uid.substring(0, 5).toUpperCase();
+                referralLink = `https://sigmaaz.vercel.app/reg.html?ref=SIG-${compactSlug}`;
+                if (dom.invite.linkInput) dom.invite.linkInput.value = referralLink;
+            };
+
+            const copyLink = async () => {
+                if (!referralLink) return;
+                try {
+                    await navigator.clipboard.writeText(referralLink);
+                    toast('Personal invite link copied!');
+                    logAction('referral_copy', 'Copied personal referral URL');
+                } catch (e) {
+                    toast('Failed to copy. Please copy manually.', true);
+                }
+            };
+
+            const shareSystem = async () => {
+                if (!referralLink) return;
+                try {
+                    if (navigator.share) {
+                        await navigator.share({
+                            title: 'Join Sigma Portfolios',
+                            text: 'Start compounding daily PKR returns with automated institutional portfolios on Sigma.',
+                            url: referralLink
+                        });
+                        logAction('share_initiated', 'Invoked system share dialog');
+                    } else {
+                        copyLink();
+                    }
+                } catch (err) { }
+            };
+
+            const shareWhatsApp = () => {
+                if (!referralLink) return;
+                const text = encodeURIComponent(`Start your automated investment journey safely with Sigma Portfolios. Earn daily compounding yields in PKR: ${referralLink}`);
+                window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+                logAction('share_whatsapp', 'Initiated WhatsApp invitation');
+            };
+
+            const openQrModal = () => {
+                if (!referralLink || !dom.invite.qrContainer) return;
+                dom.invite.qrContainer.innerHTML = '';
+                if (window.QRCode) {
+                    qrcodeInstance = new QRCode(dom.invite.qrContainer, {
+                        text: referralLink,
+                        width: 220,
+                        height: 220,
+                        colorDark: "#0B132B",
+                        colorLight: "#FFFFFF",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                }
+                openSheet('sheetQr');
+                logAction('qr_generated', 'Generated invite QR code');
+            };
+
+            const openMemberDetails = (memberUid) => {
+                const member = loadedTeam.find(m => m.uid === memberUid);
+                if (!member) return;
+
+                dom.modal.name.textContent = `Member (${member.name || 'User'})`;
+                dom.modal.id.textContent = `UID: SIG-${member.uid.substring(0, 5).toUpperCase()}`;
+
+                const dateStr = member.registeredAt ? new Date(member.registeredAt.seconds ? member.registeredAt.seconds * 1000 : member.registeredAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recent';
+                dom.modal.regDate.textContent = dateStr;
+
+                if (member.status === 'active') {
+                    dom.modal.tlPayment.className = 'tl-item completed';
+                    dom.modal.payStatus.textContent = `Active Portfolio (${member.plan || 'Invested'})`;
+
+                    dom.modal.tlEligible.className = 'tl-item completed';
+                    dom.modal.rewardStatus.textContent = `Commission Released (Rs. ${Number(member.commission || 0).toLocaleString('en-PK')})`;
+                } else {
+                    dom.modal.tlPayment.className = 'tl-item';
+                    dom.modal.payStatus.textContent = 'Awaiting Portfolio Activation';
+
+                    dom.modal.tlEligible.className = 'tl-item';
+                    dom.modal.rewardStatus.textContent = 'Awaiting Downline Qualification';
+                }
+
+                openSheet('sheetMemberDetails');
+            };
+
+            const filterTeam = (status) => {
+                currentFilter = status;
+                document.querySelectorAll('.tf-btn').forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+                haptic(15);
+                renderTeamLists();
+            };
+
+            const renderTeamLists = () => {
+                if (!dom.team.mobile || !dom.team.tableBody) return;
+
+                dom.team.mobile.innerHTML = '';
+                dom.team.tableBody.innerHTML = '';
+
+                const filtered = loadedTeam.filter(m => {
+                    if (currentFilter === 'all') return true;
+                    return m.status === currentFilter;
+                });
+
+                if (filtered.length === 0) {
+                    dom.team.empty.style.display = 'block';
+                } else {
+                    dom.team.empty.style.display = 'none';
+
+                    filtered.forEach(member => {
+                        const dateStr = member.registeredAt ? new Date(member.registeredAt.seconds ? member.registeredAt.seconds * 1000 : member.registeredAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Recent';
+                        const badgeClass = member.status === 'active' ? 'active' : 'pending';
+                        const statusTxt = member.status === 'active' ? 'Active' : 'Pending';
+                        const commTxt = member.commission > 0 ? `Rs. ${Number(member.commission).toLocaleString('en-PK')}` : '--';
+                        const initial = (member.name || 'U').charAt(0).toUpperCase();
+
+                        // 1. Mobile Card View
+                        const card = document.createElement('div');
+                        card.className = 'team-member-card';
+                        card.onclick = () => openMemberDetails(member.uid);
+                        card.innerHTML = `
+                            <div class="tm-left">
+                                <div class="tm-avatar">${initial}</div>
+                                <div class="tm-info">
+                                    <b>${member.name || 'Member'}</b>
+                                    <small>SIG-${member.uid.substring(0, 5).toUpperCase()} • ${dateStr}</small>
+                                </div>
+                            </div>
+                            <div class="tm-right">
+                                <span class="badge-status ${badgeClass}">${statusTxt}</span>
+                                <span class="tm-level font-mono">Tier ${member.level}</span>
+                            </div>
+                        `;
+                        dom.team.mobile.appendChild(card);
+
+                        // 2. Desktop Table Row
+                        const tr = document.createElement('tr');
+                        tr.onclick = () => openMemberDetails(member.uid);
+                        tr.innerHTML = `
+                            <td class="font-mono">SIG-${member.uid.substring(0, 5).toUpperCase()}</td>
+                            <td class="font-mono">Tier ${member.level}</td>
+                            <td>${dateStr}</td>
+                            <td><span class="badge-status ${badgeClass}">${statusTxt}</span></td>
+                            <td class="font-mono text-accent" style="font-weight:900;">${commTxt}</td>
+                        `;
+                        dom.team.tableBody.appendChild(tr);
+                    });
+                }
+            };
+
+            const renderRewardStructure = (rules) => {
+                const container = document.getElementById('rewardListContainer');
+                if (!container) return;
+
+                const l1 = rules.l1_amount || 400;
+                const l2 = rules.l2_amount || 250;
+                const l3 = rules.l3_percent || 2;
+
+                container.innerHTML = `
+                    <div class="reward-item primary">
+                        <div class="reward-left">
+                            <div class="level-badge">L1</div>
+                            <span>Direct Invite Bonus</span>
+                        </div>
+                        <div class="reward-right">Rs. ${Number(l1).toLocaleString('en-PK')}</div>
+                    </div>
+                    <div class="reward-item">
+                        <div class="reward-left">
+                            <div class="level-badge">L2</div>
+                            <span>2nd-Tier Network Bonus</span>
+                        </div>
+                        <div class="reward-right">Rs. ${Number(l2).toLocaleString('en-PK')}</div>
+                    </div>
+                    <div class="reward-item">
+                        <div class="reward-left">
+                            <div class="level-badge">L3</div>
+                            <span>Extended Network Share</span>
+                        </div>
+                        <div class="reward-right">${l3}%</div>
+                    </div>
+                `;
+            };
+
+            const loadAndRenderNetwork = async (db, uid) => {
+                try {
+                    // 1. Read User's Authoritative Commission Balances
+                    db.collection('users').doc(uid).onSnapshot(doc => {
+                        if (doc.exists) {
+                            const data = doc.data();
+                            const commBal = Number(data.commissionBalance || 0);
+                            const pendingComm = Number(data.pendingCommission || 0);
+
+                            dom.vault.available.textContent = "Rs. " + commBal.toLocaleString('en-PK', { minimumFractionDigits: 2 });
+                            dom.vault.pending.textContent = "Rs. " + pendingComm.toLocaleString('en-PK', { minimumFractionDigits: 2 });
+                            dom.vault.total.textContent = (commBal + pendingComm).toLocaleString('en-PK', { minimumFractionDigits: 2 });
+
+                            dom.funnel.clicks.textContent = data.refClicks || 0;
+                            dom.funnel.registered.textContent = data.referralsCount || 0;
+                            dom.funnel.active.textContent = data.activeReferralsCount || 0;
+                            dom.stats.members.textContent = data.referralsCount || 0;
+                            dom.stats.levels.textContent = (data.activeReferralsCount || 0) > 0 ? "3" : "1";
+                        }
+                    });
+
+                    // 2. Query Referrals via Slug, Upper Code, or Direct UID
+                    const compactCode = uid.substring(0, 5).toLowerCase();
+                    const upperCode = uid.substring(0, 5).toUpperCase();
+
+                    db.collection('users').where('referredBy', 'in', [compactCode, `sig-${compactCode}`, upperCode, `SIG-${upperCode}`, uid])
+                        .onSnapshot(snap => {
+                            loadedTeam = [];
+                            snap.forEach(d => {
+                                const uData = d.data();
+                                const isActive = (uData.totalInvested || 0) > 0 || (uData.activePlans || 0) > 0;
+                                loadedTeam.push({
+                                    uid: d.id,
+                                    name: uData.username || uData.fullName || 'Member',
+                                    level: 1,
+                                    registeredAt: uData.createdAt,
+                                    status: isActive ? 'active' : 'pending',
+                                    plan: isActive ? 'Sigma Portfolio' : null,
+                                    commission: isActive ? 400 : 0
+                                });
+                            });
+
+                            renderTeamLists();
+                        });
+
+                } catch (e) {
+                    console.error("Network Query Error:", e);
+                }
+            };
+
+            const initFirebase = () => {
+                if (typeof firebase === 'undefined' || !firebase.apps.length) return;
+                const auth = firebase.auth();
+                const db = firebase.firestore();
+
+                // Live CMS Referral Rules Listener
+                db.collection('settings').doc('referrals').onSnapshot(doc => {
+                    renderRewardStructure(doc.exists ? doc.data() : {});
+                });
+
+                auth.onAuthStateChanged(user => {
+                    if (!user) { window.location.replace('login.html'); return; }
+                    authUser = user;
+
+                    if (user.photoURL) {
+                        const dockAvatar = document.getElementById('dockAvatarContainer');
+                        if (dockAvatar) dockAvatar.innerHTML = `<img src="${user.photoURL}" alt="User" style="width:100%;height:100%;object-fit:cover;" referrerpolicy="no-referrer">`;
+                    }
+
+                    buildReferralLink(user);
+                    loadAndRenderNetwork(db, user.uid);
+                });
+            };
+
+            const init = () => {
+                document.querySelectorAll('.overlay').forEach(ov => {
+                    ov.addEventListener('click', e => { if (e.target === ov) closeSheet(ov.id); });
+                });
+
+                const header = document.getElementById('topHeader');
+                if (header) {
+                    window.addEventListener('scroll', () => {
+                        if (window.scrollY > 20) header.classList.add('scrolled');
+                        else header.classList.remove('scrolled');
+                    }, { passive: true });
+                }
+
+                window.addEventListener('offline', () => { if (dom.offlineBanner) dom.offlineBanner.style.display = 'block'; });
+                window.addEventListener('online', () => { if (dom.offlineBanner) dom.offlineBanner.style.display = 'none'; });
+
+                initFirebase();
+            };
+
+            return {
+                init,
+                closeSheet,
+                openQrModal,
+                openRulesModal: () => openSheet('sheetRules'),
+                copyLink,
+                shareSystem,
+                shareWhatsApp,
+                filterTeam,
+                logAction
+            };
+
+        })();
+
+        document.addEventListener('DOMContentLoaded', TeamController.init);
+    </script>
+</body>
+
+</html>

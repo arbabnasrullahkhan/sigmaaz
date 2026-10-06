@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Sigma | Identity & KYC Document Verification</title>
+
+    <!-- SEO, Privacy & PWA Metadata -->
+    <meta name="description"
+        content="Complete your verified KYC identity verification on Sigma. Upload national ID documents securely for regulatory compliance and unlimited payouts.">
+    <meta name="keywords" content="Sigma KYC, National ID Verification Pakistan, CNIC Verification, Account Compliance">
+    <meta name="author" content="Sigma Technologies">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="theme-color" content="#0B132B">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sigma KYC">
+    <link rel="canonical" href="https://sigmaaz.vercel.app/kyc.html">
+
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sigmaaz.vercel.app/kyc.html">
+    <meta property="og:title" content="Sigma | KYC Identity Verification">
+    <meta property="og:description" content="Secure identity compliance terminal for authorized Sigma accounts.">
+    <meta property="og:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sigma | Identity Compliance">
+    <meta name="twitter:description" content="Upload national documentation for automated account verification.">
+    <meta name="twitter:image" content="https://sigmaaz.vercel.app/assets/preview.png">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <!-- Fallback Firebase Initialization -->
+    <script>
+        if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+            firebase.initializeApp({
+                apiKey: "AIzaSyCTRe2w4juZ55DrayIw61qKz_UYlZfw1H8",
+                authDomain: "week-team.firebaseapp.com",
+                projectId: "week-team",
+                storageBucket: "week-team.firebasestorage.app",
+                messagingSenderId: "480334485782",
+                appId: "1:480334485782:web:c0c886ed710567b9e6d837"
+            });
+        }
+    </script>
+
+    <style>
+        /* ==========================================================================
+           1. SIGMA PREMIUM DESIGN TOKENS
+           ========================================================================== */
+        :root {
+            --sigma-primary: #0B132B;
+            --sigma-secondary: #1C2541;
+            --sigma-tertiary: #3A506B;
+
+            --sigma-surface: #FFFFFF;
+            --sigma-surface-alt: #F8FAFC;
+            --sigma-subtle: #F1F5F9;
+            --sigma-muted-border: #E2E8F0;
+            --sigma-input-border: #CBD5E1;
+
+            --sigma-accent: #10B981;
+            --sigma-accent-dark: #059669;
+            --sigma-accent-soft: #ECFDF5;
+            --sigma-accent-border: #A7F3D0;
+
+            --sigma-gold: #F59E0B;
+            --sigma-gold-dark: #D97706;
+            --sigma-gold-soft: #FEF3C7;
+
+            --sigma-danger: #EF4444;
+            --sigma-danger-dark: #DC2626;
+            --sigma-danger-soft: #FEE2E2;
+            --sigma-danger-border: #FECACA;
+
+            --sigma-info: #3B82F6;
+            --sigma-info-dark: #2563EB;
+            --sigma-pink: #F472B6;
+
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --text-light: #94A3B8;
+
+            --radius-pill: 9999px;
+            --radius-2xl: 32px;
+            --radius-xl: 20px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+
+            --shadow-subtle: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+            --shadow-card: 0 16px 32px -8px rgba(15, 23, 42, 0.08);
+            --shadow-float: 0 24px 48px -12px rgba(15, 23, 42, 0.15);
+
+            --z-dock: 1000;
+            --z-header: 900;
+            --z-toast: 3000;
+            --safe-area-bottom: env(safe-area-inset-bottom, 16px);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--sigma-surface-alt);
+            color: var(--text-body);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: calc(110px + var(--safe-area-bottom));
+            background-image:
+                radial-gradient(circle at 10% 0%, rgba(244, 114, 182, 0.035) 0%, transparent 45vw),
+                radial-gradient(circle at 90% 100%, rgba(16, 185, 129, 0.04) 0%, transparent 45vw);
+            background-attachment: fixed;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            background: none;
+        }
+
+        button {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: var(--text-heading);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ==========================================================================
+           2. SINGLE-ROW ISLAND HEADER WITH BOTH LOGOS
+           ========================================================================== */
+        .app-container {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .island-topbar {
+            position: sticky;
+            top: 12px;
+            margin: 0 16px 20px;
+            height: 68px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-pill);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 14px;
+            z-index: var(--z-header);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-subtle);
+            transition: 0.3s;
+        }
+
+        .island-topbar.scrolled {
+            box-shadow: var(--shadow-card);
+            border-color: var(--sigma-muted-border);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .btn-back {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--sigma-surface);
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--sigma-muted-border);
+            transition: 0.3s;
+        }
+
+        .btn-back:active {
+            transform: scale(0.92);
+            background: var(--sigma-subtle);
+        }
+
+        .btn-back svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2.5;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+        }
+
+        .brand-text-img {
+            height: 20px;
+            object-fit: contain;
+            margin-top: 2px;
+        }
+
+        .header-title-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .header-title-box b {
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: var(--sigma-primary);
+            line-height: 1.1;
+        }
+
+        .header-title-box small {
+            font-size: 0.65rem;
+            color: var(--sigma-accent-dark);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==========================================================================
+           3. WORKSPACE & STATUS HERO
+           ========================================================================== */
+        .workspace {
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .status-hero-card {
+            background: linear-gradient(135deg, #0b132b 0%, #161c36 45%, #20172e 80%, #131b2e 100%);
+            border-radius: var(--radius-2xl);
+            padding: 28px 24px;
+            color: white;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border: 1px solid rgba(244, 114, 182, 0.2);
+        }
+
+        .status-hero-card::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.22) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge-kyc-status {
+            padding: 4px 12px;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .badge-kyc-status.unverified {
+            background: rgba(255, 255, 255, 0.15);
+            color: #E2E8F0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .badge-kyc-status.pending {
+            background: var(--sigma-gold-soft);
+            color: var(--sigma-gold-dark);
+            border: 1px solid var(--sigma-gold-border);
+        }
+
+        .badge-kyc-status.verified {
+            background: var(--sigma-accent-soft);
+            color: var(--sigma-accent-dark);
+            border: 1px solid var(--sigma-accent-border);
+        }
+
+        .status-hero-card h2 {
+            font-size: 1.5rem;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .status-hero-card p {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.82);
+            line-height: 1.5;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Verified Card Details */
+        .verified-card {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            padding: 32px 24px;
+            text-align: center;
+            border: 1px solid var(--sigma-accent-border);
+            box-shadow: var(--shadow-subtle);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .verified-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--sigma-accent-soft);
+            color: var(--sigma-accent-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 10px rgba(16, 185, 129, 0.1);
+        }
+
+        .verified-icon svg {
+            width: 36px;
+            height: 36px;
+            stroke-width: 2.8;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        /* ==========================================================================
+           4. KYC SUBMISSION FORM
+           ========================================================================== */
+        .kyc-form-card {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            padding: 26px 22px;
+            border: 1px solid var(--sigma-muted-border);
+            box-shadow: var(--shadow-subtle);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .form-header h3 {
+            font-size: 1.15rem;
+            margin-bottom: 2px;
+        }
+
+        .form-header p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: var(--sigma-subtle);
+            border-radius: var(--radius-xl);
+            border: 2px solid var(--sigma-input-border);
+            transition: 0.2s;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--sigma-primary);
+            background: var(--sigma-surface);
+            box-shadow: 0 0 0 4px rgba(11, 19, 43, 0.08);
+        }
+
+        .input-icon {
+            padding-left: 16px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper:focus-within .input-icon {
+            color: var(--sigma-primary);
+        }
+
+        .input-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .input-field {
+            flex: 1;
+            height: 60px;
+            padding: 22px 16px 6px 12px;
+            font-size: 0.95rem;
+            color: var(--text-heading);
+            font-weight: 700;
+            background: transparent;
+            width: 100%;
+        }
+
+        .input-field:focus {
+            outline: none;
+        }
+
+        .input-field::placeholder {
+            color: transparent;
+        }
+
+        .floating-label {
+            position: absolute;
+            left: 48px;
+            top: 18px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            pointer-events: none;
+            transition: 0.2s ease all;
+            font-weight: 600;
+        }
+
+        .input-field:focus~.floating-label,
+        .input-field:not(:placeholder-shown)~.floating-label {
+            top: 7px;
+            font-size: 0.72rem;
+            color: var(--sigma-primary);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .select-field {
+            padding: 8px 16px 8px 12px;
+            font-weight: 800;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .input-wrapper.select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            right: 20px;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        /* Dual Document Upload Dropzones */
+        .docs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .dropzone {
+            border: 2px dashed var(--sigma-input-border);
+            background: var(--sigma-surface-alt);
+            border-radius: var(--radius-xl);
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
+            min-height: 140px;
+        }
+
+        .dropzone:hover {
+            border-color: var(--sigma-primary);
+            background: white;
+        }
+
+        .dropzone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .dropzone-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid var(--sigma-muted-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sigma-primary);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .dropzone-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .dropzone-text b {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-heading);
+        }
+
+        .dropzone-text small {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .preview-box {
+            position: absolute;
+            inset: 4px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: none;
+            background: white;
+            z-index: 5;
+        }
+
+        .preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-box.active {
+            display: block;
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 58px;
+            border-radius: var(--radius-xl);
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 24px rgba(11, 19, 43, 0.28);
+            transition: var(--transition-bounce);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.96);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            width: 22px;
+            height: 22px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .btn-submit.loading .spinner {
+            display: block;
+        }
+
+        .btn-submit.loading span {
+            display: none;
+        }
+
+        /* ==========================================================================
+           5. 3-BUTTON MOBILE DOCK (.html FULL NAVIGATION)
+           ========================================================================== */
+        .mobile-dock {
+            position: fixed;
+            bottom: var(--safe-area-bottom);
+            left: 50%;
+            transform: translateX(-50%);
+            height: 76px;
+            width: calc(100% - 32px);
+            max-width: 440px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-float);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: var(--z-dock);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .dock-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--text-muted);
+            width: 64px;
+            height: 100%;
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .dock-slot svg {
+            width: 26px;
+            height: 26px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2;
+        }
+
+        .dock-slot span {
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .dock-slot.active {
+            color: var(--sigma-primary);
+        }
+
+        .dock-slot.active svg {
+            stroke-width: 2.8;
+            transform: translateY(-2px);
+            color: var(--sigma-accent-dark);
+        }
+
+        .dock-crest-btn {
+            position: relative;
+            top: -24px;
+            width: 68px;
+            height: 68px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 24px rgba(11, 19, 43, 0.35);
+            border: 5px solid var(--sigma-surface-alt);
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+
+        .dock-crest-btn:active {
+            transform: scale(0.9);
+        }
+
+        .dock-crest-btn img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .dock-crest-btn::after {
+            content: 'PLANS';
+            position: absolute;
+            bottom: -22px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            color: var(--text-heading);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 860px) {
+            .mobile-dock {
+                display: none;
+            }
+
+            body {
+                padding-bottom: 40px;
+            }
+        }
+
+        /* Toast Component */
+        .toast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translate(-50%, -20px) scale(0.9);
+            background: var(--sigma-primary);
+            color: white;
+            padding: 14px 28px;
+            border-radius: var(--radius-pill);
+            font-size: 0.95rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-float);
+            z-index: var(--z-toast);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.error {
+            background: var(--sigma-danger-dark);
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0) scale(1);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="networkOfflineBanner">Reconnecting to Sigma Core Node...</div>
+
+    <!-- Complete SVG Sprites -->
+    <svg width="0" height="0" style="display:none;" aria-hidden="true">
+        <symbol id="icon-back" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22" />
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="icon-shield" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </symbol>
+        <symbol id="icon-check" viewBox="0 0 24 24">
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="20 6 9 17 4 12" />
+        </symbol>
+        <symbol id="icon-file-text" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+        </symbol>
+        <symbol id="icon-upload" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+        </symbol>
+    </svg>
+
+    <div class="app-container">
+
+        <!-- HEADER WITH LOGO, TEXT LOGO & TITLE -->
+        <header class="island-topbar" id="topHeader">
+            <a href="profile.html" class="btn-back" aria-label="Go Back">
+                <svg>
+                    <use href="#icon-back" />
+                </svg>
+            </a>
+
+            <div class="brand-cluster">
+                <img src="assets/logo.png" alt="Sigma" class="brand-logo-img"
+                    onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%2310B981\'/><text x=\'50\' y=\'65\' font-family=\'Arial\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\'>S</text></svg>'">
+                <img src="assets/textlogo.png" alt="Sigma" class="brand-text-img" onerror="this.style.display='none'">
+            </div>
+
+            <div class="header-title-box">
+                <b>KYC Portal</b>
+                <small>Legal Compliance</small>
+            </div>
+        </header>
+
+        <main class="workspace">
+
+            <!-- Dynamic Status Hero Card -->
+            <div class="status-hero-card">
+                <div class="hero-top">
+                    <span
+                        style="font-size:0.75rem; text-transform:uppercase; font-weight:800; letter-spacing:1px; color:#CBD5E1;">Identity
+                        Verification</span>
+                    <span class="badge-kyc-status unverified" id="kycStatusBadge">Unverified</span>
+                </div>
+                <h2 id="kycHeroTitle">Verify Your Identity</h2>
+                <p id="kycHeroDesc">Complete institutional KYC by providing your official national identification.
+                    Verified accounts receive priority withdrawals and increased transaction quotas.</p>
+            </div>
+
+            <!-- Verified State Card (Shown if verified) -->
+            <div class="verified-card" id="cardVerified" style="display: none;">
+                <div class="verified-icon"><svg>
+                        <use href="#icon-check" />
+                    </svg></div>
+                <h2>Account Fully Verified</h2>
+                <p>Your legal documentation has been reviewed and certified by administration. Your account has
+                    institutional clearance.</p>
+                <a href="profile.html"
+                    style="margin-top: 8px; font-size: 0.9rem; font-weight: 800; color: var(--sigma-primary);">Return to
+                    Profile Settings &rarr;</a>
+            </div>
+
+            <!-- KYC Form Card (Shown if unverified or rejected) -->
+            <div class="kyc-form-card" id="cardKycForm">
+                <div class="form-header">
+                    <h3>Submit Documentation</h3>
+                    <p>Ensure all information strictly matches your government-issued document.</p>
+                </div>
+
+                <form id="formKyc">
+                    <div class="input-wrapper" style="margin-bottom: 14px;">
+                        <div class="input-icon"><svg>
+                                <use href="#icon-user" />
+                            </svg></div>
+                        <input type="text" id="inpFullName" class="input-field" placeholder=" " required minlength="3">
+                        <label class="floating-label">Legal Full Name</label>
+                    </div>
+
+                    <div class="input-wrapper select-wrapper" style="margin-bottom: 14px;">
+                        <div class="input-icon"><svg>
+                                <use href="#icon-file-text" />
+                            </svg></div>
+                        <select id="inpDocType" class="input-field select-field" required>
+                            <option value="CNIC">National ID Card (CNIC / Smart Card)</option>
+                            <option value="Passport">International Passport</option>
+                            <option value="License">Driving License</option>
+                        </select>
+                        <label class="floating-label">Document Type</label>
+                    </div>
+
+                    <div class="input-wrapper" style="margin-bottom: 14px;">
+                        <div class="input-icon" style="font-family: monospace; font-weight: 800;">#</div>
+                        <input type="text" id="inpCnicNumber" class="input-field font-mono" placeholder=" " required
+                            maxlength="20">
+                        <label class="floating-label">Document / CNIC Number</label>
+                    </div>
+
+                    <!-- Dual Document Upload Dropzones (Front & Back) -->
+                    <div class="docs-grid">
+                        <label class="dropzone" id="dzFront">
+                            <input type="file" id="fileFront" accept="image/jpeg, image/png, image/webp" required>
+                            <div class="dropzone-icon"><svg>
+                                    <use href="#icon-upload" />
+                                </svg></div>
+                            <div class="dropzone-text">
+                                <b>Front Image</b>
+                                <small>Photo side</small>
+                            </div>
+                            <div class="preview-box" id="prevFront"><img src="" alt="Front"></div>
+                        </label>
+
+                        <label class="dropzone" id="dzBack">
+                            <input type="file" id="fileBack" accept="image/jpeg, image/png, image/webp" required>
+                            <div class="dropzone-icon"><svg>
+                                    <use href="#icon-upload" />
+                                </svg></div>
+                            <div class="dropzone-text">
+                                <b>Back Image</b>
+                                <small>Address side</small>
+                            </div>
+                            <div class="preview-box" id="prevBack"><img src="" alt="Back"></div>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="btnSubmitKyc">
+                        <span>Submit Verification</span>
+                        <div class="spinner"></div>
+                    </button>
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- 3-BUTTON MOBILE DOCK (.html FULL NAVIGATION) -->
+    <nav class="mobile-dock">
+        <a href="dash.html" class="dock-slot">
+            <svg>
+                <use href="#icon-home" />
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="plans.html" class="dock-crest-btn">
+            <img src="assets/logo.png" alt="Sigma Crest" onerror="this.style.display='none'">
+        </a>
+        <a href="profile.html" class="dock-slot active">
+            <div style="width: 26px; height: 26px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--sigma-surface);"
+                id="dockAvatarContainer">
+                <svg style="width: 18px; height: 18px; stroke: var(--sigma-primary);">
+                    <use href="#icon-user" />
+                </svg>
+            </div>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toastBox">
+        <svg style="width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.5;">
+            <use href="#icon-check" />
+        </svg>
+        <span id="toastMsg">Verified</span>
+    </div>
+
+    <!-- ==========================================================================
+         JAVASCRIPT CONTROLLER (FIREBASE STORAGE & FIRESTORE INTEGRATION)
+         ========================================================================== -->
+    <script>
+        const KycController = (() => {
+
+            let authUser = null;
+            let fileFrontObj = null;
+            let fileBackObj = null;
+
+            const dom = {
+                badge: document.getElementById('kycStatusBadge'),
+                heroTitle: document.getElementById('kycHeroTitle'),
+                heroDesc: document.getElementById('kycHeroDesc'),
+                formCard: document.getElementById('cardKycForm'),
+                verifiedCard: document.getElementById('cardVerified'),
+                form: document.getElementById('formKyc'),
+                btnSubmit: document.getElementById('btnSubmitKyc'),
+                fileFront: document.getElementById('fileFront'),
+                fileBack: document.getElementById('fileBack'),
+                prevFront: document.getElementById('prevFront'),
+                prevBack: document.getElementById('prevBack'),
+                toastBox: document.getElementById('toastBox'),
+                toastMsg: document.getElementById('toastMsg')
+            };
+
+            const haptic = (ms = 25) => {
+                try {
+                    if (navigator.userActivation && !navigator.userActivation.hasBeenActive) return;
+                    if ('vibrate' in navigator) navigator.vibrate(ms);
+                } catch (e) { }
+            };
+
+            const toast = (msg, isError = false) => {
+                dom.toastMsg.textContent = msg;
+                dom.toastBox.className = `toast show ${isError ? 'error' : ''}`;
+                haptic(isError ? 50 : 25);
+                setTimeout(() => dom.toastBox.classList.remove('show'), 3500);
+            };
+
+            const handleFilePreview = (file, previewContainer) => {
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = previewContainer.querySelector('img');
+                    img.src = e.target.result;
+                    previewContainer.classList.add('active');
+                };
+                reader.readAsDataURL(file);
+            };
+
+            const bindFileUploads = () => {
+                dom.fileFront.addEventListener('change', (e) => {
+                    if (e.target.files && e.target.files[0]) {
+                        fileFrontObj = e.target.files[0];
+                        handleFilePreview(fileFrontObj, dom.prevFront);
+                    }
+                });
+
+                dom.fileBack.addEventListener('change', (e) => {
+                    if (e.target.files && e.target.files[0]) {
+                        fileBackObj = e.target.files[0];
+                        handleFilePreview(fileBackObj, dom.prevBack);
+                    }
+                });
+            };
+
+            const submitKyc = async (e) => {
+                e.preventDefault();
+                if (!authUser) return;
+
+                const fullName = document.getElementById('inpFullName').value.trim();
+                const docType = document.getElementById('inpDocType').value;
+                const docNumber = document.getElementById('inpCnicNumber').value.trim();
+
+                if (!fileFrontObj || !fileBackObj) {
+                    toast("Please upload both front and back images of your ID.", true);
+                    return;
+                }
+
+                dom.btnSubmit.classList.add('loading');
+                dom.btnSubmit.disabled = true;
+
+                try {
+                    const storage = firebase.storage();
+                    const db = firebase.firestore();
+                    const uid = authUser.uid;
+
+                    // 1. Upload Front Image
+                    const frontExt = fileFrontObj.name.split('.').pop() || 'jpg';
+                    const frontRef = storage.ref().child(`kyc_documents/${uid}/front_${Date.now()}.${frontExt}`);
+                    await frontRef.put(fileFrontObj);
+                    const frontUrl = await frontRef.getDownloadURL();
+
+                    // 2. Upload Back Image
+                    const backExt = fileBackObj.name.split('.').pop() || 'jpg';
+                    const backRef = storage.ref().child(`kyc_documents/${uid}/back_${Date.now()}.${backExt}`);
+                    await backRef.put(fileBackObj);
+                    const backUrl = await backRef.getDownloadURL();
+
+                    // 3. Update Firestore Verification Request
+                    await db.collection('kyc_requests').doc(uid).set({
+                        uid: uid,
+                        fullName: fullName,
+                        documentType: docType,
+                        documentNumber: docNumber,
+                        frontUrl: frontUrl,
+                        backUrl: backUrl,
+                        status: 'pending',
+                        submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    // Update User Status
+                    await db.collection('users').doc(uid).update({
+                        kycStatus: 'pending'
+                    });
+
+                    toast("KYC verification documents submitted!");
+
+                } catch (error) {
+                    console.error("KYC Error:", error);
+                    toast("Failed to submit verification. Please try again.", true);
+                    dom.btnSubmit.classList.remove('loading');
+                    dom.btnSubmit.disabled = false;
+                }
+            };
+
+            const initFirebase = () => {
+                if (typeof firebase === 'undefined' || !firebase.apps.length) return;
+
+                const auth = firebase.auth();
+                const db = firebase.firestore();
+
+                auth.onAuthStateChanged(user => {
+                    if (!user) { window.location.replace('login.html'); return; }
+                    authUser = user;
+
+                    // Listen to Real-time KYC status
+                    db.collection('users').doc(user.uid).onSnapshot(doc => {
+                        if (!doc.exists) return;
+                        const data = doc.data();
+                        const status = (data.kycStatus || 'unverified').toLowerCase();
+
+                        if (status === 'verified') {
+                            dom.badge.className = 'badge-kyc-status verified';
+                            dom.badge.textContent = 'Verified';
+                            dom.heroTitle.textContent = 'Identity Verified';
+                            dom.heroDesc.textContent = 'Your account documentation has been reviewed and certified with full institutional clearance.';
+                            dom.formCard.style.display = 'none';
+                            dom.verifiedCard.style.display = 'flex';
+                        } else if (status === 'pending') {
+                            dom.badge.className = 'badge-kyc-status pending';
+                            dom.badge.textContent = 'Under Review';
+                            dom.heroTitle.textContent = 'Verification in Progress';
+                            dom.heroDesc.textContent = 'Your documents are being checked by the compliance desk. This typically completes within 24 hours.';
+                            dom.formCard.style.display = 'none';
+                            dom.verifiedCard.style.display = 'none';
+                        } else {
+                            dom.badge.className = 'badge-kyc-status unverified';
+                            dom.badge.textContent = 'Unverified';
+                            dom.formCard.style.display = 'flex';
+                            dom.verifiedCard.style.display = 'none';
+                        }
+                    });
+                });
+            };
+
+            const init = () => {
+                bindFileUploads();
+                dom.form.addEventListener('submit', submitKyc);
+                initFirebase();
+            };
+
+            return { init };
+        })();
+
+        document.addEventListener('DOMContentLoaded', KycController.init);
+    </script>
+</body>
+
+</html>

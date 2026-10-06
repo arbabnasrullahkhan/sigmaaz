@@ -1,0 +1,1715 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+    <title>Sigma | Secure Checkout & Proof Verification</title>
+
+    <meta name="description"
+        content="Submit payment verification proofs and transaction IDs securely for Sigma institutional portfolios.">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="theme-color" content="#0B132B">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,500;0,700;0,800;1,600&display=swap"
+        rel="stylesheet">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+    <!-- Centralized Configuration -->
+    <script src="firebase-config.js"></script>
+
+    <script>
+        if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+            const fallbackConfig = {
+                apiKey: "AIzaSyCTRe2w4juZ55DrayIw61qKz_UYlZfw1H8",
+                authDomain: "week-team.firebaseapp.com",
+                projectId: "week-team",
+                storageBucket: "week-team.firebasestorage.app",
+                messagingSenderId: "480334485782",
+                appId: "1:480334485782:web:c0c886ed710567b9e6d837"
+            };
+            firebase.initializeApp(fallbackConfig);
+        }
+    </script>
+
+    <style>
+        /* ==========================================================================
+           1. DESIGN TOKENS
+           ========================================================================== */
+        :root {
+            --sigma-primary: #0B132B;
+            --sigma-secondary: #1C2541;
+            --sigma-surface: #FFFFFF;
+            --sigma-surface-alt: #F8FAFC;
+            --sigma-subtle: #F1F5F9;
+            --sigma-muted-border: #E2E8F0;
+            --sigma-input-border: #CBD5E1;
+
+            --sigma-accent: #10B981;
+            --sigma-accent-dark: #059669;
+            --sigma-gold: #F59E0B;
+            --sigma-danger: #EF4444;
+            --sigma-danger-dark: #DC2626;
+            --sigma-danger-soft: #FEE2E2;
+
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+
+            --radius-pill: 9999px;
+            --radius-2xl: 32px;
+            --radius-xl: 22px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+
+            --shadow-subtle: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+            --shadow-card: 0 16px 32px -8px rgba(15, 23, 42, 0.08);
+            --shadow-float: 0 24px 48px -12px rgba(15, 23, 42, 0.16);
+
+            --z-header: 900;
+            --z-modal: 2000;
+            --z-toast: 3000;
+            --z-success: 4000;
+            --z-blocker: 9999;
+            --transition-smooth: 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            --safe-area-bottom: env(safe-area-inset-bottom, 16px);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--sigma-surface-alt);
+            color: var(--text-body);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: calc(115px + var(--safe-area-bottom));
+        }
+
+        body.locked {
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            background: none;
+        }
+
+        button {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--text-heading);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        #networkOfflineBanner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--sigma-danger);
+            color: white;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-align: center;
+            padding: 6px 12px;
+            z-index: var(--z-blocker);
+            display: none;
+            text-transform: uppercase;
+        }
+
+        /* ==========================================================================
+           2. HEADER
+           ========================================================================== */
+        .app-container {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .island-topbar {
+            position: sticky;
+            top: 12px;
+            margin: 0 16px 20px;
+            height: 68px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(24px);
+            border-radius: var(--radius-pill);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 14px;
+            z-index: var(--z-header);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .btn-back {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--sigma-surface);
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--sigma-muted-border);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-back svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2.5;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-logo-img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+        }
+
+        .header-title {
+            font-weight: 900;
+            font-size: 1.15rem;
+            color: var(--sigma-primary);
+        }
+
+        /* ==========================================================================
+           3. STEP PROGRESS
+           ========================================================================== */
+        .workspace {
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .step-indicator-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            margin: 0 12px 10px;
+            padding: 0 20px;
+        }
+
+        .step-line {
+            position: absolute;
+            top: 14px;
+            left: 40px;
+            right: 40px;
+            height: 3px;
+            background: var(--sigma-muted-border);
+            z-index: 1;
+            border-radius: 2px;
+        }
+
+        .step-line-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: var(--sigma-accent);
+            width: 50%;
+            transition: width 0.6s;
+            border-radius: 2px;
+        }
+
+        .step-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--sigma-surface);
+            border: 2px solid var(--sigma-muted-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            box-shadow: 0 0 0 4px var(--sigma-surface-alt);
+        }
+
+        .step-node span {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .step-node.completed .step-circle {
+            background: var(--sigma-accent);
+            border-color: var(--sigma-accent);
+            color: white;
+        }
+
+        .step-node.active .step-circle {
+            background: var(--sigma-primary);
+            border-color: var(--sigma-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step-node.active span {
+            color: var(--sigma-primary);
+            font-weight: 800;
+        }
+
+        /* ==========================================================================
+           4. VIEW SECTIONS & HERO
+           ========================================================================== */
+        .view-section {
+            display: none;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .view-section.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .summary-hero-card {
+            background: linear-gradient(135deg, var(--sigma-primary) 0%, var(--sigma-secondary) 100%);
+            border-radius: var(--radius-2xl);
+            padding: 28px 24px;
+            color: white;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .sh-kicker {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .sh-amount {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .sh-amount span {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-right: 4px;
+            opacity: 0.8;
+        }
+
+        .sh-details-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sh-plan-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .sh-divider {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .sh-method-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Details Card */
+        .destination-card {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            border: 1px solid var(--sigma-muted-border);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .dest-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 20px 24px;
+            background: var(--sigma-subtle);
+            border-bottom: 1px solid var(--sigma-muted-border);
+            border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+        }
+
+        .dest-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--sigma-input-border);
+        }
+
+        .dest-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .dest-title h3 {
+            font-size: 1.1rem;
+        }
+
+        .dest-title p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .dest-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .instruction-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            padding: 16px;
+            border-radius: var(--radius-xl);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .copy-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .copy-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background: var(--sigma-surface-alt);
+            border: 1px solid var(--sigma-input-border);
+            border-radius: var(--radius-lg);
+        }
+
+        .copy-data small {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .copy-data strong {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--text-heading);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .btn-copy-action {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--sigma-subtle);
+            border: 1px solid var(--sigma-muted-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sigma-primary);
+            transition: 0.2s;
+        }
+
+        .btn-copy-action:active {
+            transform: scale(0.9);
+            background: var(--sigma-input-border);
+        }
+
+        .btn-copy-action svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2;
+        }
+
+        /* Upload & Form */
+        .form-section-title {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-section-title svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--sigma-primary);
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .upload-dropzone {
+            border: 2px dashed var(--sigma-input-border);
+            background: var(--sigma-surface-alt);
+            border-radius: var(--radius-2xl);
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 160px;
+        }
+
+        .upload-dropzone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .upload-prompt-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid var(--sigma-muted-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sigma-primary);
+            margin-bottom: 16px;
+        }
+
+        .upload-prompt-icon svg {
+            width: 26px;
+            height: 26px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .upload-prompt-text b {
+            display: block;
+            font-size: 1.05rem;
+            font-weight: 800;
+        }
+
+        .upload-prompt-text small {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .upload-preview-card {
+            display: none;
+            background: var(--sigma-surface);
+            border: 1px solid var(--sigma-primary);
+            border-radius: var(--radius-xl);
+            padding: 12px;
+            align-items: center;
+            gap: 16px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .upload-preview-card.active {
+            display: flex;
+        }
+
+        .preview-img-box {
+            width: 64px;
+            height: 64px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--sigma-surface-alt);
+            border: 1px solid var(--sigma-muted-border);
+        }
+
+        .preview-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .preview-details b {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-remove-file {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--sigma-danger-soft);
+            color: var(--sigma-danger-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            z-index: 15;
+        }
+
+        .btn-remove-file svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: var(--sigma-surface);
+            border-radius: var(--radius-xl);
+            border: 2px solid var(--sigma-input-border);
+            transition: 0.2s;
+            overflow: hidden;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--sigma-primary);
+            box-shadow: 0 0 0 4px rgba(11, 19, 43, 0.08);
+        }
+
+        .input-wrapper.error {
+            border-color: var(--sigma-danger);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+        }
+
+        .input-icon {
+            width: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+        }
+
+        .input-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .input-field {
+            flex: 1;
+            height: 64px;
+            padding: 24px 16px 8px 0;
+            font-size: 1.1rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            background: transparent;
+        }
+
+        .input-field:focus {
+            outline: none;
+        }
+
+        .input-field::placeholder {
+            color: transparent;
+        }
+
+        .floating-label {
+            position: absolute;
+            left: 56px;
+            top: 20px;
+            font-size: 1rem;
+            color: var(--text-muted);
+            pointer-events: none;
+            transition: 0.2s;
+            font-weight: 600;
+        }
+
+        .input-field:focus~.floating-label,
+        .input-field:not(:placeholder-shown)~.floating-label {
+            top: 8px;
+            font-size: 0.75rem;
+            color: var(--sigma-primary);
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .form-error-msg {
+            display: none;
+            background: var(--sigma-danger-soft);
+            color: var(--sigma-danger-dark);
+            padding: 14px;
+            border-radius: var(--radius-lg);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+            border: 1px solid var(--sigma-danger-border);
+            animation: shake 0.4s ease;
+        }
+
+        .action-footer {
+            position: fixed;
+            bottom: calc(20px + var(--safe-area-bottom));
+            left: 0;
+            right: 0;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            z-index: var(--z-header);
+            pointer-events: none;
+        }
+
+        .btn-submit-payment {
+            width: 100%;
+            max-width: 720px;
+            height: 64px;
+            border-radius: var(--radius-xl);
+            background: linear-gradient(135deg, var(--sigma-primary), var(--sigma-secondary));
+            color: white;
+            font-size: 1.15rem;
+            font-weight: 900;
+            display: flex;
+            pointer-events: auto;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 12px 28px rgba(11, 19, 43, 0.3);
+            transition: 0.2s;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-submit-payment:active {
+            transform: scale(0.96);
+            box-shadow: 0 6px 16px rgba(11, 19, 43, 0.2);
+        }
+
+        .btn-submit-payment:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .btn-submit-payment .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .btn-submit-payment.loading .spinner {
+            display: block;
+        }
+
+        .btn-submit-payment.loading span,
+        .btn-submit-payment.loading svg {
+            display: none;
+        }
+
+        /* Success Timeline */
+        .success-card {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            padding: 40px 24px;
+            text-align: center;
+            border: 1px solid var(--sigma-muted-border);
+            box-shadow: var(--shadow-card);
+        }
+
+        .success-icon-wrap {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--sigma-accent-soft);
+            color: var(--sigma-accent-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .success-icon-wrap svg {
+            width: 40px;
+            height: 40px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .success-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: var(--sigma-accent-dark);
+        }
+
+        .req-id-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 8px 16px;
+            background: var(--sigma-surface-alt);
+            border: 1px solid var(--sigma-input-border);
+            border-radius: var(--radius-pill);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--sigma-primary);
+            cursor: pointer;
+        }
+
+        .timeline-container {
+            margin-top: 32px;
+            width: 100%;
+            text-align: left;
+            padding: 0 10px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            position: relative;
+            padding-bottom: 24px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 24px;
+            bottom: 0;
+            width: 2px;
+            background: var(--sigma-muted-border);
+            z-index: 1;
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .tl-indicator {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--sigma-surface);
+            border: 2px solid var(--sigma-muted-border);
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tl-indicator svg {
+            width: 12px;
+            height: 12px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            display: none;
+        }
+
+        .tl-content b {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        .timeline-item.completed .tl-indicator {
+            background: var(--sigma-accent);
+            border-color: var(--sigma-accent);
+        }
+
+        .timeline-item.completed .tl-indicator svg {
+            display: block;
+        }
+
+        .timeline-item.completed .tl-content b {
+            color: var(--text-heading);
+        }
+
+        .timeline-item.current .tl-indicator {
+            background: white;
+            border-color: var(--sigma-gold);
+            box-shadow: 0 0 0 4px var(--sigma-gold-soft);
+        }
+
+        .timeline-item.current .tl-content b {
+            color: var(--sigma-gold-dark);
+        }
+
+        .timeline-item.rejected .tl-indicator {
+            background: var(--sigma-danger);
+            border-color: var(--sigma-danger);
+        }
+
+        /* Error States & Skeletons */
+        .error-state-card {
+            background: var(--sigma-surface);
+            border-radius: var(--radius-2xl);
+            padding: 40px 24px;
+            text-align: center;
+            border: 1px solid var(--sigma-danger-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .skeleton {
+            background: #E2E8F0;
+            color: transparent !important;
+            animation: pulseSkel 1.5s infinite ease-in-out;
+            border-radius: 8px;
+        }
+
+        .skel-card {
+            height: 160px;
+            width: 100%;
+            border-radius: var(--radius-2xl);
+            margin-bottom: 20px;
+        }
+
+        .skel-box {
+            height: 280px;
+            width: 100%;
+            border-radius: var(--radius-2xl);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translate(-50%, -20px) scale(0.9);
+            background: var(--sigma-primary);
+            color: white;
+            padding: 16px 28px;
+            border-radius: var(--radius-pill);
+            font-size: 0.95rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-float);
+            z-index: var(--z-toast);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toast.error {
+            background: var(--sigma-danger-dark);
+            border-color: var(--sigma-danger);
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0) scale(1);
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-6px);
+            }
+
+            75% {
+                transform: translateX(6px);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulseSkel {
+            0% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="networkOfflineBanner">Critical Network Error. Please Check Connection.</div>
+
+    <svg width="0" height="0" style="display:none;" aria-hidden="true">
+        <symbol id="icon-back" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </symbol>
+        <symbol id="icon-wallet" viewBox="0 0 24 24">
+            <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4" />
+            <path d="M4 6v12c0 1.1.9 2 2 2h14v-4" />
+            <path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z" />
+        </symbol>
+        <symbol id="icon-copy" viewBox="0 0 24 24">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+        </symbol>
+        <symbol id="icon-check" viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12" />
+        </symbol>
+        <symbol id="icon-alert" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+        </symbol>
+        <symbol id="icon-upload" viewBox="0 0 24 24">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+        </symbol>
+        <symbol id="icon-hash" viewBox="0 0 24 24">
+            <line x1="4" y1="9" x2="20" y2="9" />
+            <line x1="4" y1="15" x2="20" y2="15" />
+            <line x1="10" y1="3" x2="8" y2="21" />
+            <line x1="16" y1="3" x2="14" y2="21" />
+        </symbol>
+        <symbol id="icon-trash" viewBox="0 0 24 24">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            <line x1="10" y1="11" x2="10" y2="17" />
+            <line x1="14" y1="11" x2="14" y2="17" />
+        </symbol>
+        <symbol id="icon-file-img" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+        </symbol>
+        <symbol id="icon-shield" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </symbol>
+    </svg>
+
+    <div class="app-container">
+
+        <!-- HEADER -->
+        <header class="island-topbar">
+            <a href="plans.html" class="btn-back" aria-label="Cancel and return to Plans">
+                <svg>
+                    <use href="#icon-back" />
+                </svg>
+            </a>
+            <div class="brand-cluster">
+                <img src="assets/logo.png" alt="Sigma" class="brand-logo-img">
+                <span class="header-title" style="font-weight: 900; color: var(--sigma-primary);">Secure Checkout</span>
+            </div>
+            <div style="width:44px;"></div>
+        </header>
+
+        <main class="workspace">
+
+            <!-- STEP INDICATOR -->
+            <div class="step-indicator-wrapper">
+                <div class="step-line">
+                    <div class="step-line-fill" id="uiStepFill" style="width: 75%;"></div>
+                </div>
+                <div class="step-node completed">
+                    <div class="step-circle"><svg
+                            style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:3;">
+                            <use href="#icon-check" />
+                        </svg></div>
+                    <span>Plan</span>
+                </div>
+                <div class="step-node completed">
+                    <div class="step-circle"><svg
+                            style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:3;">
+                            <use href="#icon-check" />
+                        </svg></div>
+                    <span>Method</span>
+                </div>
+                <div class="step-node active" id="uiStepNode3">
+                    <div class="step-circle">3</div>
+                    <span>Proof</span>
+                </div>
+                <div class="step-node" id="uiStepNode4">
+                    <div class="step-circle">4</div>
+                    <span>Verify</span>
+                </div>
+            </div>
+
+            <!-- VIEW 1: LOADING SKELETONS -->
+            <section class="view-section active" id="viewLoading">
+                <div class="skel-card skeleton"></div>
+                <div class="skel-box skeleton"></div>
+                <div class="skel-box skeleton" style="height: 180px;"></div>
+            </section>
+
+            <!-- VIEW 2: ERROR / EXPIRED CONTEXT -->
+            <section class="view-section" id="viewError">
+                <div class="error-state-card">
+                    <svg>
+                        <use href="#icon-alert" />
+                    </svg>
+                    <h3 id="uiErrorTitle">Session Expired</h3>
+                    <p id="uiErrorDesc">No verified portfolio checkout session was found. Please return to the portfolio
+                        catalog and select your desired tier.</p>
+                    <a href="plans.html"
+                        style="padding: 14px 32px; background: var(--sigma-subtle); border-radius: 99px; font-weight: 800; color: var(--text-heading); border: 1px solid var(--border-light); margin-top: 10px; text-decoration: none;">Return
+                        to Plans</a>
+                </div>
+            </section>
+
+            <!-- VIEW 3: PAYMENT FORM -->
+            <section class="view-section" id="viewPaymentForm">
+
+                <!-- Summary -->
+                <div class="summary-hero-card">
+                    <span class="sh-kicker">Required Transfer Amount</span>
+                    <strong class="sh-amount font-mono"><span>PKR</span><span id="uiPayableAmount">...</span></strong>
+
+                    <div class="sh-details-row">
+                        <span class="sh-plan-name" id="uiPlanName">Loading Plan...</span>
+                        <div class="sh-divider"></div>
+                        <span class="sh-method-name" id="uiMethodName"><svg
+                                style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;">
+                                <use href="#icon-shield" />
+                            </svg> Verified Gateway</span>
+                    </div>
+                </div>
+
+                <!-- Destination Details -->
+                <div class="destination-card">
+                    <div class="dest-header">
+                        <div class="dest-icon" id="uiMethodIconContainer">
+                            <svg>
+                                <use href="#icon-wallet" />
+                            </svg>
+                        </div>
+                        <div class="dest-title">
+                            <h3 id="uiMethodTitle">Official Destination</h3>
+                            <p>Authoritative Corporate Account</p>
+                        </div>
+                    </div>
+
+                    <div class="dest-body">
+                        <div class="instruction-box">
+                            Please transfer the exact required amount to the account below. Take a clear screenshot of
+                            the successful receipt and copy the Transaction ID (TID / Reference Number).
+                        </div>
+
+                        <div class="copy-group">
+                            <div class="copy-row" onclick="ManualPayment.copyText('valAccTitle', 'Account Title')">
+                                <div class="copy-data">
+                                    <small>Account Title / Beneficiary Name</small>
+                                    <strong id="valAccTitle">...</strong>
+                                </div>
+                                <button class="btn-copy-action" aria-label="Copy Title"><svg>
+                                        <use href="#icon-copy" />
+                                    </svg></button>
+                            </div>
+
+                            <div class="copy-row" onclick="ManualPayment.copyText('valAccNumber', 'Account Number')">
+                                <div class="copy-data">
+                                    <small>Account Number / IBAN</small>
+                                    <strong id="valAccNumber" class="font-mono">...</strong>
+                                </div>
+                                <button class="btn-copy-action" aria-label="Copy Number"><svg>
+                                        <use href="#icon-copy" />
+                                    </svg></button>
+                            </div>
+
+                            <div class="copy-row" id="rowBankName" style="display: none;"
+                                onclick="ManualPayment.copyText('valBankName', 'Bank Name')">
+                                <div class="copy-data">
+                                    <small>Bank / Clearing Network</small>
+                                    <strong id="valBankName">...</strong>
+                                </div>
+                                <button class="btn-copy-action" aria-label="Copy Bank Name"><svg>
+                                        <use href="#icon-copy" />
+                                    </svg></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proof Upload & TID Input -->
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                    <div class="form-section-title">
+                        <svg>
+                            <use href="#icon-upload" />
+                        </svg> Submit Verification Data
+                    </div>
+
+                    <label class="upload-dropzone" id="uiDropArea">
+                        <input type="file" id="inpFile" accept=".jpg,.jpeg,.png,.webp">
+                        <div class="upload-prompt-icon"><svg>
+                                <use href="#icon-file-img" />
+                            </svg></div>
+                        <div class="upload-prompt-text">
+                            <b>Upload Payment Receipt</b>
+                            <small>Tap to select image (Max 5MB)</small>
+                        </div>
+                    </label>
+
+                    <div class="upload-preview-card" id="uiPreviewCard">
+                        <div class="preview-img-box"><img src="" alt="Proof Preview" id="uiPreviewImg"></div>
+                        <div class="preview-details">
+                            <b id="uiPreviewName">receipt.jpg</b>
+                            <small
+                                style="color:var(--sigma-accent-dark); font-weight:700; display:flex; align-items:center; gap:4px; margin-top:2px;">
+                                <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;">
+                                    <use href="#icon-check" />
+                                </svg>
+                                Image attached securely
+                            </small>
+                        </div>
+                        <button type="button" class="btn-remove-file" id="btnRemoveFile"><svg>
+                                <use href="#icon-trash" />
+                            </svg></button>
+                    </div>
+
+                    <div class="input-wrapper" id="uiTrxWrapper">
+                        <div class="input-icon"><svg>
+                                <use href="#icon-hash" />
+                            </svg></div>
+                        <input type="text" id="inpTrxId" class="input-field" placeholder=" ">
+                        <label class="floating-label">Transaction ID (TID / Ref No)</label>
+                    </div>
+
+                    <div class="form-error-msg" id="uiErrorBox">Error message here</div>
+
+                    <div
+                        style="background:var(--sigma-gold-soft); border:1px solid var(--sigma-gold-border); color:var(--sigma-gold-dark); padding:14px 16px; border-radius:var(--radius-lg); font-size:0.85rem; font-weight:600; display:flex; gap:10px;">
+                        <svg style="width:18px;height:18px;stroke:currentColor;fill:none;flex-shrink:0;">
+                            <use href="#icon-alert" />
+                        </svg>
+                        <span>Only submit this request <b>after</b> funds have been successfully transferred. Submitting
+                            a fake receipt or duplicate TID will result in immediate system rejection.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 4: SUCCESS TIMELINE -->
+            <section class="view-section" id="viewSuccessStatus">
+                <div class="success-card">
+                    <div class="success-icon-wrap"><svg>
+                            <use href="#icon-check" />
+                        </svg></div>
+                    <h2 style="color: var(--sigma-accent-dark);">Congratulations!</h2>
+                    <p style="color: var(--text-heading);">Your payment has been submitted successfully. Thank you so
+                        much for trusting this platform.</p>
+
+                    <div class="req-id-badge" onclick="ManualPayment.copyText('uiSuccessReqId', 'Request ID')">
+                        ID: <span id="uiSuccessReqId">REQ-XXXXXX</span>
+                        <svg style="width:14px;height:14px;cursor:pointer;">
+                            <use href="#icon-copy" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="timeline-container">
+                    <h3 class="timeline-title">Verification Lifecycle</h3>
+
+                    <div class="timeline-item completed">
+                        <div class="tl-indicator"><svg>
+                                <use href="#icon-check" />
+                            </svg></div>
+                        <div class="tl-content">
+                            <b>Request Registered</b>
+                            <small>Portfolio parameters and deposit locked.</small>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item completed">
+                        <div class="tl-indicator"><svg>
+                                <use href="#icon-check" />
+                            </svg></div>
+                        <div class="tl-content">
+                            <b>Slip & TID Uploaded</b>
+                            <small>Stored in encrypted vaults.</small>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item current">
+                        <div class="tl-indicator"></div>
+                        <div class="tl-content">
+                            <b>Administration Review</b>
+                            <small>Matching bank clearance in progress.</small>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="tl-indicator" style="border-color: var(--border-light);"></div>
+                        <div class="tl-content">
+                            <b style="color: var(--text-muted);">Portfolio Activation</b>
+                            <small>Automated 24h daily yield cycle initialized.</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ACTION FOOTER -->
+    <div class="action-footer" id="uiFooter" style="display: none;">
+        <button class="btn-submit-payment" id="btnSubmitPayment" onclick="ManualPayment.submit()">
+            <span id="btnSubmitText">Submit Verification</span>
+            <svg style="width:20px;height:20px;stroke:white;fill:none;stroke-width:2.5;" id="btnSubmitIcon">
+                <use href="#icon-shield" />
+            </svg>
+            <div class="spinner"></div>
+        </button>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toastBox">
+        <svg style="width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.5;">
+            <use href="#icon-check" />
+        </svg>
+        <span id="toastMsg">Action successful</span>
+    </div>
+
+    <script>
+        const ManualPayment = (() => {
+
+            let authUser = null;
+            let activeFile = null;
+            let paymentContract = null;
+            let authPlanSnapshot = null;
+            let authMethodSnapshot = null;
+            let finalPayableAmount = 0;
+
+            const dom = {
+                views: {
+                    loading: document.getElementById('viewLoading'),
+                    error: document.getElementById('viewError'),
+                    form: document.getElementById('viewPaymentForm'),
+                    success: document.getElementById('viewSuccessStatus')
+                },
+                toastBox: document.getElementById('toastBox'),
+                toastMsg: document.getElementById('toastMsg')
+            };
+
+            const haptic = (ms = 20) => { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) { } };
+
+            const toast = (msg, isError = false) => {
+                if (!dom.toastBox) return;
+                dom.toastMsg.textContent = msg;
+                dom.toastBox.style.background = isError ? 'var(--sigma-danger)' : 'var(--sigma-primary)';
+                dom.toastBox.classList.add('show');
+                haptic(isError ? 50 : 25);
+                setTimeout(() => dom.toastBox.classList.remove('show'), 3000);
+            };
+
+            const switchView = (vId) => {
+                Object.values(dom.views).forEach(v => v.style.display = 'none');
+                if (dom.views[vId]) dom.views[vId].style.display = 'flex';
+            };
+
+            const showError = (title, desc) => {
+                document.getElementById('uiErrorTitle').textContent = title;
+                document.getElementById('uiErrorDesc').textContent = desc;
+                document.getElementById('uiFooter').style.display = 'none';
+                switchView('error');
+            };
+
+            const showFormError = (msg) => {
+                const box = document.getElementById('uiErrorBox');
+                box.textContent = msg;
+                box.classList.add('show');
+                box.style.animation = 'none';
+                void box.offsetWidth;
+                box.style.animation = 'shake 0.4s ease';
+                haptic(50);
+            };
+
+            const copyText = async (elementId, label) => {
+                const text = document.getElementById(elementId).innerText.trim();
+                if (!text || text === '...') return;
+                try {
+                    await navigator.clipboard.writeText(text);
+                    toast(`${label} securely copied`);
+                } catch (err) {
+                    const temp = document.createElement('textarea');
+                    temp.value = text; document.body.appendChild(temp);
+                    temp.select(); document.execCommand('copy'); document.body.removeChild(temp);
+                    toast(`${label} securely copied`);
+                }
+            };
+
+            const compressImageToBase64 = (file) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = e => {
+                        const img = new Image();
+                        img.src = e.target.result;
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            const MAX_WIDTH = 800;
+                            let width = img.width;
+                            let height = img.height;
+                            if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                            canvas.width = width; canvas.height = height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+                            resolve(canvas.toDataURL('image/jpeg', 0.6));
+                        };
+                        img.onerror = reject;
+                    };
+                });
+            };
+
+            const validateContextAndLoadData = async (db) => {
+                try {
+                    const rawContract = sessionStorage.getItem('sigma_pending_payment_contract');
+                    if (!rawContract) throw new Error("No active portfolio contract found. Initiate from Plans catalog.");
+
+                    paymentContract = JSON.parse(rawContract);
+                    if (!paymentContract.planId || !paymentContract.methodId) throw new Error("Payment context corrupted.");
+
+                    const methodDoc = await db.collection('settings').doc('payment_methods').get();
+                    const methodsConfig = methodDoc.exists ? (methodDoc.data().methods || []) : [];
+                    authMethodSnapshot = methodsConfig.find(m => m.id === paymentContract.methodId);
+
+                    // Allow robust lookup from both config and database directly
+                    const planDoc = await db.collection('plans').doc(paymentContract.planId).get();
+                    if (planDoc.exists) {
+                        const dp = planDoc.data();
+                        authPlanSnapshot = { id: planDoc.id, name: dp.name, price: Number(dp.price), duration: Number(dp.durationDays), isActive: dp.status === 'active' };
+                    } else {
+                        const pConf = await db.collection('settings').doc('plans_config').get();
+                        const pList = pConf.exists ? (pConf.data().plans || []) : [];
+                        authPlanSnapshot = pList.find(p => p.id === paymentContract.planId);
+                    }
+
+                    if (!authPlanSnapshot) throw new Error("Portfolio data unavailable in database.");
+                    if (!authMethodSnapshot) throw new Error("Selected gateway is inactive or invalid.");
+
+                    finalPayableAmount = Number(authPlanSnapshot.price);
+
+                    // Render UI
+                    document.getElementById('uiPayableAmount').textContent = finalPayableAmount.toLocaleString('en-PK');
+                    document.getElementById('uiPlanName').textContent = authPlanSnapshot.name.split(' / ')[0];
+                    document.getElementById('uiMethodName').innerHTML = `<svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;"><use href="#icon-shield"/></svg> ${authMethodSnapshot.name}`;
+                    document.getElementById('uiMethodTitle').textContent = authMethodSnapshot.name;
+
+                    if (authMethodSnapshot.iconUrl) {
+                        document.getElementById('uiMethodIconContainer').innerHTML = `<img src="${authMethodSnapshot.iconUrl}" onerror="this.style.display='none'">`;
+                    }
+
+                    const details = authMethodSnapshot.details || {};
+                    document.getElementById('valAccTitle').textContent = details.title || "N/A";
+                    document.getElementById('valAccNumber').textContent = details.accNum || "N/A";
+
+                    if (details.bankName) {
+                        document.getElementById('rowBankName').style.display = 'flex';
+                        document.getElementById('valBankName').textContent = details.bankName;
+                    }
+
+                    switchView('form');
+                    document.getElementById('uiFooter').style.display = 'flex';
+
+                } catch (err) {
+                    showError("Checkout Invalid", err.message);
+                }
+            };
+
+            const submit = async () => {
+                const trxInput = document.getElementById('inpTrxId');
+                const rawTrxId = trxInput.value.trim();
+
+                if (!activeFile) { showFormError("Upload screenshot of receipt."); return; }
+                if (!rawTrxId || rawTrxId.length < 5) {
+                    document.getElementById('uiTrxWrapper').style.borderColor = 'var(--sigma-danger)';
+                    showFormError("Enter valid Transaction ID.");
+                    return;
+                }
+
+                const normalizedTrxId = rawTrxId.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                const btn = document.getElementById('btnSubmitPayment');
+
+                try {
+                    btn.disabled = true;
+                    btn.classList.add('loading');
+
+                    const db = firebase.firestore();
+                    const reqId = "REQ-" + Math.random().toString(36).substring(2, 9).toUpperCase();
+
+                    const trxRef = db.collection('transaction_ids').doc(normalizedTrxId);
+                    const trxDoc = await trxRef.get();
+                    if (trxDoc.exists) throw new Error("DUPLICATE_TRX_ID");
+
+                    let proofUrl = "";
+                    try {
+                        const storage = firebase.storage();
+                        const ext = activeFile.name.split('.').pop() || 'jpg';
+                        const storageRef = storage.ref().child(`payment_proofs/${authUser.uid}/${reqId}_proof.${ext}`);
+                        const snapshot = await storageRef.put(activeFile);
+                        proofUrl = await snapshot.ref.getDownloadURL();
+                    } catch (e) {
+                        console.warn("Storage CORS bypassed via Base64.");
+                        proofUrl = await compressImageToBase64(activeFile);
+                    }
+
+                    const batch = db.batch();
+
+                    batch.set(db.collection('payment_requests').doc(reqId), {
+                        uid: authUser.uid,
+                        planId: authPlanSnapshot.id,
+                        planSnapshot: authPlanSnapshot,
+                        methodId: authMethodSnapshot.id,
+                        methodSnapshot: authMethodSnapshot,
+                        amount: finalPayableAmount,
+                        trxIdRaw: rawTrxId,
+                        trxIdNormalized: normalizedTrxId,
+                        proofUrl: proofUrl,
+                        status: 'pending_verification',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    batch.set(trxRef, { requestId: reqId, uid: authUser.uid, claimedAt: firebase.firestore.FieldValue.serverTimestamp() });
+
+                    batch.set(db.collection('users').doc(authUser.uid).collection('transactions').doc(), {
+                        type: 'deposit',
+                        requestId: reqId,
+                        description: `Deposit for ${authPlanSnapshot.name}`,
+                        amount: finalPayableAmount,
+                        status: 'pending',
+                        referenceId: reqId,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    await batch.commit();
+                    sessionStorage.removeItem('sigma_pending_payment_contract');
+
+                    document.getElementById('uiFooter').style.display = 'none';
+                    document.getElementById('uiStepFill').style.width = '100%';
+                    document.getElementById('uiStepNode3').className = 'step-node completed';
+                    document.getElementById('uiStepNode4').className = 'step-node active';
+                    document.getElementById('uiSuccessReqId').textContent = reqId;
+
+                    switchView('success');
+                    haptic(50);
+
+                    // Automatic redirect after exactly 3.5s
+                    setTimeout(() => {
+                        window.location.replace('my-plans.html');
+                    }, 3500);
+
+                } catch (err) {
+                    btn.disabled = false;
+                    btn.classList.remove('loading');
+
+                    if (err.message === "DUPLICATE_TRX_ID") {
+                        showFormError("This Transaction ID has already been logged. Duplicates rejected.");
+                    } else {
+                        showFormError("Network failure. Please try again.");
+                    }
+                }
+            };
+
+            const init = () => {
+                const fInput = document.getElementById('inpFile');
+                fInput.addEventListener('change', (e) => {
+                    if (e.target.files && e.target.files[0]) {
+                        document.getElementById('uiErrorBox').style.display = 'none';
+                        const file = e.target.files[0];
+                        if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) { showFormError("Invalid image."); return; }
+                        if (file.size > 5 * 1024 * 1024) { showFormError("File too large (Max 5MB)."); return; }
+                        activeFile = file;
+
+                        const reader = new FileReader();
+                        reader.onload = (ev) => {
+                            document.getElementById('uiPreviewImg').src = ev.target.result;
+                            document.getElementById('previewFileName').textContent = file.name;
+                            document.getElementById('uiDropArea').style.display = 'none';
+                            document.getElementById('uploadPreviewCard').style.display = 'flex';
+                        };
+                        reader.readAsDataURL(file);
+                        haptic(15);
+                    }
+                });
+
+                document.getElementById('btnRemoveFile').addEventListener('click', () => {
+                    activeFile = null;
+                    fInput.value = '';
+                    document.getElementById('uploadPreviewCard').style.display = 'none';
+                    document.getElementById('uiDropArea').style.display = 'flex';
+                });
+
+                document.getElementById('inpTrxId').addEventListener('input', () => {
+                    document.getElementById('uiErrorBox').style.display = 'none';
+                    document.getElementById('uiTrxWrapper').style.borderColor = 'var(--sigma-input-border)';
+                });
+
+                if (typeof firebase !== 'undefined' && firebase.apps.length) {
+                    firebase.auth().onAuthStateChanged(user => {
+                        if (!user) { window.location.replace('login.html'); return; }
+                        authUser = user;
+                        validateContextAndLoadData(firebase.firestore());
+                    });
+                }
+            };
+
+            return { init, copyText, submit };
+        })();
+
+        document.addEventListener('DOMContentLoaded', ManualPayment.init);
+    </script>
+</body>
+
+</html>
